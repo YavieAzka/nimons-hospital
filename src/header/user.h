@@ -30,7 +30,4 @@ typedef struct {
 
 } User;
 
-int load_user_data(const char* filename, User users[], int* user_count);
-int login(User users[], int user_count, char* input_username, char* input_password);
-
 #endif
