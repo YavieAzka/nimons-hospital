@@ -7,14 +7,19 @@
 #define MAX_RIWAYAT 100
 #define MAX_USERS 100
 
+
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+
 typedef struct {
     int id;
     char username[MAX_USERNAME];
     char password[MAX_PASSWORD];
     char role[MAX_ROLE]; // "manager", "dokter", "pasien"
-
     char riwayat_penyakit[MAX_RIWAYAT]; // Riwayat penyakit (string deskripsi)
-
     // Atribut kesehatan pasien
     float suhu_tubuh;
     int tekanan_darah_sistolik;
@@ -30,4 +35,8 @@ typedef struct {
 
 } User;
 
+
 #endif
+
+
+
