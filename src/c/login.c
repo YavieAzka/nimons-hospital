@@ -291,6 +291,20 @@ int getUserIndex(const char* username, User* users, int user_count){
     return -1;
 }
 
+char char_toLower(char c) {
+    if (c >= 'A' && c <= 'Z') {
+        return c + 32;
+    } else {
+        return c;
+    }
+}
+
+void str_toLower(char *str) {
+    for (int i = 0; str[i]; i++) {
+        str[i] = char_toLower(str[i]);
+    }
+}
+
 User login(User *user_now){
 
     // users adalah array yang menampung data User
@@ -301,6 +315,7 @@ User login(User *user_now){
     // input username
     printf("Username: ");
     scanf("%s", &username);
+    str_toLower(username); // username converted to all lowercase
 
     // input password
     printf("Password: ");
