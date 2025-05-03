@@ -3,13 +3,10 @@
 #include "../header/user.h"
 #include "../header/login.h"
 #include "../header/register.h"
-
+#include "../header/set.h"
 int main() {
-     // users adalah array yang menampung data User.
-     int user_count = 0;
-     User u;
+    // Your code goes here
     
-    u = login(&u);
-    printf("#%s", u.username);
+    registerUser();
     return 0;
 }
