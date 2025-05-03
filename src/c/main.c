@@ -5,7 +5,11 @@
 #include "../header/register.h"
 
 int main() {
-    // Your code goes here
-    registerUser();
+     // users adalah array yang menampung data User.
+     int user_count = 0;
+     User u;
+    
+    u = login(&u);
+    printf("#%s", u.username);
     return 0;
 }
