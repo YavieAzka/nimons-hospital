@@ -1,5 +1,5 @@
-#ifndef EXIT.h
-#define EXIT.h
+#ifndef EXIT_h
+#define EXIT_h
 
 #include "../header/user.h"
 
