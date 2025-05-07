@@ -1,6 +1,6 @@
 #include "../header/logout.h"
 
-int logout(int status){
+LogType logout(LogType status){
     if (status == LOGGED_IN) //dapat diganti dengan strcmp kalo status dalam string
     {
         printf("Sampai jumpa!\n");
