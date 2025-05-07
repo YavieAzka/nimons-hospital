@@ -3,6 +3,7 @@
 #include "../header/user.h"
 #include "../header/login.h"
 #include "../header/register.h"
+#include "../header/logout.h"
 
 int main() {
      // users adalah array yang menampung data User.
