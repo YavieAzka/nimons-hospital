@@ -2,10 +2,10 @@
 #define LOGOUT_h
 
 #include <stdio.h>
-int logout(int status){
-    if (status == 1) //dapat diganti dengan strcmp kalo status dalam string
-    {
-        
-    }
-}
+
+#define LOGGED_IN 1
+#define LOGGED_OFF 0
+
+int logout(int status);
+
 #endif
