@@ -18,3 +18,4 @@ void insert(Set* s, const char* str) {
         s->size++;
     }
 }
+    
