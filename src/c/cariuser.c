@@ -2,6 +2,14 @@
 #include <string.h>
 #include "../header/login.h"
 
+#define MAX_USERNAME_LENGTH 15
+#define MAX_ROLE_LENGTH 15
+#define MAX_PENYAKIT_LENGTH 20
+
+
+void printHorizontalLine() {
+    printf("+-----+---------------+---------------+--------------------+\n");
+}
 
 char toLowerChar(char c) {
     if (c >= 'A' && c <= 'Z') {
@@ -52,25 +60,52 @@ int binarySearchUsername(User* users, int userCount, const char* target) {
 }
 
 void printHeader(){
-    printf("ID |      Nama      |      Role      |      Penyakit     |\n");
-    printf("==========================================================\n");
+    printHorizontalLine();
+    printf("| ID  | %-13s | %-13s | %-18s |\n", "Nama", "Role", "Penyakit");
+    printHorizontalLine();
 }
 
-void printUser_general(User U[], int idx){
+void printUser_general(User U){
     // Mengeprint user jika pengguna menggunakan perintah CARI_USER
     printHeader();
     
-    if(strcmp(U[idx].role, "pasien") == 0){
-        printf("%d | %s             | %s             | %s                |\n", U[idx].id, U[idx].username, U[idx].role, U[idx].riwayat_penyakit);
+    char formatted_username[MAX_USERNAME_LENGTH + 1]; // +1 untuk null terminator
+    char formatted_role[MAX_ROLE_LENGTH + 1];
+    char formatted_penyakit[MAX_PENYAKIT_LENGTH + 1];
+    
+    // Copy dan truncate jika terlalu panjang
+    strncpy(formatted_username, U.username, MAX_USERNAME_LENGTH);
+    formatted_username[MAX_USERNAME_LENGTH] = '\0';
+    
+    strncpy(formatted_role, U.role, MAX_ROLE_LENGTH);
+    formatted_role[MAX_ROLE_LENGTH] = '\0';
+    
+    if (strcmp(U.role, "pasien") == 0) {
+        strncpy(formatted_penyakit, U.riwayat_penyakit, MAX_PENYAKIT_LENGTH);
+        formatted_penyakit[MAX_PENYAKIT_LENGTH] = '\0';
+        printf("| %-3d | %-13s | %-13s | %-18s |\n", 
+               U.id, formatted_username, formatted_role, formatted_penyakit);
+    } else {
+        printf("| %-3d | %-13s | %-13s | %-18s |\n", 
+               U.id, formatted_username, formatted_role, "-");
     }
-    else{
-        printf("%d | %s             | %s             | -                |\n", U[idx].id, U[idx].username, U[idx].role);
-    }
+    
+    printHorizontalLine();
     
 }
 
-void printPasien(User U[], int idx){
-    printf("%d | %s             | %s                |\n", U[idx].id, U[idx].username,U[idx].riwayat_penyakit);
+void printPasien(User U){
+    char formatted_username[MAX_USERNAME_LENGTH + 1];
+    char formatted_penyakit[MAX_PENYAKIT_LENGTH + 1];
+    
+    strncpy(formatted_username, U.username, MAX_USERNAME_LENGTH);
+    formatted_username[MAX_USERNAME_LENGTH] = '\0';
+    
+    strncpy(formatted_penyakit, U.riwayat_penyakit, MAX_PENYAKIT_LENGTH);
+    formatted_penyakit[MAX_PENYAKIT_LENGTH] = '\0';
+    
+    printf("| %-3d | %-18s | %-13s |\n", 
+           U.id, formatted_username, formatted_penyakit);
 }
 
 
@@ -82,8 +117,16 @@ void printPilihan(){
     printf(">>> ");
 }
 
-void printDokter(User U[], int idx){
-    printf("%d | %s             |\n", U[idx].id, U[idx].username);
+void printDokter(User U){
+    char formatted_username[MAX_USERNAME_LENGTH];
+    
+    strncpy(formatted_username, U.username, MAX_USERNAME_LENGTH);
+    formatted_username[MAX_USERNAME_LENGTH] = '\0';
+    printf("+-----+---------------+\n");
+    printf("| ID  | %-13s |\n", "Nama");
+    printf("+-----+---------------+\n");
+    printf("| %-3d | %-13s |\n", U.id, formatted_username);
+    printf("+-----+---------------+\n");
 }
 
 void cariPasien(){
@@ -108,7 +151,7 @@ void cariPasien(){
         }
         else{
             printf("Pengguna dengan ID %d:\n", id);
-            printPasien(users, id);
+            printPasien(users[id]);
         }
 
     }
@@ -127,7 +170,7 @@ void cariPasien(){
 
         if (id != -1) {
             printf("Pengguna dengan ID %d:\n", id);
-            printPasien(users, id);
+            printPasien(users[id]);
         } else {
             printf("User dengan username '%s' tidak ditemukan.\n", targetUsername);
         }
@@ -141,13 +184,20 @@ void cariPasien(){
         for(int i = 0; i < userCount; i++){
             if(strcmp(users[i].riwayat_penyakit, penyakit) == 0){
                 if(countPenyakit == 0){
-                    printHeader();
+                    printf("+-----+--------------------+---------------+\n");
+                    printf("| ID  | %-18s | %-13s |\n", "Nama", "Penyakit");
+                    printf("+-----+--------------------+---------------+\n");
                     countPenyakit++;
                 }
-                printPasien(users, i);
+                printPasien(users[i]);
+                printf("+-----+--------------------+---------------+\n");
             }
         }
+        if(countPenyakit == 0){
+            printf("Pasien dengan penyakit %s tidak ditemukan.", penyakit);
+        }
     }
+    
 }
 
 void cariDokter(){
@@ -171,7 +221,7 @@ void cariDokter(){
         }
         else if(strcmp(users[id].role,"dokter") == 0){
             printf("Dokter dengan ID %d:\n", id);
-            printDokter(users, id);
+            printDokter(users[id]);
         }
 
     }
@@ -190,12 +240,13 @@ void cariDokter(){
         
         if (id != -1 && strcmp(users[id].role,"dokter") == 0) {
             printf("Menampilkan data Dokter dengan nama %s:\n", users[id].username);
-            printDokter(users, id);
+            printDokter(users[id]);
         } 
         else {
             printf("Dokter dengan username '%s' tidak ditemukan.\n", targetUsername);
         }
     }
+    //free(users);
 }
 
 void cariUser(){
@@ -218,7 +269,7 @@ void cariUser(){
         }
         else{
             printf("Pengguna dengan ID %d:\n", id);
-            printUser_general(users, id);
+            printUser_general(users[id]);
         }
 
     }
@@ -234,22 +285,18 @@ void cariUser(){
 
         // Step 2: Binary search
         int index = binarySearchUsername(users, userCount, targetUsername);
-        for(int i = 0; i < userCount; i++){
-            printf("#%s\n", users[i].username);
-        }
         if (index != -1) {
-            printf("User ditemukan:\n");
-            printf("ID       : %d\n", users[index].id);
-            printf("Username : %s\n", users[index].username);
-            printf("Role     : %s\n", users[index].role);
+            printf("Menampilkan %s dengan nama %s:\n", users[index].role, users[index].username);
+            printUser_general(users[index]);
         } else {
             printf("User dengan username '%s' tidak ditemukan.\n", targetUsername);
         }
     }
+    free(users);
 }
 
 int main(){
-    cariDokter();
+    cariPasien();
     // gcc cariuser.c login.c -o cariuser
 
     /*
