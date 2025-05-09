@@ -68,11 +68,11 @@ void registerUser(){
     
     // input username
     printf("Username: ");
-    scanf("%s", &newUsername);
+    scanf("%s", newUsername);
 
     // input password
     printf("Password: ");
-    scanf("%s", &newPassword);
+    scanf("%s", newPassword);
 
     char lowerNewUsername[512];
     toLowerCase(newUsername, lowerNewUsername);
