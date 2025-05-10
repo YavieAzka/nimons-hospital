@@ -312,6 +312,7 @@ User login(User *user_now){
     char username[512]; char password[512];
 
 
+
     // input username
     printf("Username: ");
     scanf("%s", &username);
