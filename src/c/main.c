@@ -6,7 +6,7 @@
 #include "../header/boolean.h"
 #include "../header/cariuser.h"
 #include "../header/register.h"
-
+#include "../header/logout.h"
 // void print_nimons(){
     
 // printf ("__      __       .__                                  __                  .__                               .__                         .__  __         .__   \n");
@@ -29,6 +29,7 @@ int main() {
     // gcc src/c/main.c src/c/login.c src/c/help.c -I src/header -o src/c/main
     // sekaiwonekkyounouzuni 
     // Your code goes here
+    int status = LOGGED_OFF;
     User current_user; char userInput[10]; 
 
     print_openingMessage();
@@ -36,7 +37,7 @@ int main() {
 
     if(strcmp(userInput, "LOGIN") == 0){        // User Login
         current_user = login(&current_user);
-
+        status = LOGGED_IN;
         printf("Apa yang bisa dibantu hari ini, %s %s?. Ketik HELP untuk melihat daftar command.\n", current_user.role, current_user.username);
         scanf("%s", &userInput);
         if(strcmp(userInput, "HELP") == 0){
@@ -44,7 +45,7 @@ int main() {
 
             // Tambahkan fungsi/modul yang sudah dibuat di bawah.
             if(strcmp(command, "LOGOUT") == 0){
-                printf("Logged out\n");
+                status = logout(status);
             }
         }
     }
