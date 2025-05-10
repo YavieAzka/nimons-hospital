@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "../header/login.h"
+#include "../header/cariuser.h"
 
 #define MAX_USERNAME_LENGTH 15
 #define MAX_ROLE_LENGTH 15
