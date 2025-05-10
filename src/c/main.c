@@ -3,7 +3,20 @@
 #include "../header/user.h"
 #include "../header/login.h"
 #include "../header/help.h"
+#include "../header/boolean.h"
+#include "../header/cariuser.h"
+#include "../header/register.h"
 
+// void print_nimons(){
+    
+// printf ("__      __       .__                                  __                  .__                               .__                         .__  __         .__   \n");
+// printf("/  \    /  \ ____ |  |   ____  ____   _____   ____   _/  |_  ____     ____ |__| _____   ____   ____   ______ |  |__   ____  ____________ |__|/  |______  |  |  \n");
+// printf("\   \/\/   // __ \|  | _/ ___\/  _ \ /     \_/ __ \  \   __\/  _ \   /    \|  |/     \ /  _ \ /    \ /  ___/ |  |  \ /  _ \/  ___/\____ \|  \   __\__  \ |  |  \n");
+// printf(" \        /\  ___/|  |_\  \__(  <_> )  Y Y  \  ___/   |  | (  <_> ) |   |  \  |  Y Y  (  <_> )   |  \\___ \  |   Y  (  <_> )___ \ |  |_> >  ||  |  / __ \|  |__\n");
+// printf("  \__/\  /  \___  >____/\___  >____/|__|_|  /\___  >  |__|  \____/  |___|  /__|__|_|  /\____/|___|  /____  > |___|  /\____/____  >|   __/|__||__| (____  /____/\n");
+// printf("       \/       \/          \/            \/     \/                      \/         \/            \/     \/       \/           \/ |__|                 \/      \n");
+
+// }
 
 void print_openingMessage(){
     printf("==============================================================\n");
@@ -36,12 +49,27 @@ int main() {
         }
     }
 
-    else if(strcmp(userInput, "REGISTER") == 0){    // User Login
-        printf("Mohon maaf, fungsi belum tersedia :(\n");
+    if(strcmp(userInput, "REGISTER") == 0){    // User register
+        registerUser();
     }
+
+    if(strcmp(userInput, "CARI_USER") == 0){
+        cariUser();
+    }
+
+    if(strcmp(userInput, "CARI_PASIEN") == 0){
+        cariPasien();
+    }
+
+    if(strcmp(userInput, "CARI_DOKTER") == 0){
+        cariDokter();
+    }
+
     else{
         printf("Perintah tidak dikenali. Mohon melakukan login atau register terlebih dahulu.");
     }
     
     return 0;
 }
+// gcc c/main.c c/login.c c/help.c c/exit.c c/cariuser.c c/register.c c/set.c  -o main
+// gcc c/main.c c/login.c c/help.c c/cariuser.c  -o main

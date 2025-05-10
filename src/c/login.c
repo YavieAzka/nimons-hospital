@@ -308,7 +308,7 @@ User login(User *user_now){
 
     // users adalah array yang menampung data User
     int user_count = 0;
-    User* users = getUserData("../../data/user.csv", &user_count);
+    User* users = getUserData("data/user.csv", &user_count);
     char username[512]; char password[512];
 
 
@@ -317,7 +317,7 @@ User login(User *user_now){
     printf("Username: ");
     scanf("%s", &username);
     str_toLower(username);
-    
+
     // input password
     printf("Password: ");
     scanf("%s", &password);
