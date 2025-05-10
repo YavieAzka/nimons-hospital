@@ -311,9 +311,6 @@ User login(User *user_now){
     User* users = getUserData("../../data/user.csv", &user_count);
     char username[512]; char password[512];
 
-    for(int i = 0; i < user_count; i++){
-        printf("# %s\n", users[i].username);
-    }
 
     // input username
     printf("Username: ");
@@ -346,14 +343,14 @@ User login(User *user_now){
     return *user_now;
 }
 //Contoh cara menggunakan fungsi-fungsi ini
-// int main() {
-//     // users adalah array yang menampung data User.
-//     int user_count = 0;
-//     User u;
+int main() {
+    // users adalah array yang menampung data User.
+    int user_count = 0;
+    User u;
     
-//     u = login(&u);
-//     printf("#%s", u.username);
-//     return 0;
-// }
+    u = login(&u);
+    printf("#%s", u.username);
+    return 0;
+}
 
 // gcc src/c/main.c src/c/login.c -I src/header -o src/c/main
