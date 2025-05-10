@@ -2,6 +2,7 @@
 #include "../header/boolean.h"
 #include "../header/register.h"
 #include "../header/login.h"
+#include "../header/set.h"
 //Read user.csv file and store it in users[] array.
 #include <stdio.h>
 #include <stdlib.h>
@@ -38,11 +39,11 @@ void toLowerCase(const char* username, char* lowerUsername) {
     *lowerUsername = '\0';
 }
 
-int isUsernameUnique(const char* username, User* users, int user_count){
+int isUsernameUnique(const char* username, Set users, int user_count){
     for(int i = 0; i < user_count; i++){
         //printf("#%s %s\n", *username, users[i].username);
         char lower_username[512];
-        toLowerCase(users[i].username, lower_username);
+        toLowerCase(users.elements[i], lower_username);
         if(strcmp(username, lower_username) == 0){
             return 0;
         }
@@ -51,29 +52,39 @@ int isUsernameUnique(const char* username, User* users, int user_count){
 }
 
 void registerUser(){
+    Set setUsername;
+    createEmptySet(&setUsername);
     int user_count = 0;
-    User* users = getUserData("data/user.csv", &user_count);
-    char new_username[512]; char new_password[512];
 
+    User* users = getUserData("data/user.csv", &user_count);
+    char newUsername[512]; char newPassword[512];
+    
+    //Proses pemindahan array to set
+    for (int i = 0; i < user_count; i++)
+    {
+        insert(&setUsername, users[i].username);
+    }
+    
+    
     // input username
     printf("Username: ");
-    scanf("%s", &new_username);
+    scanf("%s", newUsername);
 
     // input password
     printf("Password: ");
-    scanf("%s", &new_password);
+    scanf("%s", newPassword);
 
-    char lowernewUsername[512];
-    toLowerCase(new_username, lowernewUsername);
+    char lowerNewUsername[512];
+    toLowerCase(newUsername, lowerNewUsername);
 
-    if(isUsernameUnique(lowernewUsername, users, user_count) == 0){
-        printf("Registrasi gagal! Pasien dengan nama %s sudah terdaftar.\n", new_username);
+    if(isUsernameUnique(lowerNewUsername, setUsername, user_count) == 0){
+        printf("Registrasi gagal! Pasien dengan nama %s sudah terdaftar.\n", newUsername);
     }
     else{
         User new_user;
 
-        strcpy(new_user.username, new_username);
-        strcpy(new_user.password, new_password);
+        strcpy(new_user.username, newUsername);
+        strcpy(new_user.password, newPassword);
         new_user.id = user_count + 1;
         strcpy(new_user.role, "Pasien");
         appendUserToFile("data/user.csv", new_user);
@@ -89,3 +100,5 @@ void registerUser(){
 //     registerUser();
 //     return 0;
 // } buat debugging dan mencoba
+
+// gcc src/c/main.c src/c/login.c src/c/register.c -I src/header -o src/c/main

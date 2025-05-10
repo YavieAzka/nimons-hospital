@@ -255,7 +255,6 @@ User* getUserData(const char* filename, int* user_count) {
     }
     
     fclose(file);
-    free(users);
     return users;
 }
 
@@ -309,17 +308,22 @@ User login(User *user_now){
 
     // users adalah array yang menampung data User
     int user_count = 0;
-    User* users = getUserData("data/user.csv", &user_count);
+    User* users = getUserData("../../data/user.csv", &user_count);
     char username[512]; char password[512];
+
+    for(int i = 0; i < user_count; i++){
+        printf("# %s\n", users[i].username);
+    }
 
     // input username
     printf("Username: ");
-    scanf("%s", &username);
+
+    scanf("%s", username);
     str_toLower(username);
     
     // input password
     printf("Password: ");
-    scanf("%s", &password);
+    scanf("%s", password);
     
     // cek apakah username sudah terdaftar
     if(getUserIndex(username, users, user_count) != -1){
@@ -339,6 +343,7 @@ User login(User *user_now){
         printf("Pengguna belum terdaftar. Mohon untuk melakukan pendaftaran terlebih dahulu.\n");
     }
     
+    free(users);
     return *user_now;
 }
 //Contoh cara menggunakan fungsi-fungsi ini
