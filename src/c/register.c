@@ -82,7 +82,6 @@ void registerUser(){
     }
     else{
         User new_user;
-
         strcpy(new_user.username, newUsername);
         strcpy(new_user.password, newPassword);
         new_user.id = user_count + 1;
@@ -92,13 +91,3 @@ void registerUser(){
         printf("Pasien %s berhasil ditambahkan!", new_user.username);
     }
 } //register function
-
-
-// int main() {
-//     // Your code goes here
-    
-//     registerUser();
-//     return 0;
-// } buat debugging dan mencoba
-
-// gcc src/c/main.c src/c/login.c src/c/register.c -I src/header -o src/c/main
