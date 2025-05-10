@@ -296,8 +296,8 @@ void cariUser(){
     free(users);
 }
 
-int main(){
-    cariPasien();
+//int main(){
+    //cariPasien();
     // gcc cariuser.c login.c -o cariuser
 
     /*
@@ -305,4 +305,4 @@ int main(){
     header
     jarak pembatas
     */
-}
+//}
