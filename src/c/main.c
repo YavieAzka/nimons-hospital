@@ -50,19 +50,19 @@ int main() {
         }
     }
 
-    if(strcmp(userInput, "REGISTER") == 0){    // User register
+    else if(strcmp(userInput, "REGISTER") == 0){    // User register
         registerUser();
     }
 
-    if(strcmp(userInput, "CARI_USER") == 0){
+    else if(strcmp(userInput, "CARI_USER") == 0){
         cariUser();
     }
 
-    if(strcmp(userInput, "CARI_PASIEN") == 0){
+    else if(strcmp(userInput, "CARI_PASIEN") == 0){
         cariPasien();
     }
 
-    if(strcmp(userInput, "CARI_DOKTER") == 0){
+    else if(strcmp(userInput, "CARI_DOKTER") == 0){
         cariDokter();
     }
 
