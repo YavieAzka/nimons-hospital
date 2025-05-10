@@ -2,6 +2,7 @@
 #define REGISTER_H
 
 #include "user.h"
+#include "set.h"
 #include <string.h>
 
 //register function
