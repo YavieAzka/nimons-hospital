@@ -1,6 +1,9 @@
 {
   "files.associations": {
     "user.h": "c",
-    "boolean.h": "c"
+    "boolean.h": "c",
+    "lihatuser.h": "c",
+    "help.h": "c",
+    "login.h": "c"
   }
 }

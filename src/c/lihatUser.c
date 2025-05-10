@@ -1,9 +1,9 @@
 #include "stdio.h"
 #include "string.h"
-#include "user.h"
-#include "lihatUser.h"
-#include "help.h"
-#include "login.h"
+#include "../header/user.h"
+#include "../header/lihatUser.h"
+#include "../header/help.h"
+#include "../header/login.h"
 
 //Prosedur untuk menerima input pilihan sort dan melakukan sort
 void urutanSort(User* users, int user_count) {
@@ -96,7 +96,7 @@ void sortAscNama(User* users, int user_count) {
 
     for(int i = 0; i < user_count; i++) {
         for(int j = 0; j < user_count - i - 1; j++) {
-            if(strcmp(users[i].username, users[j].username) > 0) {
+            if(strcmp(users[j].username, users[j+1].username) > 0) {
                 temp = users[j];
                 users[j] = users[j+1];
                 users[j+1] = temp;
@@ -111,7 +111,7 @@ void sortDescNama(User* users, int user_count) {
 
     for(int i = 0; i < user_count; i++) {
         for(int j = 0; j < user_count - i - 1; j++) {
-            if(strcmp(users[i].username, users[j].username) < 0) {
+            if(strcmp(users[j].username, users[j+1].username) < 0) {
                 temp = users[j];
                 users[j] = users[j+1];
                 users[j+1] = temp;
@@ -121,8 +121,7 @@ void sortDescNama(User* users, int user_count) {
 }
 
 //Prosedur untuk menampilkan data User / Pasien / Dokter
-void interfaceUser(User* users, User usernow){
-    int user_count = 0 ;
+void interfaceUser(User* users, User usernow, int user_count){
     
     if(strcmp(help(usernow), "LIHAT_USER") == 0) {
         printf("DATA USER ================================\n");
@@ -155,42 +154,39 @@ void interfaceUser(User* users, User usernow){
 }
 
 //Prosedur untuk menampilkan data user yang sudah di sort
-void lihatUser(User* users, User usernow) {
+void lihatUser(User usernow) {
     int user_count = 0;
     User* users = getUserData("data/user.csv", &user_count);
 
-    urutan_sort(users, user_count);
-    interfaceUser(users, usernow);
+    urutanSort(users, user_count);
+    interfaceUser(users, usernow, user_count);
 }
 
 //Prosedur untuk menampilkan data pasien yang sudah di sort
-void lihatPasien(User* users, User usernow) {
+void lihatPasien(User usernow) {
     int user_count = 0;
     User* users = getUserData("data/user.csv", &user_count);
 
-    urutan_sort(users, user_count);
-    interfaceUser(users, usernow);
+    urutanSort(users, user_count);
+    interfaceUser(users, usernow, user_count);
 }
 
 //Prosedur untuk menampilkan data dokter yang sudah di sort
-void lihatDokter(User* users, User usernow) {
+void lihatDokter(User usernow) {
     int user_count = 0;
     User* users = getUserData("data/user.csv", &user_count);
 
-    urutan_sort(users, user_count);
-    interfaceUser(users, usernow);
+    urutanSort(users, user_count);
+    interfaceUser(users, usernow, user_count);
 }
 
 //output
 void output(User usernow){
-    int user_count = 0 ;
-    User* users = getUserData("data/user.csv", &user_count);
-
     if(strcmp(help(usernow), "LIHAT_USER") == 0 ) {
-        lihatUser(users, usernow);
+        lihatUser(usernow);
     } else if (strcmp(help(usernow), "LIHAT_PASIEN") == 0 ) {
-        lihatPasien(users, usernow); 
+        lihatPasien(usernow); 
     } else if (strcmp(help(usernow), "LIHAT_DOKTER") == 0) {
-        lihatDokter(users, usernow);
+        lihatDokter(usernow);
     }
 }
