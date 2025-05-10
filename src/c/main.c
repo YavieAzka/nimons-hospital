@@ -26,7 +26,7 @@ void print_openingMessage(){
 }
 
 int main() { 
-    // gcc src/c/main.c src/c/login.c src/c/help.c -I src/header -o src/c/main
+    //gcc src/c/main.c src/c/login.c src/c/help.c src/c/cariuser.c src/c/register.c src/c/set.c src/c/logout.c -I src/header -o src/c/main
     // sekaiwonekkyounouzuni 
     // Your code goes here
     int status = LOGGED_OFF;
