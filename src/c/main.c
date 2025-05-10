@@ -5,7 +5,7 @@
 #include "../header/help.h"
 #include "../header/boolean.h"
 #include "../header/cariuser.h"
-
+#include "../header/register.h"
 
 // void print_nimons(){
     
@@ -49,8 +49,8 @@ int main() {
         }
     }
 
-    if(strcmp(userInput, "REGISTER") == 0){    // User Login
-        
+    if(strcmp(userInput, "REGISTER") == 0){    // User register
+        registerUser();
     }
 
     if(strcmp(userInput, "CARI_USER") == 0){
@@ -72,4 +72,6 @@ int main() {
     return 0;
 }
 // gcc c/main.c c/login.c c/help.c c/exit.c c/cariuser.c c/register.c c/set.c  -o main
-// gcc c/main.c c/login.c c/help.c c/cariuser.c  -o main
+// gcc c/main.c c/login.c c/help.c c/exit.c c/cariuser.c c/register.c c/set.c  -o main
+
+// gcc src/c/main.c src/c/login.c src/c/help.c src/c/exit.c src/c/cariuser.c src/c/register.c src/c/set.c  -o main
