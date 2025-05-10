@@ -1,5 +1,15 @@
+<<<<<<< HEAD
 id;username;password;role;riwayat_penyakit;suhu_tubuh;tekanan_darah_sistolik;tekanan_darah_diastolik;detak_jantung;saturasi_oksigen;kadar_gula_darah;berat_badan;tinggi_badan;kadar_kolesterol;kadar_kolesterol_ldl;trombosit
 1;nimonsslatte;nimonatutgajah23;manager;;;;
 2;Neroifa;Neroifa123;dokter;maag;120/80;65;170
 3;GRO;NeirofaCantik123;pasien;;;;
 4;furinadefontaine;sekaiwonekkyounouzuni;pasien;;;;
+5;Juniorrr;Jeje2424;Pasien;;;;
+=======
+id;username;password;role;riwayat_penyakit;suhu_tubuh;tekanan_darah_sistolik;tekanan_darah_diastolik;detak_jantung;saturasi_oksigen;kadar_gula_darah;berat_badan;tinggi_badan;kadar_kolesterol;kadar_kolesterol_ldl;trombosit
+1;nimonsslatte;nimonatutgajah23;manager;;;;
+2;Neroifa;Neroifa123;dokter;maag;120/80;65;170
+3;GRO;NeirofaCantik123;pasien;;;;
+4;furinadefontaine;sekaiwonekkyounouzuni;pasien;;;;
+5;Jerannn;Apalu;Pasien;;;;
+>>>>>>> main
