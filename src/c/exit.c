@@ -1,6 +1,4 @@
 #include "../header/user.h"
-#include "../header/boolean.h"
-#include "../header/login.h"
 #include "../header/save.h"
 
 #include <stdio.h>
