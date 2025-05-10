@@ -311,9 +311,7 @@ User login(User *user_now){
     User* users = getUserData("../../data/user.csv", &user_count);
     char username[512]; char password[512];
 
-    for(int i = 0; i < user_count; i++){
-        printf("# %s\n", users[i].username);
-    }
+
 
     // input username
     printf("Username: ");
