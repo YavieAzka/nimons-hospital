@@ -2,7 +2,11 @@
   "files.associations": {
     "user.h": "c",
     "boolean.h": "c",
+<<<<<<< HEAD
     "string.h": "c"
     "sstream": "c"
+=======
+    "register.h": "c"
+>>>>>>> main
   }
 }

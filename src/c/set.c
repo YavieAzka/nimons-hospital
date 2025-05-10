@@ -1,5 +1,5 @@
 #include <string.h>
-#include "set.h"
+#include "../header/set.h"
 
 void createEmptySet(Set* s) {
     s->size = 0;
@@ -18,3 +18,4 @@ void insert(Set* s, const char* str) {
         s->size++;
     }
 }
+    
