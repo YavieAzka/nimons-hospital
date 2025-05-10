@@ -318,7 +318,7 @@ User login(User *user_now){
 
     scanf("%s", username);
     str_toLower(username);
-    
+
     // input password
     printf("Password: ");
     scanf("%s", password);
