@@ -1,6 +1,7 @@
 #include "../header/user.h"
 #include "../header/boolean.h"
 #include "../header/login.h"
+#include "../header/lupa_password.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
