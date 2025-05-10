@@ -7,6 +7,6 @@ typedef int LogType;
 #define LOGGED_IN 1
 #define LOGGED_OFF 0
 
-int logout(int status);
+LogType logout(LogType status);
 
 #endif
