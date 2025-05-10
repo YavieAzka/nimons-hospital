@@ -317,12 +317,12 @@ User login(User *user_now){
 
     // input username
     printf("Username: ");
-    scanf("%s", &username);
+    scanf("%s", username);
     str_toLower(username);
     
     // input password
     printf("Password: ");
-    scanf("%s", &password);
+    scanf("%s", password);
     
     // cek apakah username sudah terdaftar
     if(getUserIndex(username, users, user_count) != -1){

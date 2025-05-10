@@ -2,13 +2,11 @@
 #include <stdio.h>
 #include "../header/user.h"
 #include "../header/login.h"
-
-
+#include "../header/register.h"
+#include "../header/set.h"
 int main() {
     // Your code goes here
-    User u;
     
-     u = login(&u);
-     printf("#%s", u.username);
-     return 0;
+    registerUser();
+    return 0;
 }
