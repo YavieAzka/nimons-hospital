@@ -7,6 +7,7 @@
 #include "../header/cariuser.h"
 #include "../header/register.h"
 #include "../header/logout.h"
+#include "../header/lupa_password.h"
 // void print_nimons(){
     
 // printf ("__      __       .__                                  __                  .__                               .__                         .__  __         .__   \n");
@@ -64,6 +65,9 @@ int main() {
 
     else if(strcmp(userInput, "CARI_DOKTER") == 0){
         cariDokter();
+    }
+    else if(strcmp(userInput, "LUPA_PASSWORD") == 0){
+        lupaPassword();
     }
 
     else{
