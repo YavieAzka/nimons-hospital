@@ -54,7 +54,7 @@ void print_helpMessage_manager(User usernow){
 char* help(User userNow){
 
     if(strcmp(userNow.role, "manager") == 0){
-        print_helpMessage_pasien(userNow);
+        print_helpMessage_manager(userNow);
     }
 
     else if(strcmp(userNow.role, "dokter") == 0){
