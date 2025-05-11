@@ -160,6 +160,8 @@ void lihatUser(User usernow) {
 
     urutanSort(users, user_count);
     interfaceUser(users, usernow, user_count);
+
+    free(users);
 }
 
 //Prosedur untuk menampilkan data pasien yang sudah di sort
@@ -169,6 +171,8 @@ void lihatPasien(User usernow) {
 
     urutanSort(users, user_count);
     interfaceUser(users, usernow, user_count);
+
+    free(users);
 }
 
 //Prosedur untuk menampilkan data dokter yang sudah di sort
@@ -178,6 +182,8 @@ void lihatDokter(User usernow) {
 
     urutanSort(users, user_count);
     interfaceUser(users, usernow, user_count);
+
+    free(users);
 }
 
 //output
