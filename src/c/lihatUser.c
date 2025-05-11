@@ -123,7 +123,7 @@ void urutanSort(User* users, int user_count) {
 //Prosedur untuk menampilkan data User / Pasien / Dokter
 void interfaceUser(User* users, User usernow, int user_count){
     
-    if(strcmp(usernow.role, "admin") == 0) {  
+    if(strcmp(help(usernow), "LIHAT_USER") == 0) {
         printf("DATA USER ================================\n");
         printf("| ID |  Nama   |   Role   |   Penyakit   |\n");
 
@@ -131,7 +131,7 @@ void interfaceUser(User* users, User usernow, int user_count){
             printf("| %d |  %s    |  %s    |  %s     |\n", users[i].id, users[i].username, users[i].role, users[i].riwayat_penyakit);
         }
 
-    } else if (strcmp(usernow.role, "pasien") == 0) {
+    } else if (strcmp(help(usernow), "LIHAT_PASIEN") == 0) {
         printf("DATA PASIEN ================================\n");
         printf("| ID |  Nama   |   Penyakit   |\n");
 
@@ -141,9 +141,9 @@ void interfaceUser(User* users, User usernow, int user_count){
             }
         }
 
-    } else if (strcmp(usernow.role, "dokter") == 0) {
+    } else {
         printf("DATA DOKTER ================================\n");
-        printf("| ID |  Nama   |\n");
+        printf("| ID |  Nama   |   Penyakit   |\n");
 
         for(int i = 0; i < user_count; i++) {
             if(strcmp(users[i].role, "dokter") == 0) {
