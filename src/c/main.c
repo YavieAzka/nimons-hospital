@@ -8,6 +8,7 @@
 #include "../header/register.h"
 #include "../header/logout.h"
 #include "../header/lupa_password.h"
+#include "../header/lihatUser.h"
 // void print_nimons(){
     
 // printf ("__      __       .__                                  __                  .__                               .__                         .__  __         .__   \n");
@@ -47,6 +48,15 @@ int main() {
             // Tambahkan fungsi/modul yang sudah dibuat di bawah.
             if(strcmp(command, "LOGOUT") == 0){
                 status = logout(status);
+
+            } else if(strcmp(command, "LIHAT_USER") == 0) {
+                lihatUser(current_user);
+
+            } else if (strcmp(command, "LIHAT_PASIEN") == 0) {
+                lihatPasien(current_user);
+                
+            } else if (strcmp(command, "LIHAT_DOKTER") == 0) {
+                lihatDokter(current_user);
             }
         }
     }
@@ -66,6 +76,7 @@ int main() {
     else if(strcmp(userInput, "CARI_DOKTER") == 0){
         cariDokter();
     }
+
     else if(strcmp(userInput, "LUPA_PASSWORD") == 0){
         lupaPassword();
     }
