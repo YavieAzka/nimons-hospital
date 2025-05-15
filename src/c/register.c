@@ -83,7 +83,7 @@ void registerUser(){
         strcpy(new_user.username, newUsername);
         strcpy(new_user.password, newPassword);
         new_user.id = user_count + 1;
-        strcpy(new_user.role, "Pasien");
+        strcpy(new_user.role, "pasien");
         appendUserToFile("data/user.csv", new_user);
 
         printf("Pasien %s berhasil ditambahkan!", new_user.username);
