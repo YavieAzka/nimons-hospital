@@ -47,8 +47,11 @@ main: main.c
 # The -c option is used to compile the source files without linking them.
 # *.c: compile all C source files in the current directory
 compile:
-	mkdir -p build
-	$(CC) $(CFLAGS) -c $(SRCS) -o $(TARGET_DIR)/$(OBJS)
+	$(OBJS)
+
+$(TARGET_DIR)/%.o: %.c
+	mkdir -p $(TARGET_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 
 # This target is used to link the object files and create the executable.
