@@ -5,15 +5,12 @@
 #include <string.h>
 #include "penyakit.h"
 
-int getUserIndex(const char* username, User* users, int user_count);
-User* getUserData(const char* filename, int* user_count);
-int getTrombosit(char* line);
-int getKadarKolesterolLDL(char* line);
-int getKadarKolesterol(char* line);
-
-
 int stringToInt(char* str);
 float stringToFloat(char* str);
+int getTrombositMax(char* line);
+int getTrombositMin(char* line);
+int getKadarKolesterolMax(char* line);
+int getKadarKolesterolMin(char* line);
 int getTinggiBadanMax(char* line);
 int getTinggiBadanMin(char* line);
 float getBeratBadanMax(char* line);
