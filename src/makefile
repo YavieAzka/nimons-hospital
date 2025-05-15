@@ -47,10 +47,11 @@ main: main.c
 # The -c option is used to compile the source files without linking them.
 # *.c: compile all C source files in the current directory
 compile:
-	$(OBJS)
+	@echo "Compiling source files..."
+	mkdir -p $(TARGET_DIR)
+	$(MAKE) $(OBJS)
 
 $(TARGET_DIR)/%.o: %.c
-	mkdir -p $(TARGET_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 
