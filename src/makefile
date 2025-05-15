@@ -1,74 +1,36 @@
-# This is a makefile for compiling your whole project.
-# It is used to compile all the source files in the src directory and link them together.
-# It is also used to clean up the build directory and remove all the object files and the executable.
-# The makefile is used to compile the project using the gcc compiler.
-
-# Things to explore:
-# - Linux, MacOS, WSL for Windows
-# - Makefile variables
-# - Makefile rules
-# - Makefile targets
-# - Makefile dependencies
-# - Makefile commands
-
-# ---------------------- Example makefile for a C project ----------------------
-
-# This is variable that specifies the compiler to use.
 CC = gcc
-# This is variable that specifies the compiler flags to use.
-CFLAGS = -g -Wall
-# This is variable that specifies the source files to compile.
-SRCS = $(wildcard *.c)
-# This is variable that specifies the object files to create.
-OBJS = $(SRCS:.c=.o)
-# This is variable that specifies the name of the executable file.
+CFLAGS = -g -Wall -I./src  # Menambahkan path ke folder src untuk mencari file header
 TARGET = main
-# This is variable that specifies target compile directory.
 TARGET_DIR = build
 
+# Temukan semua file .c di dalam folder src dan juga file .c di root folder
+SRCS = $(wildcard *.c) $(shell find src -name '*.c')
 
-# TODO: Explore best practices for makefiles
-# HINT: Do step by step compilation and linking (e.g. compile all .c files to .o files, then link them together to create the executable)
-# HINT: Specify output directory for object files and executable (e.g. build/) and ignore the build directory in the git repository
+# Buat path object (.o) berdasarkan lokasi source file
+OBJS = $(patsubst %.c, $(TARGET_DIR)/%.o, $(SRCS))
 
-
-# This is default target that is used to compile the project.
-main: main.c
-	@echo "Compiling the project..."
-	@echo "Compiling source files..."
-	@$(MAKE) compile
+# Default target
+$(TARGET): $(OBJS)
 	@echo "Linking object files..."
-	@$(MAKE) link
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
 	@echo "Build complete."
 
-# This target is used to compile all the source files in the src directory.
-# The -g option is used to generate debug information.
-# The -Wall option is used to enable all compiler warnings.
-# The -c option is used to compile the source files without linking them.
-# *.c: compile all C source files in the current directory
-compile:
-	mkdir -p build
-	$(CC) $(CFLAGS) -c $(SRCS) -o $(TARGET_DIR)/$(OBJS)
+# Rule umum untuk kompilasi: src/abc/def.c → build/src/abc/def.o
+$(TARGET_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-
-# This target is used to link the object files and create the executable.
-# The -o option specifies the output file name.
-link:
-	$(CC) $(CFLAGS) -o	
-
-# This target is used to compile all the source files in the src directory and link them together.
+# Clean target
 clean:
-	rm -rf build
+	rm -rf $(TARGET_DIR)
 	rm -f $(TARGET)
-	rm -f *.o
-	rm -f *.out
-	rm -f *.exe
-	rm -f *.a
-	rm -f *.so
-	rm -f *.dll
-	rm -f *.dSYM
-	rm -f *.pdb
-	rm -f *.ilk
-	rm -f *.idb
-	rm -f *.lib
-	rm -f *.exp
+
+run: $(TARGET)
+	./$(TARGET) $(ARGS)
+
+# Dependency untuk file header
+build/main.o: src/DataParser/dataParser.h src/Model/model.h src/Laman/pasien.h src/Laman/dokter.h src/Laman/manager.h src/Label/label.h src/Utils/load.h src/Utils/save.h 
+build/src/DataParser/dataParser.o: src/DataParser/dataParser.h src/Model/model.h
+# build/src/penyakit.o: src/penyakit.h
+build/src/Utils/utils.o: src/Utils/utils.h
+build/src/Laman/pasien.o: src/Model/model.h
