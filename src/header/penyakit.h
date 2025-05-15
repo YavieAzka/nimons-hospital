@@ -2,7 +2,7 @@
 #define PENYAKIT_H
 
 #define MAX_NAMA_PENYAKIT 50
-
+#define MAX_PENYAKIT 50
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
