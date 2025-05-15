@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <strings.h> 
-#include "antriansaya.h"
+#include "../header/antriansaya.h"
 
 Pasien antrian[MAX_PASIEN]; //array buat simpan daftar pasien
 int jumlahPasien = 0;
