@@ -36,13 +36,13 @@ int main() {
     User current_user; char userInput[10]; 
 
     print_openingMessage();
-    scanf("%s", &userInput);
+    scanf("%s", userInput);
 
     if(strcmp(userInput, "LOGIN") == 0){        // User Login
         current_user = login(&current_user);
         status = LOGGED_IN;
         printf("Apa yang bisa dibantu hari ini, %s %s?. Ketik HELP untuk melihat daftar command.\n", current_user.role, current_user.username);
-        scanf("%s", &userInput);
+        scanf("%s", userInput);
         if(strcmp(userInput, "HELP") == 0){
             char *command = help(current_user);
 
