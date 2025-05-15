@@ -1,7 +1,7 @@
 #ifndef USER_H
 #define USER_H
 
-#define MAX_PENYAKIT 50
+#define MAX_NAMA_PENYAKIT 50
 
 #include <stdio.h>
 #include <string.h>
@@ -10,7 +10,7 @@
 
 typedef struct {
     int id;
-    char name_penyakit[MAX_PENYAKIT];
+    char name_penyakit[MAX_NAMA_PENYAKIT];
     float suhu_tubuh_min;
     float suhu_tubuh_max;
     int tekanan_darah_sistolik_min;
