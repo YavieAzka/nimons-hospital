@@ -285,7 +285,7 @@ char *cekPenyakit(User user, Penyakit* penyakit, int penyakit_count){
     int i = 0;
     while (Found == false && i < penyakit_count)
     {
-        /* code */
+        return "false";
     }
     
 }
