@@ -1,5 +1,5 @@
-#ifndef USER_H
-#define USER_H
+#ifndef PENYAKIT_H
+#define PENYAKIT_H
 
 #define MAX_NAMA_PENYAKIT 50
 
