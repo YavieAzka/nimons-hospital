@@ -280,18 +280,17 @@ Penyakit* getPenyakitData(const char* filename, int* penyakit_count) {
     return penyakit;
 }
 
-char *cekPenyakit(User user, Penyakit* penyakit, int penyakit_count){
+/*char *cekPenyakit(User user, Penyakit* penyakit, int penyakit_count){
     bool Found = false;
     int i = 0;
     while (Found == false && i < penyakit_count)
     {
         return "false";
     }
-    
 }
 
 void diagnosis(const char* filename, User user){
     int penyakit_count = 0;
     Penyakit* penyakit = getPenyakitData("data/user.csv", &penyakit_count);
     return;
-}
+}*/
