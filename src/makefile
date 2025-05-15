@@ -54,7 +54,7 @@ compile:
 # This target is used to link the object files and create the executable.
 # The -o option specifies the output file name.
 link:
-	$(CC) $(CFLAGS) -o $(TARGET) $(TARGET_DIR)/$(OBJS)
+	$(CC) $(CFLAGS) -o	
 
 # This target is used to compile all the source files in the src directory and link them together.
 clean:
