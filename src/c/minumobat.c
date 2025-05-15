@@ -1,7 +1,7 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "minumobat.h"
+#include "../header/minumobat.h"
 
 void daftarObat(Obat list[], int jumlah){ //array dan jumlah obat yang ada
     printf(">>> MINUM_OBAT ===========\n");
@@ -48,4 +48,4 @@ int main(){
     } while(masihAdaObat);
     printf("Semua obat udah kamu minum. Hati-hati bisa overdosis!\n");
     return 0;
-}
+}*/
