@@ -1,15 +1,15 @@
 // Include any necessary headers
 #include <stdio.h>
-#include "../header/user.h"
-#include "../header/login.h"
-#include "../header/help.h"
-#include "../header/boolean.h"
-#include "../header/cariuser.h"
-#include "../header/register.h"
-#include "../header/logout.h"
-#include "../header/lupa_password.h"
-#include "../header/lihatUser.h"
-#include "../header/set.h"
+#include "header/user.h"
+#include "header/login.h"
+#include "header/help.h"
+#include "header/boolean.h"
+#include "header/cariuser.h"
+#include "header/register.h"
+#include "header/logout.h"
+#include "header/lupa_password.h"
+#include "header/lihatUser.h"
+#include "header/set.h"
 // void print_nimons(){
     
 // printf ("__      __       .__                                  __                  .__                               .__                         .__  __         .__   \n");
