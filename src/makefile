@@ -33,13 +33,13 @@ TARGET_DIR = build
 
 
 # This is default target that is used to compile the project.
-main: main.c
-	@echo "Compiling the project..."
-	@echo "Compiling source files..."
-	@$(MAKE) compile
-	@echo "Linking object files..."
-	@$(MAKE) link
+main: compile link
 	@echo "Build complete."
+
+# Compile each .c to .o
+$(TARGET_DIR)/%.o: %.c
+	mkdir -p $(TARGET_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # This target is used to compile all the source files in the src directory.
 # The -g option is used to generate debug information.
@@ -48,11 +48,7 @@ main: main.c
 # *.c: compile all C source files in the current directory
 compile:
 	@echo "Compiling source files..."
-	mkdir -p $(TARGET_DIR)
 	$(MAKE) $(OBJS)
-
-$(TARGET_DIR)/%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
 
 
 # This target is used to link the object files and create the executable.
