@@ -1,57 +1,33 @@
 CC = gcc
-CFLAGS = -g -Wall -I./src/header -I./src/c
+CFLAGS = -g -Wall -I./header -I./c
+SRC_DIR = .
+SRC_C_DIR = ./c
+BUILD_DIR = ./build
+TARGET = main
 
-SRC_DIR = src
-SUBSRC_DIR = $(SRC_DIR)/c
-BUILD_DIR = build
+# Semua file .c di src dan src/c
+SRCS = $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_C_DIR)/*.c)
 
-# Semua source file main.c dan .c di src/c
-SRCS = $(SRC_DIR)/main.c $(wildcard $(SUBSRC_DIR)/*.c)
-
-# Semua object file di build/, path disesuaikan
+# Buat object file path di build (misal src/main.c -> build/main.o, src/c/diagnosis.c -> build/diagnosis.o)
 OBJS = $(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRCS))
-OBJS := $(patsubst $(SUBSRC_DIR)/%.c, $(BUILD_DIR)/c/%.o, $(OBJS))
+OBJS := $(patsubst $(SRC_C_DIR)/%.c, $(BUILD_DIR)/%.o, $(OBJS))
 
-TARGET = $(BUILD_DIR)/main
+# Default target
+all: $(TARGET)
 
-.PHONY: main compile link clean
+# Link object files jadi executable
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $(BUILD_DIR)/$@ $^
 
-# Default target: compile + link
-main:
-	@echo "Compiling the project..."
-	@$(MAKE) compile
-	@echo "Linking object files..."
-	@$(MAKE) link
-	@echo "Build complete."
-
-# Compile semua source file jadi object
-compile: $(OBJS)
-
+# Compile source jadi object file di build/
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(dir $@)
+	mkdir -p $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(BUILD_DIR)/c/%.o: $(SUBSRC_DIR)/%.c
-	@mkdir -p $(dir $@)
+$(BUILD_DIR)/%.o: $(SRC_C_DIR)/%.c
+	mkdir -p $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Link semua object file ke executable
-link:
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
-
-# Clean tetap sama
+# Bersihkan hasil build
 clean:
-	rm -rf $(BUILD_DIR)
-	rm -f main
-	rm -f *.o
-	rm -f *.out
-	rm -f *.exe
-	rm -f *.a
-	rm -f *.so
-	rm -f *.dll
-	rm -f *.dSYM
-	rm -f *.pdb
-	rm -f *.ilk
-	rm -f *.idb
-	rm -f *.lib
-	rm -f *.exp
+	rm -rf $(BUILD_DIR)/*
