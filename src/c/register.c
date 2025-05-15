@@ -1,8 +1,6 @@
-#include "../header/user.h"
 #include "../header/boolean.h"
 #include "../header/register.h"
 #include "../header/login.h"
-#include "../header/set.h"
 //Read user.csv file and store it in users[] array.
 #include <stdio.h>
 #include <stdlib.h>
