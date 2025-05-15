@@ -20,7 +20,7 @@ CFLAGS = -g -Wall
 # This is variable that specifies the source files to compile.
 SRCS = $(wildcard *.c)
 # This is variable that specifies the object files to create.
-OBJS = $(SRCS:.c=.o)
+OBJS = $(patsubst %.c, $(TARGET_DIR)/%.o, $(SRCS))
 # This is variable that specifies the name of the executable file.
 TARGET = main
 # This is variable that specifies target compile directory.
