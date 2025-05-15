@@ -5,24 +5,26 @@ SRC_DIR = src
 SUBSRC_DIR = $(SRC_DIR)/c
 BUILD_DIR = build
 
-# Source files: main.c di src dan semua .c di src/c
+# Semua source file main.c dan .c di src/c
 SRCS = $(SRC_DIR)/main.c $(wildcard $(SUBSRC_DIR)/*.c)
 
-# Object files di build/, path disesuaikan dari src/
-OBJS = $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
-OBJS := $(patsubst $(SUBSRC_DIR)/%.c,$(BUILD_DIR)/c/%.o,$(OBJS))
+# Semua object file di build/, path disesuaikan
+OBJS = $(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRCS))
+OBJS := $(patsubst $(SUBSRC_DIR)/%.c, $(BUILD_DIR)/c/%.o, $(OBJS))
 
 TARGET = $(BUILD_DIR)/main
 
-# Target default, build executable
-main: 
+.PHONY: main compile link clean
+
+# Default target: compile + link
+main:
 	@echo "Compiling the project..."
 	@$(MAKE) compile
 	@echo "Linking object files..."
 	@$(MAKE) link
 	@echo "Build complete."
 
-# Compile semua .c jadi .o di build/
+# Compile semua source file jadi object
 compile: $(OBJS)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
@@ -33,13 +35,13 @@ $(BUILD_DIR)/c/%.o: $(SUBSRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Link semua objek jadi executable di build/main
+# Link semua object file ke executable
 link:
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
 
-# Clean tetap sama seperti kamu minta
+# Clean tetap sama
 clean:
-	rm -rf build
+	rm -rf $(BUILD_DIR)
 	rm -f main
 	rm -f *.o
 	rm -f *.out
