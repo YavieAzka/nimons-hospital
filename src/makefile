@@ -18,7 +18,7 @@ CC = gcc
 # This is variable that specifies the compiler flags to use.
 CFLAGS = -g -Wall
 # This is variable that specifies the source files to compile.
-SRCS = $(wildcard *.c)$(wildcard c/*.c)
+SRCS = $(wildcard *.c)
 # This is variable that specifies the object files to create.
 OBJS = $(SRCS:.c=.o)
 # This is variable that specifies the name of the executable file.
