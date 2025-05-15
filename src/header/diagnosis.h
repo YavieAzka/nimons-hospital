@@ -3,8 +3,9 @@
 
 #include "user.h"
 #include <string.h>
+#include "penyakit.h"
 
-char *cekPenyakit(User user);
-void Diagnosis(const char* filename, User user);
+char *cekPenyakit(User user, Penyakit penyakit);
+void diagnosis(const char* filename, User user);
 
 #endif
