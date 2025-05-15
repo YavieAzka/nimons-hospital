@@ -184,7 +184,7 @@ int getTinggiBadanMin(char* line){
     return stringToInt(field);
 }
 
-int getTinggiBadanMin(char* line){
+int getTinggiBadanMax(char* line){
     char field[MAX_FIELD_LENGTH];
     getFieldAt(line, 17, field, MAX_FIELD_LENGTH);
     return stringToInt(field);
