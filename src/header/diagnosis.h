@@ -5,7 +5,7 @@
 #include <string.h>
 #include "penyakit.h"
 
-char *cekPenyakit(User user, Penyakit );
+char *cekPenyakit(User user, Penyakit penyakit);
 void diagnosis(const char* filename, User user);
 
 #endif
