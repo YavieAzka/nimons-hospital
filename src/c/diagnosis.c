@@ -293,5 +293,5 @@ char *cekPenyakit(User user, Penyakit* penyakit, int penyakit_count){
 void diagnosis(const char* filename, User user){
     int penyakit_count = 0;
     Penyakit* penyakit = getPenyakitData("data/user.csv", &penyakit_count);
-    
+    return;
 }
