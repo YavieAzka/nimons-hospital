@@ -17,13 +17,10 @@ float getSuhuTubuh(char* line);
 int getTekananDarahSistolik(char* line);
 int getTekananDarahDiastolik(char* line);
 int getDetakJantung(char* line);
-int stringToInt(char* str);
-float stringToFloat(char* str);
 void getUsername(char* line, char* username);
 void getPassword(char* line, char* password);
 void getRole(char* line, char* role);
 void getRiwayatPenyakit(char* line, char* riwayat_penyakit);
 int getId(char* line);
-void getFieldAt(char* line, int field_number, char* output, int max_length);
 
 #endif

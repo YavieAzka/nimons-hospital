@@ -1,4 +1,4 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include "../header/minumobat.h"
@@ -48,4 +48,4 @@ int main(){
     } while(masihAdaObat);
     printf("Semua obat udah kamu minum. Hati-hati bisa overdosis!\n");
     return 0;
-}
+}*/
