@@ -80,6 +80,7 @@ void registerUser(){
     }
     else{
         User new_user;
+
         strcpy(new_user.username, newUsername);
         strcpy(new_user.password, newPassword);
         new_user.id = user_count + 1;
