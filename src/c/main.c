@@ -52,13 +52,13 @@ int main() {
                 status = logout(status);
 
             } else if(strcmp(command, "LIHAT_USER") == 0) {
-                lihatUser(current_user);
+                lihatUser(command);
 
             } else if (strcmp(command, "LIHAT_PASIEN") == 0) {
-                lihatPasien(current_user);
+                lihatPasien(command);
                 
             } else if (strcmp(command, "LIHAT_DOKTER") == 0) {
-                lihatDokter(current_user);
+                lihatDokter(command);
             }
         }
     }
@@ -89,4 +89,4 @@ int main() {
     
     return 0;
 }
-// gcc c/main.c c/login.c c/help.c c/register.c c/cariuser.c c/register.c c/logout.c  c/utils.c c/set.c c/lihatuser.c c/lupa_password.c -o main  
+// gcc src/c/main.c src/c/login.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lupa_password.c -o main
