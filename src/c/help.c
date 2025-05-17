@@ -16,7 +16,9 @@ void print_helpMessage_pasien(User usernow){
     printf("    4. MINUM_OBAT\n");
     printf("    5. MINUM_PENAWAR\n");
     printf("    6. DOK_AKU_MAU_PULANG\n");
-    printf("    7. EXIT\n");
+    printf("    7. LIHAT_DENAH\n");
+    printf("    8. LIHAT_RUANGAN\n");
+    printf("    9. EXIT\n");
     printf("Footnote: =====================================================================\n");
     printf("    1. Untuk menggunakan aplikasi, silahkan masukkan perintah yang terdaftar.\n");
     printf("    2. Jangan lupa untuk memasukkan input yang valid.\n");
@@ -30,7 +32,9 @@ void print_helpMessage_dokter(User usernow){
     printf("    2. LIHAT_ANTRIAN\n");
     printf("    3. DIAGNOSIS\n");
     printf("    4. NGOBATIN\n");
-    printf("    5. EXIT\n");
+    printf("    5. LIHAT_DENAH\n");
+    printf("    6. LIHAT_RUANGAN\n");
+    printf("    7. EXIT\n");
     printf("Footnote: =====================================================================\n");
     printf("    1. Untuk menggunakan aplikasi, silahkan masukkan perintah yang terdaftar.\n");
     printf("    2. Jangan lupa untuk memasukkan input yang valid.\n");
@@ -44,8 +48,10 @@ void print_helpMessage_manager(User usernow){
     printf("    3. ASSIGN_DOKTER\n");
     printf("    4. LIHAT_USER\n");
     printf("    5. CARI_USER\n");
-    printf("    6. HELP\n");
-    printf("    7. EXIT\n");
+    printf("    6. LIHAT_DENAH\n");
+    printf("    7. LIHAT_RUANGAN\n");
+    printf("    8. HELP\n");
+    printf("    9. EXIT\n");
     printf("Footnote: =====================================================================\n");
     printf("    1. Untuk menggunakan aplikasi, silahkan masukkan perintah yang terdaftar.\n");
     printf("    2. Jangan lupa untuk memasukkan input yang valid.\n");
