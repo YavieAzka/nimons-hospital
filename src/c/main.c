@@ -10,6 +10,8 @@
 #include "../header/lupa_password.h"
 #include "../header/lihatUser.h"
 #include "../header/set.h"
+#include "../header/utils.h"
+
 // void print_nimons(){
     
 // printf ("__      __       .__                                  __                  .__                               .__                         .__  __         .__   \n");
@@ -88,4 +90,4 @@ int main() {
     
     return 0;
 }
-// gcc c/main.c c/login.c c/help.c c/exit.c c/cariuser.c c/register.c c/set.c  -o main
+// gcc c/main.c c/login.c c/help.c c/register.c c/cariuser.c c/register.c c/logout.c  c/utils.c c/set.c c/lihatuser.c c/lupa_password.c -o main  

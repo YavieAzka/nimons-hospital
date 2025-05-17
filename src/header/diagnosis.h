@@ -5,8 +5,7 @@
 #include <string.h>
 #include "penyakit.h"
 
-int stringToInt(char* str);
-float stringToFloat(char* str);
+
 int getTrombositMax(char* line);
 int getTrombositMin(char* line);
 int getKadarKolesterolMax(char* line);
@@ -29,7 +28,6 @@ float getSuhuTubuhMax(char* line);
 float getSuhuTubuhMin(char* line);
 void getNamaPenyakit(char* line, char* nama_penyakit);
 int getPenyakitId(char* line);
-void getFieldAt(char* line, int field_number, char* output, int max_length);
 
 char *cekPenyakit(User user, Penyakit penyakit);
 void diagnosis(const char* filename, User user);
