@@ -53,7 +53,7 @@ void getUsernameFromArray(int id, char* str){
 
 void gambarDenah(Denah denah){
     printf("     ");
-    for (int k = 1; k <= denah.kolomEff; k++)
+    for (int k = 1; k <= denah.kolomMax; k++)
     {
         printf("  %d   ", k);
     }
@@ -72,7 +72,7 @@ void gambarDenah(Denah denah){
 
         for (int j = 1; j <= denah.kolomMax; j++)
         {
-            printf("|  %d  ", j);
+            printf("| %c%d  ",'A' + i - 1 ,j);
         }
         printf("|\n");
     }
@@ -150,6 +150,6 @@ void denahRumahSakit(char* str){
 }
 
 int main(){
-    denahRumahSakit("LIHAT_RUANGAN");
+    denahRumahSakit("LIHAT_DENAH");
     return 0;
 }
