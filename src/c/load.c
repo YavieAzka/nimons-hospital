@@ -4,12 +4,10 @@
 #include "../header/obat.h"
 #include "../header/obatPenyakit.h"
 
-#define MAX_OBAT 100
-#define MAX_LINE_LENGTH 100
-#define MAX_MAPPING 10
-#define MAX_OBAT_PER_PENYAKIT 20
-
-
+#define MAX_LINE_LENGTH 256
+#define MAX_OBAT 20
+#define MAX_MAPPING 100
+// Variabel global
 User* users = NULL;
 int userCount = 0;
 
@@ -22,6 +20,15 @@ int penyakitCount = 0;
 ObatPenyakit* obatPenyakitList = NULL;
 int obatPenyakitCount = 0;
 
+// Membersihkan karakter newline atau carriage return
+void trim_newline(char* str) {
+    int len = strlen(str);
+    while (len > 0 && (str[len - 1] == '\n' || str[len - 1] == '\r')) {
+        str[--len] = '\0';
+    }
+}
+
+// ================== OBAT ==================
 
 Obat* getObatData(const char* filename, int* count) {
     FILE* file = fopen(filename, "r");
@@ -30,27 +37,29 @@ Obat* getObatData(const char* filename, int* count) {
         return NULL;
     }
 
-    Obat* obatList = (Obat*)malloc(MAX_OBAT * sizeof(Obat));
+    Obat* list = malloc(MAX_OBAT * sizeof(Obat));
     *count = 0;
 
     char line[MAX_LINE_LENGTH];
-    int line_number = 0;
+    fgets(line, sizeof(line), file); // skip header
 
-    while (fgets(line, MAX_LINE_LENGTH, file)) {
-        if (++line_number == 1) continue;
-
+    while (fgets(line, sizeof(line), file)) {
         char field[64];
         getFieldAt(line, 0, field, sizeof(field));
-        obatList[*count].id = stringToInt(field);
-        getFieldAt(line, 1, obatList[*count].nama, 50);
+        list[*count].id = stringToInt(field);
+
+        getFieldAt(line, 1, list[*count].nama, 50);
+        trim_newline(list[*count].nama);
 
         (*count)++;
         if (*count >= MAX_OBAT) break;
     }
 
     fclose(file);
-    return obatList;
+    return list;
 }
+
+// ================== PENYAKIT ==================
 
 Penyakit* getPenyakitData(const char* filename, int* count) {
     FILE* file = fopen(filename, "r");
@@ -59,20 +68,19 @@ Penyakit* getPenyakitData(const char* filename, int* count) {
         return NULL;
     }
 
-    Penyakit* penyakitList = malloc(MAX_PENYAKIT * sizeof(Penyakit));
+    Penyakit* list = malloc(MAX_PENYAKIT * sizeof(Penyakit));
     *count = 0;
 
     char line[MAX_LINE_LENGTH];
+    fgets(line, sizeof(line), file); // skip header
     int line_number = 0;
-
-    while (fgets(line, MAX_LINE_LENGTH, file)) {
-        if (++line_number == 1) continue;
-
+    while (fgets(line, sizeof(line), file)) {
+        if (line_number++ == 0) continue;
         char field[64];
         Penyakit p;
 
         getFieldAt(line, 0, field, 64); p.id = stringToInt(field);
-        getFieldAt(line, 1, p.name_penyakit, 50);
+        getFieldAt(line, 1, p.name_penyakit, 50); trim_newline(p.name_penyakit);
         getFieldAt(line, 2, field, 64); p.suhu_tubuh_min = stringToFloat(field);
         getFieldAt(line, 3, field, 64); p.suhu_tubuh_max = stringToFloat(field);
         getFieldAt(line, 4, field, 64); p.tekanan_darah_sistolik_min = stringToInt(field);
@@ -92,13 +100,17 @@ Penyakit* getPenyakitData(const char* filename, int* count) {
         getFieldAt(line, 18, field, 64); p.kadar_kolesterol_max = stringToInt(field);
         getFieldAt(line, 19, field, 64); p.trombosit_min = stringToInt(field);
         getFieldAt(line, 20, field, 64); p.trombosit_max = stringToInt(field);
-        penyakitList[*count] = p;
+
+        list[*count] = p;
         (*count)++;
+        if (*count >= MAX_PENYAKIT) break;
     }
 
     fclose(file);
-    return penyakitList;
+    return list;
 }
+
+// ================== OBAT-PENYAKIT ==================
 
 ObatPenyakit* getObatPenyakitData(const char* filename, int* count) {
     FILE* file = fopen(filename, "r");
@@ -107,38 +119,37 @@ ObatPenyakit* getObatPenyakitData(const char* filename, int* count) {
         return NULL;
     }
 
-    ObatPenyakit* mapList = malloc(MAX_MAPPING * sizeof(ObatPenyakit));
+    ObatPenyakit* list = malloc(MAX_MAPPING * sizeof(ObatPenyakit));
     *count = 0;
 
     char line[MAX_LINE_LENGTH];
-    int line_number = 0;
+    fgets(line, sizeof(line), file); // skip header
 
-    while (fgets(line, MAX_LINE_LENGTH, file)) {
-        if (++line_number == 1) continue;
-
+    while (fgets(line, sizeof(line), file)) {
         ObatPenyakit op;
         char field[64];
 
-        // Kolom pertama = id penyakit
         getFieldAt(line, 0, field, 64);
         op.id_penyakit = stringToInt(field);
         op.jumlah_obat = 0;
 
-        // Sisanya = id obat
-        for (int i = 1; i < MAX_OBAT_PER_PENYAKIT + 1; i++) {
+        for (int i = 1; i <= MAX_OBAT_PER_PENYAKIT; i++) {
             getFieldAt(line, i, field, 64);
-            if (field[0] == '\0' || field[0] == '\n') break;
+            trim_newline(field);
+            if (field[0] == '\0') break;
             op.id_obat[op.jumlah_obat++] = stringToInt(field);
         }
 
-        mapList[*count] = op;
+        list[*count] = op;
         (*count)++;
+        if (*count >= MAX_MAPPING) break;
     }
 
     fclose(file);
-    return mapList;
+    return list;
 }
 
+// ================== LOAD ALL ==================
 
 void load_all_data(const char* folder) {
     char path[256];
