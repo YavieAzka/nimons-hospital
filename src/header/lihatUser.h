@@ -8,11 +8,9 @@ void sortDescID(User* users, int user_count) ;
 void sortAscNama(User* users, int user_count) ;
 void sortDescNama(User* users, int user_count);
 void sortAscNama(User* users, int user_count);
-void lihatUser(User usernow) ;
-void lihatPasien(User usernow);
-void lihatDokter(User usernow);
-void interfaceUser(User* users, User usernow, int user_count);
-void output(User usernow);
-
+void lihatUser(char *command) ;
+void lihatPasien(char *command);
+void lihatDokter(char *command);
+void interfaceUser(User* users, char *command, int user_count);
 
 #endif

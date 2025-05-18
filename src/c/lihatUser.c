@@ -5,7 +5,6 @@
 #include "../header/help.h"
 #include "../header/login.h"
 
-//Prosedur untuk mengurutkan berdasarkan ID dan Ascending
 void sortAscID(User* users, int user_count) {
     User temp;
 
@@ -41,7 +40,7 @@ void sortAscNama(User* users, int user_count) {
 
     for(int i = 0; i < user_count; i++) {
         for(int j = 0; j < user_count - i - 1; j++) {
-            if(strcmp(users[j].username, users[j+1].username) > 0) {
+            if(strcasecmp(users[j].username, users[j+1].username) > 0) {
                 temp = users[j];
                 users[j] = users[j+1];
                 users[j+1] = temp;
@@ -56,7 +55,7 @@ void sortDescNama(User* users, int user_count) {
 
     for(int i = 0; i < user_count; i++) {
         for(int j = 0; j < user_count - i - 1; j++) {
-            if(strcmp(users[j].username, users[j+1].username) < 0) {
+            if(strcasecmp(users[j].username, users[j+1].username) < 0) {
                 temp = users[j];
                 users[j] = users[j+1];
                 users[j+1] = temp;
@@ -121,78 +120,68 @@ void urutanSort(User* users, int user_count) {
 }
 
 //Prosedur untuk menampilkan data User / Pasien / Dokter
-void interfaceUser(User* users, User usernow, int user_count){
-    
-    if(strcmp(help(usernow), "LIHAT_USER") == 0) {
-        printf("DATA USER ================================\n");
-        printf("| ID |  Nama   |   Role   |   Penyakit   |\n");
-
-        for(int i = 0; i < user_count; i++) {
-            printf("| %d |  %s    |  %s    |  %s     |\n", users[i].id, users[i].username, users[i].role, users[i].riwayat_penyakit);
+void interfaceUser(User* users, char *command, int user_count){
+    if (strcmp(command, "LIHAT_USER") == 0 ) {
+        printf("========================== DATA USER ==========================\n");
+        printf("+-----+---------------------+----------------+----------------+\n");
+        printf("| ID  | %-18s  | %-13s  | %-13s  |\n", "Nama", "Role", "Penyakit");
+        printf("+-----+---------------------+----------------+----------------+\n");
+        for (int i = 0; i < user_count; i++) {
+            printf("| %-3d | %-18s  | %-13s  | %-13s  |\n", users[i].id, users[i].username, users[i].role, users[i].riwayat_penyakit);
+            printf("+-----+---------------------+----------------+----------------+\n");
         }
-
-    } else if (strcmp(help(usernow), "LIHAT_PASIEN") == 0) {
-        printf("DATA PASIEN ================================\n");
-        printf("| ID |  Nama   |   Penyakit   |\n");
-
-        for(int i = 0; i < user_count; i++) {
+    } else if (strcmp(command, "LIHAT_PASIEN") == 0 ) {
+        printf("=============== DATA PASIEN ================\n");
+        printf("+-----+--------------------+---------------+\n");
+        printf("| ID  | %-18s | %-13s |\n", "Nama", "Penyakit");
+        printf("+-----+--------------------+---------------+\n");
+        for (int i = 0; i < user_count; i++) {
             if (strcmp(users[i].role, "pasien") == 0) {
-                printf("| %d |  %s    |  %s     |\n", users[i].id, users[i].username, users[i].riwayat_penyakit);
+                printf("| %-3d | %-18s | %-13s |\n", users[i].id, users[i].username, users[i].riwayat_penyakit);
+                printf("+-----+--------------------+---------------+\n");
             }
         }
-
-    } else {
-        printf("DATA DOKTER ================================\n");
-        printf("| ID |  Nama   |   Penyakit   |\n");
-
-        for(int i = 0; i < user_count; i++) {
-            if(strcmp(users[i].role, "dokter") == 0) {
-                printf("| %d |  %s    |\n", users[i].id, users[i].username);
+    } else if (strcmp(command, "LIHAT_DOKTER") == 0 ) {
+        printf("======== DATA DOKTER =======\n");
+        printf("+-----+--------------------+\n");
+        printf("| ID  | %-18s |\n", "Nama");
+        printf("+-----+--------------------+\n");
+        for (int i = 0; i < user_count; i++) {
+            if (strcmp(users[i].role, "dokter") == 0) {
+                printf("| %-3d | %-18s |\n", users[i].id, users[i].username);
+                printf("+-----+--------------------+\n");
             }
         }
     }
 }
 
 //Prosedur untuk menampilkan data user yang sudah di sort
-void lihatUser(User usernow) {
+void lihatUser(char *command) {
     int user_count = 0;
     User* users = getUserData("data/user.csv", &user_count);
 
     urutanSort(users, user_count);
-    interfaceUser(users, usernow, user_count);
-
+    interfaceUser(users, command, user_count);
     free(users);
 }
 
 //Prosedur untuk menampilkan data pasien yang sudah di sort
-void lihatPasien(User usernow) {
-    int user_count = 0;
-    User* users = getUserData("data/user.csv", &user_count);
-
-    urutanSort(users, user_count);
-    interfaceUser(users, usernow, user_count);
-
-    free(users);
+void lihatPasien(char *command) {
+    lihatUser(command); 
 }
 
 //Prosedur untuk menampilkan data dokter yang sudah di sort
-void lihatDokter(User usernow) {
-    int user_count = 0;
-    User* users = getUserData("data/user.csv", &user_count);
-
-    urutanSort(users, user_count);
-    interfaceUser(users, usernow, user_count);
-
-    free(users);
+void lihatDokter(char *command) {
+    lihatUser(command); 
 }
 
 //output
-void output(User usernow){
-    if(strcmp(help(usernow), "LIHAT_USER") == 0 ) {
-        lihatUser(usernow);
-    } else if (strcmp(help(usernow), "LIHAT_PASIEN") == 0 ) {
-        lihatPasien(usernow); 
-    } else if (strcmp(help(usernow), "LIHAT_DOKTER") == 0) {
-        lihatDokter(usernow);
-    }
-}
+//void output(User usernow){
+//    if(strcmp(help(usernow), "LIHAT_USER") == 0 ) {
+//        lihatUser(usernow);
+//    } else if (strcmp(help(usernow), "LIHAT_PASIEN") == 0 ) {
+//        lihatPasien(usernow); 
+//    } else if (strcmp(help(usernow), "LIHAT_DOKTER") == 0) {
+//        lihatDokter(usernow);
+//    }
+//}
