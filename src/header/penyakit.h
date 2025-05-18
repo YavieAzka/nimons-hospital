@@ -33,6 +33,8 @@ typedef struct {
     int trombosit_max;
 } Penyakit;
 
+extern Penyakit* penyakitList;
+extern int penyakitCount;
 
 #endif
 

@@ -11,6 +11,10 @@
 #include "../header/lihatUser.h"
 #include "../header/set.h"
 #include "../header/utils.h"
+#include "../header/obat.h"
+#include "../header/obatPenyakit.h"
+#include "../header/penyakit.h"
+#include "../header/load.h"
 // void print_nimons(){
     
 // printf ("__      __       .__                                  __                  .__                               .__                         .__  __         .__   \n");
@@ -29,12 +33,38 @@ void print_openingMessage(){
     printf("==============================================================\n");
 }
 
-int main() { 
+int main(int argc, char* argv[]) { 
+    if (argc != 2) {
+        printf("Usage: %s <nama_folder>\n", argv[0]);
+        return 1;
+    }
+
+    char* folder = argv[1];
+
+    // LOAD
+    printf("Loading...\n");
+    load_all_data(folder);
+    printf("Data berhasil dimuat dari folder: %s\n", folder);
     //gcc src/c/main.c src/c/login.c src/c/help.c src/c/cariuser.c src/c/register.c src/c/set.c src/c/logout.c -I src/header -o src/c/main
     // sekaiwonekkyounouzuni 
     // Your code goes here
     int status = LOGGED_OFF;
+
     User current_user; char userInput[10]; 
+
+    User users[100];
+    int userCount = 0;
+
+    Obat obatList[1000];
+    int obatCount = 0;
+    
+    Penyakit penyakitList[1000];
+    int penyakitCount = 0;
+
+    ObatPenyakit obatPenyakitList[1000];
+    int obatPenyakitCount = 0;
+
+    // LOAD FILE
 
     print_openingMessage();
     scanf("%s", userInput);
@@ -89,4 +119,4 @@ int main() {
     
     return 0;
 }
-// gcc src/c/main.c src/c/login.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lupa_password.c -o main
+// gcc src/c/main.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lupa_password.c -o main
