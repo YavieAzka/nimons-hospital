@@ -74,9 +74,7 @@ void getFieldAt(char* line, int field_number, char* output, int max_length) {
 int parse_int(const char* str, int* idx) {
     int value = 0;
     int is_negative = 0;
-    int started = 0;
 
-    // Skip spasi
     while (str[*idx] == ' ') {
         (*idx)++;
     }
@@ -88,12 +86,6 @@ int parse_int(const char* str, int* idx) {
 
     while (str[*idx] >= '0' && str[*idx] <= '9') {
         value = value * 10 + (str[*idx] - '0');
-        (*idx)++;
-        started = 1;
-    }
-
-    // Jika tidak ada angka, naikkan idx agar tidak stuck
-    if (!started && str[*idx] != '\0') {
         (*idx)++;
     }
 
