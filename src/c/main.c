@@ -9,7 +9,8 @@
 #include "../header/logout.h"
 #include "../header/lupa_password.h"
 #include "../header/lihatUser.h"
-#include "../header/antriansaya.h"
+#include "../header/set.h"
+#include "../header/utils.h"
 // void print_nimons(){
     
 // printf ("__      __       .__                                  __                  .__                               .__                         .__  __         .__   \n");
@@ -36,13 +37,13 @@ int main() {
     User current_user; char userInput[10]; 
 
     print_openingMessage();
-    scanf("%s", &userInput);
+    scanf("%s", userInput);
 
     if(strcmp(userInput, "LOGIN") == 0){        // User Login
         current_user = login(&current_user);
         status = LOGGED_IN;
         printf("Apa yang bisa dibantu hari ini, %s %s?. Ketik HELP untuk melihat daftar command.\n", current_user.role, current_user.username);
-        scanf("%s", &userInput);
+        scanf("%s", userInput);
         if(strcmp(userInput, "HELP") == 0){
             char *command = help(current_user);
 
@@ -51,13 +52,13 @@ int main() {
                 status = logout(status);
 
             } else if(strcmp(command, "LIHAT_USER") == 0) {
-                lihatUser(current_user);
+                lihatUser(command);
 
             } else if (strcmp(command, "LIHAT_PASIEN") == 0) {
-                lihatPasien(current_user);
+                lihatPasien(command);
                 
             } else if (strcmp(command, "LIHAT_DOKTER") == 0) {
-                lihatDokter(current_user);
+                lihatDokter(command);
             }
         }
     }
@@ -88,4 +89,4 @@ int main() {
     
     return 0;
 }
-// gcc src/c/main.c src/c/login.c src/c/lihatuser.c src/c/help.c src/c/antriansaya.c src/c/cariuser.c src/c/register.c src/c/set.c  -o main
+// gcc src/c/main.c src/c/login.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lupa_password.c -o main

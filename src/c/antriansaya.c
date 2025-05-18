@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <strings.h> 
 #include "../header/antriansaya.h"
 
 Pasien antrian[MAX_PASIEN]; //array buat simpan daftar pasien
@@ -35,7 +36,7 @@ void cekAntrian(const char*nama){
     }
 }
 
-int main(){
+/*int main(){
     daftarPasien("Kalyca", "Dr. Budi", "A1");
     daftarPasien("Manullang", "Dr. Budi", "A1");
     char nama[50];
@@ -43,11 +44,11 @@ int main(){
     fgets(nama, sizeof(nama), stdin);
     /*Biar bisa baca lebih dari satu kata karena
     siapa tau ada yang namanya pasaran*/
-    size_t len = strlen(nama);
+    /*size_t len = strlen(nama);
     if (len>0 && nama[len-1] == '\n') {
         nama[len-1] = '\0';
     }
     printf("\n>>> ANTRIAN\n");
     cekAntrian(nama);
     return 0;
-}
+}*/

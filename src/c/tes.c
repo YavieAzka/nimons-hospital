@@ -1,5 +1,5 @@
-#include "header/tes.h"
+/*#include "header/tes.h"
 
 void tes() {
     printf("Hello, World TES!\n");
-}
+}*/

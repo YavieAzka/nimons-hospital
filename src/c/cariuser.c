@@ -180,7 +180,7 @@ void cariPasien(){
     if(userChoice == 3){  // Search by riwayat_penyakit
         char penyakit[32];
         printf("Cari penyakit: ");
-        scanf("%s", &penyakit);
+        scanf("%s", penyakit);
         int countPenyakit = 0;
         for(int i = 0; i < userCount; i++){
             if(strcmp(users[i].riwayat_penyakit, penyakit) == 0){

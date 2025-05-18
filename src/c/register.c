@@ -1,8 +1,6 @@
-#include "../header/user.h"
 #include "../header/boolean.h"
 #include "../header/register.h"
 #include "../header/login.h"
-#include "../header/set.h"
 //Read user.csv file and store it in users[] array.
 #include <stdio.h>
 #include <stdlib.h>
@@ -82,10 +80,11 @@ void registerUser(){
     }
     else{
         User new_user;
+
         strcpy(new_user.username, newUsername);
         strcpy(new_user.password, newPassword);
         new_user.id = user_count + 1;
-        strcpy(new_user.role, "Pasien");
+        strcpy(new_user.role, "pasien");
         appendUserToFile("data/user.csv", new_user);
 
         printf("Pasien %s berhasil ditambahkan!", new_user.username);
