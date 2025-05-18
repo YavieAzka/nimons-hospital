@@ -19,7 +19,7 @@ void lihatRuang(Denah denah, char * str){
 
     if (denah.daftarRuang[x][y].idDokter != 0)
     {
-        printf("Dokter     : %s\n", denah.daftarRuang[x][y].usernameDokter);
+        printf("Dokter     : Dr. %s\n", denah.daftarRuang[x][y].usernameDokter);
     }else
     {
         printf("Dokter     : -\n");
@@ -151,7 +151,7 @@ void denahRumahSakit(char* str){
 
 /*
 int main(){
-    denahRumahSakit("LIHAT_DENAH");
+    denahRumahSakit("LIHAT_RUANGAN");
     return 0;
 }
 */
