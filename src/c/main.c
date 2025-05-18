@@ -1,5 +1,6 @@
 // Include any necessary headers
 #include <stdio.h>
+#include <stbool.h>
 #include "../header/user.h"
 #include "../header/login.h"
 #include "../header/help.h"
@@ -33,60 +34,66 @@ int main() {
     //gcc src/c/main.c src/c/login.c src/c/help.c src/c/cariuser.c src/c/register.c src/c/set.c src/c/logout.c -I src/header -o src/c/main
     // sekaiwonekkyounouzuni 
     // Your code goes here
-    int status = LOGGED_OFF;
-    User current_user; char userInput[10]; 
+    bool start = true;
+    while (start)
+    {
+        int status = LOGGED_OFF;
+        User current_user; char userInput[10]; 
 
-    print_openingMessage();
-    scanf("%s", userInput);
-
-    if(strcmp(userInput, "LOGIN") == 0){        // User Login
-        current_user = login(&current_user);
-        status = LOGGED_IN;
-        printf("Apa yang bisa dibantu hari ini, %s %s?. Ketik HELP untuk melihat daftar command.\n", current_user.role, current_user.username);
+        print_openingMessage();
         scanf("%s", userInput);
-        if(strcmp(userInput, "HELP") == 0){
-            char *command = help(current_user);
 
-            // Tambahkan fungsi/modul yang sudah dibuat di bawah.
-            if(strcmp(command, "LOGOUT") == 0){
-                status = logout(status);
+        if(strcmp(userInput, "LOGIN") == 0){        // User Login
+            current_user = login(&current_user);
+            status = LOGGED_IN;
+            printf("Apa yang bisa dibantu hari ini, %s %s?. Ketik HELP untuk melihat daftar command.\n", current_user.role, current_user.username);
+            scanf("%s", userInput);
+            if(strcmp(userInput, "HELP") == 0){
+                char *command = help(current_user);
 
-            } else if(strcmp(command, "LIHAT_USER") == 0) {
-                lihatUser(command);
+                // Tambahkan fungsi/modul yang sudah dibuat di bawah.
+                if(strcmp(command, "LOGOUT") == 0){
+                    status = logout(status);
 
-            } else if (strcmp(command, "LIHAT_PASIEN") == 0) {
-                lihatPasien(command);
-                
-            } else if (strcmp(command, "LIHAT_DOKTER") == 0) {
-                lihatDokter(command);
+                } else if(strcmp(command, "LIHAT_USER") == 0) {
+                    lihatUser(command);
+
+                } else if (strcmp(command, "LIHAT_PASIEN") == 0) {
+                    lihatPasien(command);
+                    
+                } else if (strcmp(command, "LIHAT_DOKTER") == 0) {
+                    lihatDokter(command);
+                }
             }
         }
-    }
 
-    else if(strcmp(userInput, "REGISTER") == 0){    // User register
-        registerUser();
-    }
+        else if(strcmp(userInput, "REGISTER") == 0){    // User register
+            registerUser();
+        }
 
-    else if(strcmp(userInput, "CARI_USER") == 0){
-        cariUser();
-    }
+        else if(strcmp(userInput, "CARI_USER") == 0){
+            cariUser();
+        }
 
-    else if(strcmp(userInput, "CARI_PASIEN") == 0){
-        cariPasien();
-    }
+        else if(strcmp(userInput, "CARI_PASIEN") == 0){
+            cariPasien();
+        }
 
-    else if(strcmp(userInput, "CARI_DOKTER") == 0){
-        cariDokter();
-    }
+        else if(strcmp(userInput, "CARI_DOKTER") == 0){
+            cariDokter();
+        }
 
-    else if(strcmp(userInput, "LUPA_PASSWORD") == 0){
-        lupaPassword();
-    }
+        else if(strcmp(userInput, "LUPA_PASSWORD") == 0){
+            lupaPassword();
+        }
 
-    else{
-        printf("Perintah tidak dikenali. Mohon melakukan login atau register terlebih dahulu.");
+        else{
+            printf("Perintah tidak dikenali. Mohon melakukan login atau register terlebih dahulu.");
+        }
+        
+        return 0;
     }
-    
-    return 0;
+        }
+        
 }
 // gcc src/c/main.c src/c/login.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lupa_password.c -o main
