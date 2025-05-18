@@ -16,6 +16,7 @@ typedef struct
 } Denah;
 
 void denah();
+void gambarDenah(Denah denah);
 void getUsernameFromArray(int id, char* str);
 
 #endif

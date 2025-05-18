@@ -1,4 +1,4 @@
-#include "queue.h"
+#include "../header/queue.h"
 
 void initQueue(Queue* q) {
     q->front = NULL;
