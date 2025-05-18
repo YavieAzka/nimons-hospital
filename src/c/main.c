@@ -1,6 +1,5 @@
 // Include any necessary headers
 #include <stdio.h>
-#include <stbool.h>
 #include "../header/user.h"
 #include "../header/login.h"
 #include "../header/help.h"
@@ -12,6 +11,10 @@
 #include "../header/lihatUser.h"
 #include "../header/set.h"
 #include "../header/utils.h"
+#include "../header/obat.h"
+#include "../header/obatPenyakit.h"
+#include "../header/penyakit.h"
+#include "../header/load.h"
 // void print_nimons(){
     
 // printf ("__      __       .__                                  __                  .__                               .__                         .__  __         .__   \n");
@@ -30,67 +33,84 @@ void print_openingMessage(){
     printf("==============================================================\n");
 }
 
-int main() { 
-    //gcc src/c/main.c src/c/login.c src/c/help.c src/c/cariuser.c src/c/register.c src/c/set.c src/c/logout.c -I src/header -o src/c/main
-    // sekaiwonekkyounouzuni 
-    // Your code goes here
-    bool start = true;
-    while (start)
-    {
-        int status = LOGGED_OFF;
-        User current_user; char userInput[10]; 
+int main(int argc, char* argv[]) { 
+    if (argc != 2) {
+        printf("Usage: %s <nama_folder>\n", argv[0]);
+        return 1;
+    }
 
-        print_openingMessage();
-        scanf("%s", userInput);
+    char* folder = argv[1];
 
-        if(strcmp(userInput, "LOGIN") == 0){        // User Login
-            current_user = login(&current_user);
-            status = LOGGED_IN;
-            printf("Apa yang bisa dibantu hari ini, %s %s?. Ketik HELP untuk melihat daftar command.\n", current_user.role, current_user.username);
-            scanf("%s", userInput);
-            if(strcmp(userInput, "HELP") == 0){
-                char *command = help(current_user);
+    // ====================== LOAD FILE START ======================
+    printf("Loading...\n");
+    load_all_data(folder);
+    printf("Data berhasil dimuat dari folder: %s\n", folder);
+    // ====================== LOAD FILE END ======================
 
-                // Tambahkan fungsi/modul yang sudah dibuat di bawah.
-                if(strcmp(command, "LOGOUT") == 0){
-                    status = logout(status);
+    // PROGRAM START
+    //list of array for processingL: users, penyakitList, obatList, penyakitObatList
+    
+    int status = LOGGED_OFF;
+    User current_user; char userInput[10]; 
 
-                } else if(strcmp(command, "LIHAT_USER") == 0) {
-                    lihatUser(command);
 
-                } else if (strcmp(command, "LIHAT_PASIEN") == 0) {
-                    lihatPasien(command);
-                    
-                } else if (strcmp(command, "LIHAT_DOKTER") == 0) {
-                    lihatDokter(command);
-                }
-            }
-        }
-
-        else if(strcmp(userInput, "REGISTER") == 0){    // User register
-            registerUser();
-        }
-
-        else if(strcmp(userInput, "CARI_USER") == 0){
-            cariUser();
-        }
-
-        else if(strcmp(userInput, "CARI_PASIEN") == 0){
-            cariPasien();
-        }
-
-        else if(strcmp(userInput, "CARI_DOKTER") == 0){
-            cariDokter();
-        }
-
-        else if(strcmp(userInput, "LUPA_PASSWORD") == 0){
-            lupaPassword();
-        }
-
-        else{
-            printf("Perintah tidak dikenali. Mohon melakukan login atau register terlebih dahulu.");
-        }
+    for(int i = 0; i < penyakitCount; i++){
+        printf("%d\n", penyakitList[i].tekanan_darah_diastolik_min);
     }
     return 0;
+    // LOAD FILE
+
+    print_openingMessage();
+    scanf("%s", userInput);
+
+    if(strcmp(userInput, "LOGIN") == 0){        // User Login
+        current_user = login(&current_user);
+        status = LOGGED_IN;
+        printf("Apa yang bisa dibantu hari ini, %s %s?. Ketik HELP untuk melihat daftar command.\n", current_user.role, current_user.username);
+        scanf("%s", userInput);
+        if(strcmp(userInput, "HELP") == 0){
+            char *command = help(current_user);
+
+            // Tambahkan fungsi/modul yang sudah dibuat di bawah.
+            if(strcmp(command, "LOGOUT") == 0){
+                status = logout(status);
+
+            } else if(strcmp(command, "LIHAT_USER") == 0) {
+                lihatUser(command);
+
+            } else if (strcmp(command, "LIHAT_PASIEN") == 0) {
+                lihatPasien(command);
+                
+            } else if (strcmp(command, "LIHAT_DOKTER") == 0) {
+                lihatDokter(command);
+            }
+        }
+    }
+
+    else if(strcmp(userInput, "REGISTER") == 0){    // User register
+        registerUser();
+    }
+
+    else if(strcmp(userInput, "CARI_USER") == 0){
+        cariUser();
+    }
+
+    else if(strcmp(userInput, "CARI_PASIEN") == 0){
+        cariPasien();
+    }
+
+    else if(strcmp(userInput, "CARI_DOKTER") == 0){
+        cariDokter();
+    }
+
+    else if(strcmp(userInput, "LUPA_PASSWORD") == 0){
+        lupaPassword();
+    }
+
+    else{
+        printf("Perintah tidak dikenali. Mohon melakukan login atau register terlebih dahulu.");
+    }
+    
+    return 0;
 }
-// gcc src/c/main.c src/c/login.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lupa_password.c -o main
+// gcc src/c/main.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lupa_password.c -o main

@@ -1,6 +1,7 @@
 #include "../header/user.h"
 #include "../header/boolean.h"
 #include "../header/utils.h"
+
 //Read user.csv file and store it in users[] array.
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,6 +9,8 @@
 
 #define MAX_LINE_LENGTH 1024
 #define MAX_FIELD_LENGTH 256
+
+
 
 // Fungsi untuk mengambil nilai ID dari baris CSV (field index 0)
 int getId(char* line) {

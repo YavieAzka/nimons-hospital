@@ -5,6 +5,8 @@
 #include "../header/utils.h"
 #include "../header/login.h"
 #include "../header/user.h"
+#include "../header/lihat_antrian.h"
+#include "../header/queue.h"
 
 #define MAX_LINE_LENGTH 1024
 #define MAX_FIELD_LENGTH 256
@@ -146,12 +148,15 @@ void denahRumahSakit(char* str){
 
         lihatRuang(denah, ruang);
     }
+    else if(strcmp(str, "LIHAT_SEMUA_ANTRIAN") == 0){
+        lihatSemuaAntrian(denah);
+    }
 }
 
 
-int main(){
-    denahRumahSakit("LIHAT_DENAH");
-    return 0;
-}
+// int main(){
+//     denahRumahSakit("LIHAT_DENAH");
+//     return 0;
+// }
 
-//gcc src/c/denah.c src/c/utils.c src/c/login.c -o test
+//gcc src/c/denah.c src/c/queue.c src/c/lihat_antrian.c src/c/utils.c src/c/login.c -o test

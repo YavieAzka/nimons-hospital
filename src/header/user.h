@@ -35,6 +35,10 @@ typedef struct {
 
 } User;
 
+User* getUserData(const char* filename, int* count);
+
+extern User* users;
+extern int userCount;
 
 #endif
 
