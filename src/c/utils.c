@@ -70,3 +70,24 @@ void getFieldAt(char* line, int field_number, char* output, int max_length) {
     
     output[j] = '\0';
 }
+
+int parse_int(const char* str, int* idx) {
+    int value = 0;
+    int is_negative = 0;
+
+    while (str[*idx] == ' ') {
+        (*idx)++;
+    }
+
+    if (str[*idx] == '-') {
+        is_negative = 1;
+        (*idx)++;
+    }
+
+    while (str[*idx] >= '0' && str[*idx] <= '9') {
+        value = value * 10 + (str[*idx] - '0');
+        (*idx)++;
+    }
+
+    return is_negative ? -value : value;
+}
