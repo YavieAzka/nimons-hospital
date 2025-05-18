@@ -148,10 +148,10 @@ void denahRumahSakit(char* str){
     }
 }
 
-/*
+
 int main(){
-    denahRumahSakit("LIHAT_RUANGAN");
+    denahRumahSakit("LIHAT_DENAH");
     return 0;
 }
-*/
+
 //gcc src/c/denah.c src/c/utils.c src/c/login.c -o test
