@@ -9,12 +9,12 @@
 void registerUser(); 
 
 //untuk mengecek username merubah huruf menjadi lower A -> a
-void toLowerCase(const char* username, char* lowerUsername); 
+void usernameToLowerCase(const char* username, char* lowerUsername); 
 
 //untuk mengecek username case-insensitive
 int isUsernameUnique(const char* username, Set users, int user_count); //untuk mengecek username unik
 
 //Menambahkan data Baru ke FILE CSV
-void appendUserToFile(const char* filename, User user);
+// void appendUserToFile(const char* filename, User user);
 
 #endif
