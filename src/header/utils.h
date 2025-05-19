@@ -2,10 +2,6 @@
 #define UTILS_H
 
 #include <stdio.h>
-#include "user.h"
-#include "obat.h"
-#include "penyakit.h"
-#include "obatPenyakit.h"
 
 typedef enum {
     USER_LOGGED_OFF,

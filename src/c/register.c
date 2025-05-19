@@ -2,13 +2,11 @@
 #include "../header/register.h"
 #include "../header/login.h"
 #include "../header/load.h"
+#include "../header/global.h"
 //Read user.csv file and store it in users[] array.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-extern int userCount; 
-extern User* users; 
 
 // void appendUserToFile(const char* filename, User user) {
 //     FILE* file = fopen(filename, "a");  // buka dalam mode append

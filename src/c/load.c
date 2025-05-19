@@ -291,8 +291,11 @@ int getTrombosit(char* line) {
 int getUserIndex(const char* username, User* users, int user_count){
     
     for(int i = 0; i < user_count; i++){
+        char tempUsername[MAX_USERNAME];
+        strcpy(tempUsername, users[i].username);
+        str_toLower(tempUsername);
         //printf("#%s %s\n", *username, users[i].username);
-        if(strcmp(username, users[i].username) == 0){
+        if(strcmp(username, tempUsername) == 0){
             return i;
         }
     }

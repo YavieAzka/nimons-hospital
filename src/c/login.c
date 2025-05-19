@@ -2,7 +2,7 @@
 #include "../header/boolean.h"
 #include "../header/utils.h"
 #include "../header/load.h"
-
+#include "../header/global.h"
 #include <stdio.h>
 #include <string.h>
 
