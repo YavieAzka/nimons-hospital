@@ -24,7 +24,7 @@
 //     fclose(file);
 // }
 
-void toLowerCase(const char* username, char* lowerUsername) {
+void usernameToLowerCase(const char* username, char* lowerUsername) {
     while (*username) {
         if (*username >= 'A' && *username <= 'Z') {
             *lowerUsername = *username + ('a' - 'A');  // konversi manual huruf besar ke kecil
@@ -41,7 +41,7 @@ int isUsernameUnique(const char* username, Set userset, int user_count){
     for(int i = 0; i < user_count; i++){
         //printf("#%s %s\n", *username, users[i].username);
         char lower_username[512];
-        toLowerCase(userset.elements[i], lower_username);
+        usernameToLowerCase(userset.elements[i], lower_username);
         if(strcmp(username, lower_username) == 0){
             return 0;
         }
@@ -69,7 +69,7 @@ void registerUser(){
     scanf("%s", newPassword);
 
     char lowerNewUsername[512];
-    toLowerCase(newUsername, lowerNewUsername);
+    usernameToLowerCase(newUsername, lowerNewUsername);
 
     if(isUsernameUnique(lowerNewUsername, setUsername, userCount) == 0){
         printf("Registrasi gagal! Pasien dengan nama %s sudah terdaftar.\n", newUsername);
