@@ -2,6 +2,22 @@
 #define UTILS_H
 
 #include <stdio.h>
+#include "user.h"
+#include "obat.h"
+#include "penyakit.h"
+#include "obatPenyakit.h"
+
+User* users = NULL;
+int userCount = 0;
+
+Obat* obatList = NULL;
+int obatCount = 0;
+
+Penyakit* penyakitList = NULL;
+int penyakitCount = 0;
+
+ObatPenyakit* obatPenyakitList = NULL;
+int obatPenyakitCount = 0;
 
 typedef enum {
     USER_LOGGED_OFF,

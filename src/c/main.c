@@ -171,6 +171,12 @@ int main(int argc, char* argv[]) {
             //printf("Apa yang bisa dibantu hari ini, %s %s?. Ketik [HELP] untuk melihat daftar command.\n", current_user.role, current_user.username);
 
         }
+        //================ LOGIN ================// 
+        else if (strcmp(userInput, "REGISTER") == 0)
+        {
+            registerUser();
+        }
+        
         //================ LOGIN END ================//
         switch (status) {
             case MANAGER_LOGGED_IN:
@@ -186,6 +192,8 @@ int main(int argc, char* argv[]) {
                 break;
 
         }
+        printf(">>> ");
+        scanf("%s", userInput);
     }
     printf("Sampai jumpa di lain hari!\n");
     return 0;
