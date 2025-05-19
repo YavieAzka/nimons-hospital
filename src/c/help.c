@@ -77,6 +77,7 @@ char* help(User userNow){
 
     // get user input
     char* input = (char*)malloc(MAX_COMMAND * sizeof(char));
+    printf(">>> ");
     scanf("%s", input);
     return input;
 }
