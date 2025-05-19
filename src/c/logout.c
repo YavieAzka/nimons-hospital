@@ -1,14 +1,17 @@
 #include "../header/logout.h"
 
-LogType logout(LogType status){
-    if (status == LOGGED_IN) //dapat diganti dengan strcmp kalo status dalam string
-    {
-        printf("Sampai jumpa!\n");
-        return LOGGED_OFF;
-    } else if (status == LOGGED_OFF)
-    {
+void logout(User* user, Status* status) {
+    if (*status == USER_LOGGED_OFF) {
         printf("Logout gagal!\n");
-        printf("Anda belum login, silahkan login terlebih dahulu sebelum melakukan logout\n");
-        return LOGGED_OFF;
+        printf("Anda belum login, silakan login terlebih dahulu sebelum logout.\n");
+    } else {
+        printf("Sampai jumpa, %s %s!\n", user->role, user->username);
+        *status = USER_LOGGED_OFF;
+
+        // Clear current user
+        user->id = -1;
+        strcpy(user->username, "");
+        strcpy(user->password, "");
+        strcpy(user->role, "");
     }
 }
