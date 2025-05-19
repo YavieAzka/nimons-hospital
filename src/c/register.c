@@ -7,6 +7,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+extern int userCount; 
+extern User* users; 
+
 // void appendUserToFile(const char* filename, User user) {
 //     FILE* file = fopen(filename, "a");  // buka dalam mode append
 //     if (file == NULL) {

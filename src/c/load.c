@@ -4,20 +4,23 @@
 #include "../header/obat.h"
 #include "../header/obatPenyakit.h"
 #include "../header/load.h"
+#include "../header/global.h"
 
 #define MAX_MAPPING 100
+
+
 // Variabel global
-extern User* users = NULL;
-extern int userCount = 0;
+User* users = NULL;
+int userCount = 0;
 
-extern Obat* obatList = NULL;
-extern int obatCount = 0;
+Obat* obatList = NULL;
+int obatCount = 0;
 
-extern Penyakit* penyakitList = NULL;
-extern int penyakitCount = 0;
+Penyakit* penyakitList = NULL;
+int penyakitCount = 0;
 
-extern ObatPenyakit* obatPenyakitList = NULL;
-extern int obatPenyakitCount = 0;
+ObatPenyakit* obatPenyakitList = NULL;
+int obatPenyakitCount = 0;
 
 // Membersihkan karakter newline atau carriage return
 void trim_newline(char* str) {
