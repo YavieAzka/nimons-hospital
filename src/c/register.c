@@ -75,14 +75,12 @@ void registerUser(){
         printf("Registrasi gagal! Pasien dengan nama %s sudah terdaftar.\n", newUsername);
     }
     else{
-        User new_user;
-
         strcpy(users[userCount].username, newUsername);
         strcpy(users[userCount].password, newPassword);
         strcpy(users[userCount].role, "pasien");
         
         userCount = userCount + 1;
 
-        printf("Pasien %s berhasil ditambahkan!", new_user.username);
+        printf("Pasien %s berhasil ditambahkan!", newUsername);
     }
 } //register function
