@@ -34,38 +34,19 @@ boolean validasiCode(const char* username, const char* inputCode){
     free(trueCode);
     return isValid;
 }
-//menulis ulang password yang sudah diganti ke dalam file
-void overwriteUserFile(User* users, int count, const char* filename) {
-    FILE* file = fopen(filename, "w");//file dibuka untuk tulis ulang
-    if (file == NULL) {
-        printf("Gagal membuka file untuk menulis ulang data.\n");
-        return;
-    }
 
-    for (int i = 0; i < count; i++) {
-        fprintf(file, "%d;%s;%s;%s;;;;\n",
-                users[i].id,
-                users[i].username,
-                users[i].password,
-                users[i].role);
-    }
-
-    fclose(file);
-}
-//untuk mengubah password username
-void gantiPassword(User* users, int userCount, const char* username, const char* newPassword) {
+// Fungsi untuk mengupdate password dalam array users[]
+void updatePasswordInArray(User* users, int userCount, const char* username, const char* newPassword) {
     for (int i = 0; i < userCount; i++) {
         if (strcmp(users[i].username, username) == 0) {
-            strcpy(users[i].password, newPassword);  // Ubah password
+            strcpy(users[i].password, newPassword);  // Ubah password langsung di array
             break;
         }
     }
-
-    overwriteUserFile(users, userCount, "user.csv");  // Tulis ulang ke file
 }
 
-//lupa password
-void lupaPassword(){
+// lupa password
+void lupaPassword() {
     char username[100];
     char kodeUnik[200];
     char newPassword[100];
@@ -76,7 +57,7 @@ void lupaPassword(){
     int userCount;
     User* users = getUserData("user.csv", &userCount);
 
-    boolean found = false;//mengecheck apakah user ada pada file
+    boolean found = false;
     for (int i = 0; i < userCount; i++) {
         if (strcmp(users[i].username, username) == 0) {
             found = true;
@@ -103,9 +84,8 @@ void lupaPassword(){
     printf("Password Baru: ");
     scanf("%s", newPassword);
 
-    gantiPassword(users, userCount, username, newPassword);
-;
-    printf("Password berhasil diperbarui!\n");
+    updatePasswordInArray(users, userCount, username, newPassword);
+    printf("Password berhasil diperbarui dalam memori!\n");
 
     free(users);
 }
