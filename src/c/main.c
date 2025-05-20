@@ -172,18 +172,10 @@ int main(int argc, char* argv[]) {
             //printf("Apa yang bisa dibantu hari ini, %s %s?. Ketik [HELP] untuk melihat daftar command.\n", current_user.role, current_user.username);
 
         }
-<<<<<<< HEAD
-        //================ LOGIN ================// 
-        else if (strcmp(userInput, "REGISTER") == 0)
-        {
-            registerUser();
-        }
-        
-=======
         if(strcmp(userInput, "REGISTER") == 0){        
             registerUser();
         }
->>>>>>> 21f4253254c9c6eb274cc471659c1275a8a8010a
+
         //================ LOGIN END ================//
         switch (status) {
             case MANAGER_LOGGED_IN:
@@ -199,8 +191,6 @@ int main(int argc, char* argv[]) {
                 break;
 
         }
-        printf(">>> ");
-        scanf("%s", userInput);
     }
     printf("Sampai jumpa di lain hari!\n");
     printf("%d %d\n", panjang_denah, lebar_denah);
