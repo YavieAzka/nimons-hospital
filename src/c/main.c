@@ -151,14 +151,14 @@ int main(int argc, char* argv[]) {
     printWelcomeMessage();
     printOpeningMessage();
 
-    printf(">>> ");
-    scanf("%s", userInput);
     while(status != EXIT){
+        printf(">>> ");
+        scanf("%s", userInput);
         //================ LOGIN ================//
         if(strcmp(userInput, "LOGIN") == 0){        
             current_user = login(&current_user);
             if(current_user.id == 9999){
-                // REGISTER
+                printf("Anda belum LOGIN. Silakan melakukan register terlebih dahulu dengan mengetik [REGISTER].\n");
             }
             if(strcmp(current_user.role, "dokter") == 0){
                 status = DOKTER_LOGGED_IN;
@@ -171,6 +171,9 @@ int main(int argc, char* argv[]) {
             }
             //printf("Apa yang bisa dibantu hari ini, %s %s?. Ketik [HELP] untuk melihat daftar command.\n", current_user.role, current_user.username);
 
+        }
+        if(strcmp(userInput, "REGISTER") == 0){        
+            registerUser();
         }
         //================ LOGIN END ================//
         switch (status) {

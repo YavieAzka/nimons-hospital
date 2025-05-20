@@ -81,6 +81,6 @@ void registerUser(){
         
         userCount = userCount + 1;
 
-        printf("Pasien %s berhasil ditambahkan!", newUsername);
+        printf("Pasien %s berhasil ditambahkan!\n", newUsername);
     }
 } //register function
