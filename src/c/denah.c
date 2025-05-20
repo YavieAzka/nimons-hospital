@@ -178,7 +178,7 @@ void cariRuang(int *baris, int *kolom, int newLebar, int newPanjang) {
     }
 }
 
-int main(int argc, char* argv[]) {
+/*int main(int argc, char* argv[]) {
     if (argc != 2) {
         printf("Usage: %s <nama_folder>\n", argv[0]);
         return 1;
@@ -198,6 +198,6 @@ int main(int argc, char* argv[]) {
         denahRumahSakit(str);
     }
     return 0;
-}
+}*/
 
 //gcc src/c/denah.c src/c/queue.c src/c/lihat_antrian.c src/c/utils.c src/c/login.c src/c/load.c -o test
