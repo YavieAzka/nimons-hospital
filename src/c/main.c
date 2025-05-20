@@ -65,7 +65,7 @@ void handleManager(User* user, Status* status) {
             char ruanganInput[10];
             printf("Masukkan ruangan yang ingin dilihat: ");
             scanf("%s", ruanganInput);
-            denahRumahSakit(ruanganInput);
+            lihatRuang(ruanganInput);
             //return;
         }
         if (strcmp(input, "UBAH_DENAH") == 0) {
@@ -162,7 +162,8 @@ void handlePasien(User* user, Status* status) {
         if (strcmp(input, "LIHAT_RUANGAN") == 0) {
             char ruanganInput[10];
             printf("Masukkan ruangan yang ingin dilihat: ");
-            denahRumahSakit(ruanganInput);
+            scanf("%s", ruanganInput);
+            lihatRuang(ruanganInput);
             //return;
         }
         if (strcmp(input, "UBAH_DENAH") == 0) {

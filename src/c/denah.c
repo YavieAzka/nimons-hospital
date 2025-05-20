@@ -84,13 +84,7 @@ void denahRumahSakit(char* str){
     if (strcmp(str ,"LIHAT_DENAH") == 0)
     {
         gambarDenah();
-    } else if (strcmp(str, "LIHAT_RUANGAN") == 0)
-    {
-        char ruang[10];
-        scanf("%s", ruang);
-
-        lihatRuang(ruang);
-    } 
+    }
     else if(strcmp(str, "LIHAT_SEMUA_ANTRIAN") == 0){
         lihatSemuaAntrian();
     } 
