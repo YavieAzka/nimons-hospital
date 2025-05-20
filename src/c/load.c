@@ -4,6 +4,8 @@
 #include "../header/obat.h"
 #include "../header/obatPenyakit.h"
 #include "../header/load.h"
+#include "../header/config.h"
+#include "../header/queue.h"
 
 #define MAX_MAPPING 100
 
@@ -21,6 +23,15 @@ int penyakitCount = 0;
 ObatPenyakit* obatPenyakitList = NULL;
 int obatPenyakitCount = 0;
 
+
+int panjang_denah = 0;
+int lebar_denah = 0;
+int kapasitas_ruangan = 0;
+int jumlah_ruangan = 0;
+
+Ruangan ruanganList[MAX_RUANGAN];
+InventoryPasien daftar_inventory[MAX_INVENTORY];
+int jumlah_inventory = 0;
 // Membersihkan karakter newline atau carriage return
 void trim_newline(char* str) {
     int len = strlen(str);
@@ -377,6 +388,77 @@ User* getUserData(const char* filename, int* user_count) {
     return users;
 }
 
+const char* getUsernameById(int id) {
+    for (int i = 0; i < userCount; i++) {
+        if (users[i].id == id) {
+            return users[i].username;
+        }
+    }
+    return "-"; // default jika tidak ditemukan
+}
+
+
+void loadConfig(const char* folder) {
+    char path[256];
+    sprintf(path, "%s/config.txt", folder);
+
+    FILE* file = fopen(path, "r");
+    if (!file) {
+        printf("Error: Cannot open config file at %s\n", path);
+        return;
+    }
+
+    fscanf(file, "%d %d\n", &panjang_denah, &lebar_denah);
+    jumlah_ruangan = panjang_denah * lebar_denah;
+
+    fscanf(file, "%d\n", &kapasitas_ruangan);
+
+    for (int i = 0; i < jumlah_ruangan; i++) {
+        char line[256];
+        fgets(line, sizeof(line), file);
+
+        Ruangan* r = &ruanganList[i];
+        r->totalPasien = 0;
+
+        int offset = 0;
+        sscanf(line, "%d%n", &r->idDokter, &offset);
+        strcpy(r->usernameDokter, getUsernameById(r->idDokter));
+
+        char* ptr = line + offset;
+        while (sscanf(ptr, "%d%n", &r->idPasien[r->totalPasien], &offset) == 1) {
+            strcpy(r->usernamePasien[r->totalPasien], getUsernameById(r->idPasien[r->totalPasien]));
+            r->totalPasien++;
+            ptr += offset;
+        }
+
+        // Inisialisasi queue antrian kosong
+        initQueue(&(r->antrianPasien));
+    }
+
+    fscanf(file, "%d\n", &jumlah_inventory);
+
+    for (int i = 0; i < jumlah_inventory; i++) {
+        char line[256];
+        fgets(line, sizeof(line), file);
+
+        InventoryPasien* inv = &daftar_inventory[i];
+        inv->jumlah_obat = 0;
+
+        int offset = 0;
+        sscanf(line, "%d%n", &inv->pasien_id, &offset);
+
+        char* ptr = line + offset;
+        while (sscanf(ptr, "%d%n", &inv->obat_ids[inv->jumlah_obat], &offset) == 1) {
+            inv->jumlah_obat++;
+            ptr += offset;
+        }
+    }
+
+    fclose(file);
+    printf("Konfigurasi berhasil dimuat dari %s\n", path);
+}
+
+
 // ================== LOAD ALL ==================
 
 void load_all_data(const char* folder) {
@@ -394,5 +476,8 @@ void load_all_data(const char* folder) {
     sprintf(path, "%s/obat_penyakit.csv", folder);
     obatPenyakitList = getObatPenyakitData(path, &obatPenyakitCount);
 
+    loadConfig(folder);
+    
     printf("Data berhasil diload dari folder: %s\n", folder);
+
 }
