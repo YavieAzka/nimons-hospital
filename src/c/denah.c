@@ -5,6 +5,8 @@
 #include "../header/utils.h"
 #include "../header/login.h"
 #include "../header/user.h"
+#include "../header/lihat_antrian.h"
+#include "../header/queue.h"
 
 #define MAX_LINE_LENGTH 1024
 #define MAX_FIELD_LENGTH 256
@@ -95,7 +97,6 @@ void denahRumahSakit(char* str){
     Denah denah;
 
     char line[MAX_LINE_LENGTH];
-    int baris = 0, kolom = 0, kapasitas = 0;
 
     if (fgets(line, sizeof(line), file)) {
         int i = 0;
@@ -147,12 +148,15 @@ void denahRumahSakit(char* str){
 
         lihatRuang(denah, ruang);
     }
+    else if(strcmp(str, "LIHAT_SEMUA_ANTRIAN") == 0){
+        lihatSemuaAntrian(denah);
+    }
 }
 
-/*
-int main(){
-    denahRumahSakit("LIHAT_RUANGAN");
-    return 0;
-}
-*/
-//gcc src/c/denah.c src/c/utils.c src/c/login.c -o test
+
+// int main(){
+//     denahRumahSakit("LIHAT_DENAH");
+//     return 0;
+// }
+
+//gcc src/c/denah.c src/c/queue.c src/c/lihat_antrian.c src/c/utils.c src/c/login.c -o test
