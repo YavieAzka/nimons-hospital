@@ -15,6 +15,7 @@
 #include "../header/obatPenyakit.h"
 #include "../header/penyakit.h"
 #include "../header/load.h"
+#include "../header/config.h"
 
 
 
@@ -190,4 +191,4 @@ int main(int argc, char* argv[]) {
     printf("Sampai jumpa di lain hari!\n");
     return 0;
 }
-// gcc src/c/main.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lupa_password.c -o main
+// gcc src/c/main.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/queue.c src/c/lupa_password.c -o main
