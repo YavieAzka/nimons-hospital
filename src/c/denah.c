@@ -97,7 +97,6 @@ void denahRumahSakit(char* str){
     Denah denah;
 
     char line[MAX_LINE_LENGTH];
-    int baris = 0, kolom = 0, kapasitas = 0;
 
     if (fgets(line, sizeof(line), file)) {
         int i = 0;

@@ -5,6 +5,7 @@
 #define MAX_MAPPING 100
 #define MAX_LINE_LENGTH 1024
 #define MAX_FIELD_LENGTH 256
+
 void load_all_data(const char* folder);
 void str_toLower(char *str);
 char char_toLower(char c);

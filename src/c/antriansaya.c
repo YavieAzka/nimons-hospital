@@ -42,9 +42,9 @@ void cekAntrian(const char*nama){
     char nama[50];
     printf("Kenalan dulu kuy, yuk masukkan nama Anda: ");
     fgets(nama, sizeof(nama), stdin);
-    /*Biar bisa baca lebih dari satu kata karena
-    siapa tau ada yang namanya pasaran*/
-    /*size_t len = strlen(nama);
+    Biar bisa baca lebih dari satu kata karena
+    siapa tau ada yang namanya pasaran
+    size_t len = strlen(nama);
     if (len>0 && nama[len-1] == '\n') {
         nama[len-1] = '\0';
     }
