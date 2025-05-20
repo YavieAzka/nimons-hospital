@@ -21,4 +21,5 @@ bool cekTinggiBadan(User user, Penyakit penyakit);
 bool cekKadarKolesterol(User user, Penyakit penyakit);
 bool cekTrombosit(User user, Penyakit penyakit);
 
+
 #endif
