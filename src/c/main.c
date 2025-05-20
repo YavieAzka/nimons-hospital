@@ -33,6 +33,7 @@ void handleManager(User* user, Status* status) {
             //cari_user();
         } else if (strcmp(input, "LIHAT_USER") == 0) {
             //lihat_user();
+            lihatUser(input);
         } else if (strcmp(input, "SET_ROLE") == 0) {
             //set_role();
         } else if (strcmp(input, "LOGOUT") == 0) {
