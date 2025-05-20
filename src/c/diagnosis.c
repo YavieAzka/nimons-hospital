@@ -10,6 +10,7 @@
 
 #define MAX_LINE_LENGTH 1024
 #define MAX_FIELD_LENGTH 256
+
 void searchRuangan(User user, Ruangan *ruangan){
     for (int i = 0; i < panjang_denah; i++)
     {
@@ -104,16 +105,16 @@ bool cekTrombosit(User user, Penyakit penyakit){
     return false;
 }
 
-char *cekPenyakit(User pasien, Penyakit* penyakit, int penyakitCount){
+char *cekPenyakit(User pasien){
     int i = 0;
     
     while (i < penyakitCount)
     {
-        if (cekSuhu(pasien, penyakit[i]) && cekTekananSistolik(pasien, penyakit[i]) && cekTekananDiastolik(pasien, penyakit[i]) && cekDetakJantung(pasien, penyakit[i]) && cekSaturasiOksigen(pasien, penyakit[i]) && cekKadarGulaDarah(pasien, penyakit[i]) && cekBeratBadan(pasien, penyakit[i]) && cekTinggiBadan(pasien, penyakit[i]) && cekKadarKolesterol(pasien, penyakit[i]) && cekTrombosit(pasien, penyakit[i]))
+        if (cekSuhu(pasien, penyakitList[i]) && cekTekananSistolik(pasien, penyakitList[i]) && cekTekananDiastolik(pasien, penyakitList[i]) && cekDetakJantung(pasien, penyakitList[i]) && cekSaturasiOksigen(pasien, penyakitList[i]) && cekKadarGulaDarah(pasien, penyakitList[i]) && cekBeratBadan(pasien, penyakitList[i]) && cekTinggiBadan(pasien, penyakitList[i]) && cekKadarKolesterol(pasien, penyakitList[i]) && cekTrombosit(pasien, penyakitList[i]))
         {
             return penyakitList[i].name_penyakit;
         }
-        i++
+        i++;
     }
     return "Nothing";
 }
@@ -122,21 +123,23 @@ void diagnosis(User user){
     Ruangan ruangan;
     searchRuangan(user, &ruangan);
 
-    User* pasien;
-    for (int i = 0; i < userCount; i++)
-    {
-        if (ruangan.antrianPasien.front->idPasien == users[i].id)
-        {
-            pasien = &users[i];
-        }
-    }
-
     char namaPenyakit[MAX_NAMA_PENYAKIT];
     if (isEmptyQueue(ruangan.antrianPasien))
     {
         printf("Tidak ada pasien untuk diperiksa!\n");
     } else{
-        strcpy(namaPenyakit, cekPenyakit(*pasien, penyakitList, penyakitCount));
+        User* pasien;
+        
+        for (int i = 0; i < userCount; i++)
+        {
+            if (ruangan.antrianPasien.front->idPasien == users[i].id)
+            {
+                pasien = &users[i];
+                break;
+            }
+        }
+
+        strcpy(namaPenyakit, cekPenyakit(*pasien));
     
         if (strcmp(namaPenyakit, "Nothing") == 0)
         {
