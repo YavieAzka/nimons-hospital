@@ -37,13 +37,13 @@ void handleManager(User* user, Status* status) {
             //register_user();
         }
         if (strcmp(input, "CARI_USER") == 0) {
-            //cariUser();
+                cariUser();
         }
         if (strcmp(input, "CARI_DOKTER") == 0) {
-            //cariDokter();
+            cariDokter();
         }
         if (strcmp(input, "CARI_PASIEN") == 0) {
-            //cariPasien();
+            cariPasien();
         } 
         if (strcmp(input, "LIHAT_USER") == 0) {
             lihatUser(input);
