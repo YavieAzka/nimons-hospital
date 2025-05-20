@@ -452,8 +452,8 @@ void loadConfig(const char* folder) {
         int nums[20];
         int count = readIntsFromLine(line, nums, 20);
 
-        int row = i / lebar_denah;
-        int col = i % lebar_denah;
+        int row = i  / lebar_denah;
+        int col = i  % lebar_denah;
         Ruangan* r = &ruanganList[row][col];
 
         r->totalPasien = 0;
