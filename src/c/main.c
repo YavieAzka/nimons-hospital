@@ -6,6 +6,7 @@
 #include "../header/help.h"
 #include "../header/boolean.h"
 #include "../header/cariuser.h"
+#include "../header/diagnosis.h"
 #include "../header/register.h"
 #include "../header/logout.h"
 #include "../header/lupa_password.h"
@@ -73,7 +74,7 @@ void handleDokter(User* user, Status* status) {
             // implementasi modul lihat_antrian(); // placeholder
         }
         if (strcmp(input, "DIAGNOSIS") == 0) {
-            // implementasi modul diagnosis(); // placeholder
+            diagnosis(*user);
         }
         if (strcmp(input, "NGOBATIN") == 0) {
             // implementasi modul ngobatin(); // placeholder
