@@ -20,6 +20,7 @@ void minumObat(Obat list[], int nomorObat){
         printf("Pilihan nomor tidak tersedia!\n");
     }
 }
+
 int main(){
     Obat inventory[MAX_OBAT] = {
         {"Paracetamol", 1}, {"Amoxicillin", 1}, {"Panadol", 1}
