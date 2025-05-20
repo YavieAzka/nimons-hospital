@@ -4,6 +4,6 @@
 #include "denah.h" 
 #include "queue.h" 
 
-void lihatSemuaAntrian(Denah denah);
+void lihatSemuaAntrian();
 
 #endif

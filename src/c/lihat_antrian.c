@@ -6,20 +6,21 @@
 #include "../header/login.h"
 #include "../header/user.h"
 #include "../header/queue.h"
+#include "../header/config.h"
 
-void lihatSemuaAntrian(Denah denah) {
-    gambarDenah(denah);
+void lihatSemuaAntrian() {
+    gambarDenah();
 
-    for (int i = 0; i < denah.barisMax; i++) {
-        for (int j = 0; j < denah.kolomMax; j++) {
-            Ruangan r = denah.daftarRuang[i][j];
+    for (int i = 0; i < panjang_denah; i++) {
+        for (int j = 0; j < lebar_denah; j++) {
+            Ruangan r = ruanganList[i][j];
             
             if (r.idDokter != 0) {
                 char namaRuang[4];
                 sprintf(namaRuang, "%c%d", 'A' + i, j + 1);
 
                 printf("\n============ %s ============\n", namaRuang);
-                printf("Kapasitas  : %d\n", denah.MaxPasien);
+                printf("Kapasitas  : %d\n", kapasitas_ruangan);
                 printf("Dokter     : Dr. %s\n", r.usernameDokter);
 
                 printf("Pasien di dalam ruangan:\n");

@@ -20,7 +20,7 @@ int obatCount = 0;
 Penyakit* penyakitList = NULL;
 int penyakitCount = 0;
 
-ObatPenyakit*   obatPenyakitList = NULL;
+ObatPenyakit* obatPenyakitList = NULL;
 int obatPenyakitCount = 0;
 
 
@@ -29,9 +29,8 @@ int lebar_denah = 0;
 int kapasitas_ruangan = 0;
 int jumlah_ruangan = 0;
 
-Ruangan ruanganList[MAX_RUANGAN];
+Ruangan ruanganList[MAX_RUANGAN][MAX_RUANGAN];
 InventoryPasien daftar_inventory[MAX_INVENTORY];
-
 int jumlah_inventory = 0;
 // Membersihkan karakter newline atau carriage return
 void trim_newline(char* str) {
@@ -398,6 +397,29 @@ const char* getUsernameById(int id) {
     return "-"; // default jika tidak ditemukan
 }
 
+int readIntsFromLine(const char* line, int* output, int maxInts) {
+    int count = 0;
+    int value = 0;
+    bool inNumber = false;
+
+    for (int i = 0; line[i] != '\0' && count < maxInts; i++) {
+        if (line[i] >= '0' && line[i] <= '9') {
+            value = value * 10 + (line[i] - '0');
+            inNumber = true;
+        } else if (inNumber) {
+            output[count++] = value;
+            value = 0;
+            inNumber = false;
+        }
+    }
+
+    if (inNumber && count < maxInts) {
+        output[count++] = value;
+    }
+
+    return count;
+}
+
 
 void loadConfig(const char* folder) {
     char path[256];
@@ -409,55 +431,70 @@ void loadConfig(const char* folder) {
         return;
     }
 
-    fscanf(file, "%d %d\n", &panjang_denah, &lebar_denah);
+    char line[256];
+    int data[20];
+
+    // Baris 1: panjang dan lebar denah
+    fgets(line, sizeof(line), file);
+    int n = readIntsFromLine(line, data, 2);
+    panjang_denah = data[0];
+    lebar_denah = data[1];
     jumlah_ruangan = panjang_denah * lebar_denah;
 
-    fscanf(file, "%d\n", &kapasitas_ruangan);
+    // Baris 2: kapasitas ruangan
+    fgets(line, sizeof(line), file);
+    readIntsFromLine(line, data, 1);
+    kapasitas_ruangan = data[0];
 
+    // Baris 3 sampai jumlah_ruangan + 2: data ruangan
     for (int i = 0; i < jumlah_ruangan; i++) {
-        char line[256];
         fgets(line, sizeof(line), file);
+        int nums[20];
+        int count = readIntsFromLine(line, nums, 20);
 
-        Ruangan* r = &ruanganList[i];
+        int row = i / lebar_denah;
+        int col = i % lebar_denah;
+        Ruangan* r = &ruanganList[row][col];
+
         r->totalPasien = 0;
-
-        int offset = 0;
-        sscanf(line, "%d%n", &r->idDokter, &offset);
+        r->idDokter = (count > 0) ? nums[0] : 0;
         strcpy(r->usernameDokter, getUsernameById(r->idDokter));
 
-        char* ptr = line + offset;
-        while (sscanf(ptr, "%d%n", &r->idPasien[r->totalPasien], &offset) == 1) {
-            strcpy(r->usernamePasien[r->totalPasien], getUsernameById(r->idPasien[r->totalPasien]));
+        for (int j = 1; j < count; j++) {
+            r->idPasien[r->totalPasien] = nums[j];
+            strcpy(r->usernamePasien[r->totalPasien], getUsernameById(nums[j]));
             r->totalPasien++;
-            ptr += offset;
         }
 
-        // Inisialisasi queue antrian kosong
-        initQueue(&(r->antrianPasien));
+        initQueue(&(r->antrianPasien)); // kosong
     }
 
-    fscanf(file, "%d\n", &jumlah_inventory);
+    // Baris selanjutnya: jumlah pasien yang punya inventory
+    fgets(line, sizeof(line), file);
+    readIntsFromLine(line, data, 1);
+    jumlah_inventory = data[0];
 
+    // Baris setelahnya: daftar inventory
     for (int i = 0; i < jumlah_inventory; i++) {
-        char line[256];
         fgets(line, sizeof(line), file);
+        int nums[20];
+        int count = readIntsFromLine(line, nums, 20);
 
-        InventoryPasien* inv = &daftar_inventory[i];
-        inv->jumlah_obat = 0;
+        if (count >= 1) {
+            InventoryPasien* inv = &daftar_inventory[i];
+            inv->pasien_id = nums[0];
+            inv->jumlah_obat = 0;
 
-        int offset = 0;
-        sscanf(line, "%d%n", &inv->pasien_id, &offset);
-
-        char* ptr = line + offset;
-        while (sscanf(ptr, "%d%n", &inv->obat_ids[inv->jumlah_obat], &offset) == 1) {
-            inv->jumlah_obat++;
-            ptr += offset;
+            for (int j = 1; j < count; j++) {
+                inv->obat_ids[inv->jumlah_obat++] = nums[j];
+            }
         }
     }
 
     fclose(file);
     printf("Konfigurasi berhasil dimuat dari %s\n", path);
 }
+
 
 
 // ================== LOAD ALL ==================

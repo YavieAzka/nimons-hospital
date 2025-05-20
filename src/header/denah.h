@@ -5,7 +5,7 @@
 #define MAX_BARIS 100
 #define MAX_KOLOM 100
 
-void lihatRuang(Ruangan* ruangan, char * str);
-void gambarDenah(Ruangan* ruangan);
+void lihatRuang(char * str);
+void gambarDenah();
 
 #endif
