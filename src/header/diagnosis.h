@@ -6,7 +6,7 @@
 #include "penyakit.h"
 
 
-char *cekPenyakit(User user, Penyakit penyakit);
+char *cekPenyakit(User pasien);
 void diagnosis();
 
 

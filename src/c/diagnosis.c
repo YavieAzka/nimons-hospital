@@ -18,7 +18,7 @@ void searchRuangan(User user, Ruangan *ruangan){
         {
             if (ruanganList[i][j].idDokter == user.id)
             {
-                ruangan = ruanganList[i][j];
+                *ruangan = ruanganList[i][j];
                 break;
             }
         }
@@ -105,7 +105,7 @@ bool cekTrombosit(User user, Penyakit penyakit){
     return false;
 }
 
-char *cekPenyakit(User pasien){
+char * cekPenyakit(User pasien){
     int i = 0;
     
     while (i < penyakitCount)
@@ -124,7 +124,7 @@ void diagnosis(User user){
     searchRuangan(user, &ruangan);
 
     char namaPenyakit[MAX_NAMA_PENYAKIT];
-    if (isEmptyQueue(ruangan.antrianPasien))
+    if (isEmptyQueue(&ruangan.antrianPasien))
     {
         printf("Tidak ada pasien untuk diperiksa!\n");
     } else{
@@ -149,8 +149,4 @@ void diagnosis(User user){
             strcpy(pasien->riwayat_penyakit, namaPenyakit);
         }
     }
-    
-    
-    
-    
 }
