@@ -35,78 +35,59 @@ boolean validasiCode(const char* username, const char* inputCode){
     free(trueCode);
     return isValid;
 }
-//menulis ulang password yang sudah diganti ke dalam file
-void overwriteUserFile(User* users, int count, const char* filename) {
-    FILE* file = fopen(filename, "w");//file dibuka untuk tulis ulang
-    if (file == NULL) {
-        printf("Gagal membuka file untuk menulis ulang data.\n");
-        return;
-    }
 
-    for (int i = 0; i < count; i++) {
-        fprintf(file, "%d;%s;%s;%s;;;;\n",
-                users[i].id,
-                users[i].username,
-                users[i].password,
-                users[i].role);
-    }
-
-    fclose(file);
-}
-//untuk mengubah password username
-void gantiPassword(User* users, int userCount, const char* username, const char* newPassword) {
-    for (int i = 0; i < userCount; i++) {
-        if (strcmp(users[i].username, username) == 0) {
-            strcpy(users[i].password, newPassword);  // Ubah password
-            break;
-        }
-    }
-
-    overwriteUserFile(users, userCount, "user.csv");  // Tulis ulang ke file
-}
-
-//lupa password
-void lupaPassword(){
-    char username[100];
+void lupaPassword(User* users, int userCount) {
+    char username[MAX_USERNAME];
     char kodeUnik[200];
-    char newPassword[100];
+    char newPassword[MAX_PASSWORD];
 
+    // Input username
+    printf("\n=== Lupa Password ===\n");
     printf("Username: ");
-    scanf("%s", username);
+    if (scanf("%49s", username) != 1) {
+        printf("Input tidak valid\n");
+        while (getchar() != '\n');
+        return;
+    }
 
-    int userCount;
-    User* users = getUserData("user.csv", &userCount);
-
-    boolean found = false;//mengecheck apakah user ada pada file
+    // Cari user
+    int userIndex = -1;
     for (int i = 0; i < userCount; i++) {
         if (strcmp(users[i].username, username) == 0) {
-            found = true;
+            userIndex = i;
             break;
         }
     }
 
-    if (!found) {
-        printf("Username tidak terdaftar!\n");
-        free(users);
+    if (userIndex == -1) {
+        printf("Username tidak ditemukan!\n");
         return;
     }
 
+    // Validasi kode unik
     printf("Kode Unik: ");
-    scanf("%s", kodeUnik);
+    if (scanf("%199s", kodeUnik) != 1) {
+        printf("Input tidak valid\n");
+        while (getchar() != '\n');
+        return;
+    }
 
     if (!validasiCode(username, kodeUnik)) {
-        printf("Kode unik salah!\n");
-        free(users);
+        printf("Kode unik tidak valid!\n");
         return;
     }
 
-    printf("Halo %s, silakan daftarkan ulang password anda!\n", username);
+    // Input password baru
     printf("Password Baru: ");
-    scanf("%s", newPassword);
+    if (scanf("%49s", newPassword) != 1) {
+        printf("Input tidak valid\n");
+        while (getchar() != '\n');
+        return;
+    }
 
-    gantiPassword(users, userCount, username, newPassword);
-;
-    printf("Password berhasil diperbarui!\n");
-
-    free(users);
+    // Update password
+    strncpy(users[userIndex].password, newPassword, MAX_PASSWORD - 1);
+    users[userIndex].password[MAX_PASSWORD - 1] = '\0';
+    
+    printf("Password berhasil diubah untuk user %s\n", username);
 }
