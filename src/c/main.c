@@ -15,6 +15,7 @@
 #include "../header/obatPenyakit.h"
 #include "../header/penyakit.h"
 #include "../header/load.h"
+#include "../header/config.h"
 
 
 
@@ -150,14 +151,14 @@ int main(int argc, char* argv[]) {
     printWelcomeMessage();
     printOpeningMessage();
 
-    printf(">>> ");
-    scanf("%s", userInput);
     while(status != EXIT){
+        printf(">>> ");
+        scanf("%s", userInput);
         //================ LOGIN ================//
         if(strcmp(userInput, "LOGIN") == 0){        
             current_user = login(&current_user);
             if(current_user.id == 9999){
-                // REGISTER
+                printf("Anda belum LOGIN. Silakan melakukan register terlebih dahulu dengan mengetik [REGISTER].\n");
             }
             if(strcmp(current_user.role, "dokter") == 0){
                 status = DOKTER_LOGGED_IN;
@@ -171,12 +172,10 @@ int main(int argc, char* argv[]) {
             //printf("Apa yang bisa dibantu hari ini, %s %s?. Ketik [HELP] untuk melihat daftar command.\n", current_user.role, current_user.username);
 
         }
-        //================ LOGIN ================// 
-        else if (strcmp(userInput, "REGISTER") == 0)
-        {
+        if(strcmp(userInput, "REGISTER") == 0){        
             registerUser();
         }
-        
+
         //================ LOGIN END ================//
         switch (status) {
             case MANAGER_LOGGED_IN:
@@ -192,10 +191,24 @@ int main(int argc, char* argv[]) {
                 break;
 
         }
-        printf(">>> ");
-        scanf("%s", userInput);
     }
     printf("Sampai jumpa di lain hari!\n");
+    printf("%d %d\n", panjang_denah, lebar_denah);
+    for(int i = 0; i < panjang_denah; i++){
+        for(int j = 0; j < lebar_denah; j++){
+            printf("%d\n", ruanganList[i][j].idDokter);
+        }
+    }
     return 0;
 }
-// gcc src/c/main.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lupa_password.c -o main
+
+// gcc src/c/main.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/queue.c src/c/lupa_password.c -o main
+
+/*
+Applied module:
+F01 - LOGIN
+F02 - REGISTER
+F03 - LOGOUT
+F05 - Menu & Help
+F18 - EXIT
+*/

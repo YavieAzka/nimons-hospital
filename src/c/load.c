@@ -4,7 +4,8 @@
 #include "../header/obat.h"
 #include "../header/obatPenyakit.h"
 #include "../header/load.h"
-#include "../header/global.h"
+#include "../header/config.h"
+#include "../header/queue.h"
 
 #define MAX_MAPPING 100
 
@@ -22,6 +23,15 @@ int penyakitCount = 0;
 ObatPenyakit* obatPenyakitList = NULL;
 int obatPenyakitCount = 0;
 
+
+int panjang_denah = 0;
+int lebar_denah = 0;
+int kapasitas_ruangan = 0;
+int jumlah_ruangan = 0;
+
+Ruangan ruanganList[MAX_RUANGAN][MAX_RUANGAN];
+InventoryPasien daftar_inventory[MAX_INVENTORY];
+int jumlah_inventory = 0;
 // Membersihkan karakter newline atau carriage return
 void trim_newline(char* str) {
     int len = strlen(str);
@@ -378,6 +388,115 @@ User* getUserData(const char* filename, int* user_count) {
     return users;
 }
 
+const char* getUsernameById(int id) {
+    for (int i = 0; i < userCount; i++) {
+        if (users[i].id == id) {
+            return users[i].username;
+        }
+    }
+    return "-"; // default jika tidak ditemukan
+}
+
+int readIntsFromLine(const char* line, int* output, int maxInts) {
+    int count = 0;
+    int value = 0;
+    bool inNumber = false;
+
+    for (int i = 0; line[i] != '\0' && count < maxInts; i++) {
+        if (line[i] >= '0' && line[i] <= '9') {
+            value = value * 10 + (line[i] - '0');
+            inNumber = true;
+        } else if (inNumber) {
+            output[count++] = value;
+            value = 0;
+            inNumber = false;
+        }
+    }
+
+    if (inNumber && count < maxInts) {
+        output[count++] = value;
+    }
+
+    return count;
+}
+
+
+void loadConfig(const char* folder) {
+    char path[256];
+    sprintf(path, "%s/config.txt", folder);
+
+    FILE* file = fopen(path, "r");
+    if (!file) {
+        printf("Error: Cannot open config file at %s\n", path);
+        return;
+    }
+
+    char line[256];
+    int data[20];
+
+    // Baris 1: panjang dan lebar denah
+    fgets(line, sizeof(line), file);
+    int n = readIntsFromLine(line, data, 2);
+    panjang_denah = data[0];
+    lebar_denah = data[1];
+    jumlah_ruangan = panjang_denah * lebar_denah;
+
+    // Baris 2: kapasitas ruangan
+    fgets(line, sizeof(line), file);
+    readIntsFromLine(line, data, 1);
+    kapasitas_ruangan = data[0];
+
+    // Baris 3 sampai jumlah_ruangan + 2: data ruangan
+    for (int i = 0; i < jumlah_ruangan; i++) {
+        fgets(line, sizeof(line), file);
+        int nums[20];
+        int count = readIntsFromLine(line, nums, 20);
+
+        int row = i / lebar_denah;
+        int col = i % lebar_denah;
+        Ruangan* r = &ruanganList[row][col];
+
+        r->totalPasien = 0;
+        r->idDokter = (count > 0) ? nums[0] : 0;
+        strcpy(r->usernameDokter, getUsernameById(r->idDokter));
+
+        for (int j = 1; j < count; j++) {
+            r->idPasien[r->totalPasien] = nums[j];
+            strcpy(r->usernamePasien[r->totalPasien], getUsernameById(nums[j]));
+            r->totalPasien++;
+        }
+
+        initQueue(&(r->antrianPasien)); // kosong
+    }
+
+    // Baris selanjutnya: jumlah pasien yang punya inventory
+    fgets(line, sizeof(line), file);
+    readIntsFromLine(line, data, 1);
+    jumlah_inventory = data[0];
+
+    // Baris setelahnya: daftar inventory
+    for (int i = 0; i < jumlah_inventory; i++) {
+        fgets(line, sizeof(line), file);
+        int nums[20];
+        int count = readIntsFromLine(line, nums, 20);
+
+        if (count >= 1) {
+            InventoryPasien* inv = &daftar_inventory[i];
+            inv->pasien_id = nums[0];
+            inv->jumlah_obat = 0;
+
+            for (int j = 1; j < count; j++) {
+                inv->obat_ids[inv->jumlah_obat++] = nums[j];
+            }
+        }
+    }
+
+    fclose(file);
+    printf("Konfigurasi berhasil dimuat dari %s\n", path);
+}
+
+
+
 // ================== LOAD ALL ==================
 
 void load_all_data(const char* folder) {
@@ -395,5 +514,8 @@ void load_all_data(const char* folder) {
     sprintf(path, "%s/obat_penyakit.csv", folder);
     obatPenyakitList = getObatPenyakitData(path, &obatPenyakitCount);
 
+    loadConfig(folder);
+    
     printf("Data berhasil diload dari folder: %s\n", folder);
+
 }
