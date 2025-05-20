@@ -13,7 +13,7 @@
 void searchRuangan(User user, Ruangan *ruangan){
     for (int i = 0; i < panjang_denah; i++)
     {
-        for (int j = 0; j < lebar_denah; i++)
+        for (int j = 0; j < lebar_denah; j++)
         {
             if (ruanganList[i][j].idDokter == user.id)
             {
