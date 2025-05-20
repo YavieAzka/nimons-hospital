@@ -7,21 +7,100 @@
 #define MAX_LINE_LENGTH 1024
 #define MAX_FIELD_LENGTH 256
 
-bool 
+bool cekSuhu(User user, Penyakit penyakit){
+    if (user.suhu_tubuh >= penyakit.suhu_tubuh_min && user.suhu_tubuh <= penyakit.suhu_tubuh_max)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool cekTekananSistolik(User user, Penyakit penyakit){
+    if (user.tekanan_darah_sistolik >= penyakit.tekanan_darah_sistolik_min && user.tekanan_darah_sistolik <= penyakit.tekanan_darah_sistolik_max)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool cekTekananDiastolik(User user, Penyakit penyakit){
+    if (user.tekanan_darah_diastolik >= penyakit.tekanan_darah_diastolik_min && user.tekanan_darah_diastolik <= penyakit.tekanan_darah_diastolik_max)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool cekDetakJantung(User user, Penyakit penyakit){
+    if (user.detak_jantung >= penyakit.detak_jantung_min && user.detak_jantung <= penyakit.detak_jantung_max)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool cekSaturasiOksigen(User user, Penyakit penyakit){
+    if (user.saturasi_oksigen >= penyakit.saturasi_oksigen_min && user.saturasi_oksigen <= penyakit.saturasi_oksigen_max)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool cekKadarGulaDarah(User user, Penyakit penyakit){
+    if (user.kadar_gula_darah >= penyakit.kadar_gula_darah_min && user.kadar_gula_darah <= penyakit.kadar_gula_darah_max)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool cekBeratBadan(User user, Penyakit penyakit){
+    if (user.berat_badan >= penyakit.berat_badan_min && user.berat_badan <= penyakit.berat_badan_max)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool cekTinggiBadan(User user, Penyakit penyakit){
+    if (user.tinggi_badan >= penyakit.tinggi_badan_min && user.tinggi_badan <= penyakit.tinggi_badan_max)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool cekKadarKolesterol(User user, Penyakit penyakit){
+    if (user.kadar_kolesterol >= penyakit.kadar_kolesterol_min && user.kadar_kolesterol <= penyakit.kadar_kolesterol_max)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool cekTrombosit(User user, Penyakit penyakit){
+    if (user.trombosit >= penyakit.trombosit_min && user.trombosit <= penyakit.trombosit_max)
+    {
+        return true;
+    }
+    return false;
+}
+
 char *cekPenyakit(User user, Penyakit* penyakit, int penyakitCount){
     int i = 0;
     while (i < penyakitCount)
     {
-        if (condition)
+        if (cekSuhu(user, penyakit[i]) && cekTekananSistolik(user, penyakit[i]) && cekTekananDiastolik(user, penyakit[i]) && cekDetakJantung(user, penyakit[i]) && cekSaturasiOksigen(user, penyakit[i]) && cekKadarGulaDarah(user, penyakit[i]) && cekBeratBadan(user, penyakit[i]) && cekTinggiBadan(user, penyakit[i]) && cekKadarKolesterol(user, penyakit[i]) && cekTrombosit(user, penyakit[i]))
         {
-            penyakitList
+            return penyakitList[i].name_penyakit;
         }
         i++
     }
     return "Nothing";
 }
 
-void diagnosis(const char* filename, User user){
+void diagnosis(User user){
     char namaPenyakit[MAX_NAMA_PENYAKIT];
     strcpy(namaPenyakit, cekPenyakit(user, penyakitList, penyakitCount));
 }
