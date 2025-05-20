@@ -87,6 +87,7 @@ void denahRumahSakit(char* str){
     } else if (strcmp(str, "LIHAT_RUANGAN") == 0)
     {
         char ruang[10];
+        printf("Masukkan ruangan yang ingin dilihat: ");
         scanf("%s", ruang);
 
         lihatRuang(ruang);
@@ -118,6 +119,7 @@ void ubahDenah(){
     }
 
     int newPanjang, newLebar;
+    printf("Masukkan ukuran denah yang baru: ");
     scanf("%d %d", &newPanjang, &newLebar);
     while (newLebar > MAX_RUANGAN || newPanjang > MAX_RUANGAN){
         printf("Masukkan Nilai Panjang dan Lebar yang tidak melebihi capacity Ruangan (5 5): \n");
