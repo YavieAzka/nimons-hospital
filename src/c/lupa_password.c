@@ -35,57 +35,58 @@ boolean validasiCode(const char* username, const char* inputCode){
     return isValid;
 }
 
-// Fungsi untuk mengupdate password dalam array users[]
-void updatePasswordInArray(User* users, int userCount, const char* username, const char* newPassword) {
-    for (int i = 0; i < userCount; i++) {
-        if (strcmp(users[i].username, username) == 0) {
-            strcpy(users[i].password, newPassword);  // Ubah password langsung di array
-            break;
-        }
-    }
-}
-
-// lupa password
-void lupaPassword() {
-    char username[100];
+void lupaPassword(User* users, int userCount) {
+    char username[MAX_USERNAME];
     char kodeUnik[200];
-    char newPassword[100];
+    char newPassword[MAX_PASSWORD];
 
+    // Input username
+    printf("\n=== Lupa Password ===\n");
     printf("Username: ");
-    scanf("%s", username);
-
-    int userCount;
-    User* users = getUserData("user.csv", &userCount);
-
-    boolean found = false;
-    for (int i = 0; i < userCount; i++) {
-        if (strcmp(users[i].username, username) == 0) {
-            found = true;
-            break;
-        }
-    }
-
-    if (!found) {
-        printf("Username tidak terdaftar!\n");
-        free(users);
+    if (scanf("%49s", username) != 1) {
+        printf("Input tidak valid\n");
+        while (getchar() != '\n');
         return;
     }
 
+    // Cari user
+    int userIndex = -1;
+    for (int i = 0; i < userCount; i++) {
+        if (strcmp(users[i].username, username) == 0) {
+            userIndex = i;
+            break;
+        }
+    }
+
+    if (userIndex == -1) {
+        printf("Username tidak ditemukan!\n");
+        return;
+    }
+
+    // Validasi kode unik
     printf("Kode Unik: ");
-    scanf("%s", kodeUnik);
+    if (scanf("%199s", kodeUnik) != 1) {
+        printf("Input tidak valid\n");
+        while (getchar() != '\n');
+        return;
+    }
 
     if (!validasiCode(username, kodeUnik)) {
-        printf("Kode unik salah!\n");
-        free(users);
+        printf("Kode unik tidak valid!\n");
         return;
     }
 
-    printf("Halo %s, silakan daftarkan ulang password anda!\n", username);
+    // Input password baru
     printf("Password Baru: ");
-    scanf("%s", newPassword);
+    if (scanf("%49s", newPassword) != 1) {
+        printf("Input tidak valid\n");
+        while (getchar() != '\n');
+        return;
+    }
 
-    updatePasswordInArray(users, userCount, username, newPassword);
-    printf("Password berhasil diperbarui dalam memori!\n");
-
-    free(users);
+    // Update password
+    strncpy(users[userIndex].password, newPassword, MAX_PASSWORD - 1);
+    users[userIndex].password[MAX_PASSWORD - 1] = '\0';
+    
+    printf("Password berhasil diubah untuk user %s\n", username);
 }
