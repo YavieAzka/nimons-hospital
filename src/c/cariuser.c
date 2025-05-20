@@ -306,3 +306,12 @@ void cariUser(){
     jarak pembatas
     */
 //}
+
+/*
+Applied module:
+F01 - LOGIN
+F02 - REGISTER
+F03 - LOGOUT
+F05 - Menu & Help
+F18 - EXIT
+*/
