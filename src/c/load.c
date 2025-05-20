@@ -31,6 +31,7 @@ int jumlah_ruangan = 0;
 
 Ruangan ruanganList[MAX_RUANGAN][MAX_RUANGAN];
 InventoryPasien daftar_inventory[MAX_INVENTORY];
+
 int jumlah_inventory = 0;
 // Membersihkan karakter newline atau carriage return
 void trim_newline(char* str) {
