@@ -68,8 +68,8 @@ void sortDescNama(User* users, int userCount) {
 
 //Prosedur untuk menerima input pilihan sort dan melakukan sort
 void urutanSort(User* users, int userCount) {
-    char pilihanSort[MAX_COMMAND];
-    char pilihanPengurutan[MAX_COMMAND];
+    int pilihanSort;
+    int pilihanPengurutan;
 
     //Pilih sort berdasarkan ID / Nama
     printf("Urutkan berdasarkan? (ID / Nama)\n");
@@ -77,12 +77,12 @@ void urutanSort(User* users, int userCount) {
     printf("    2. Nama\n");
 
     for(;;) {
-        printf("Silahkan Ketik disini: ");
-        scanf("%s", pilihanSort);
-        if(strcmp(pilihanSort, "ID") == 0) {
+        printf(">>> ");
+        scanf("%d", &pilihanSort);
+        if(pilihanSort == 1) {
             break;
 
-        } else if (strcmp(pilihanSort, "Nama") == 0){
+        } else if (pilihanSort == 2){
             break;
 
         } else {
@@ -96,12 +96,12 @@ void urutanSort(User* users, int userCount) {
     printf("    2. DESC (Z-A)\n");
 
     for(;;) {
-        printf("Silahkan Ketik disini: ");
-        scanf("%s", pilihanPengurutan);
-        if(strcmp(pilihanPengurutan, "ASC") == 0) {
+        printf(">>> ");
+        scanf("%d", &pilihanPengurutan);
+        if(pilihanPengurutan == 1) {
             break;
 
-        } else if (strcmp(pilihanPengurutan, "DESC") == 0){
+        } else if (pilihanPengurutan == 2){
             break;
 
         } else {
@@ -110,11 +110,11 @@ void urutanSort(User* users, int userCount) {
     }
 
     //Sort berdasarkan input yang dimasukkan
-    if (strcmp(pilihanSort, "ID") == 0 && strcmp(pilihanPengurutan, "ASC") == 0) {
+    if (pilihanSort == 1 && pilihanPengurutan == 1) {
         sortAscID(users, userCount); 
-    } else if (strcmp(pilihanSort, "Nama") == 0 && strcmp(pilihanPengurutan, "ASC") == 0) {
+    } else if (pilihanSort == 2 && pilihanPengurutan == 1) {
         sortAscNama(users, userCount);
-    } else if (strcmp(pilihanSort, "ID") == 0 && strcmp(pilihanPengurutan, "DESC") == 0) {
+    } else if (pilihanSort == 1 && pilihanPengurutan == 2) {
         sortDescID(users, userCount);
     } else {
         sortDescNama(users, userCount);
@@ -159,12 +159,8 @@ void interfaceUser(User* users, char *command, int userCount){
 
 //Prosedur untuk menampilkan data user yang sudah di sort
 void lihatUser(char *command) {
-    //int userCount = 0;
-    //User* users = getUserData("data/user.csv", &userCount);
-    printf("Menampilkan data... Silakan pilih metode pengurutan.\n");
     urutanSort(users, userCount);
     interfaceUser(users, command, userCount);
-    //free(users);
 }
 
 //Prosedur untuk menampilkan data pasien yang sudah di sort

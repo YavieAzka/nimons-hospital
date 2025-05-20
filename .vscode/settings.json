@@ -9,7 +9,8 @@
     "load.h": "c",
     "global.h": "c",
     "ruangan.h": "c",
-    "config.h": "c"
+    "config.h": "c",
+    "utils.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

@@ -132,8 +132,6 @@ void printDokter(User U){
 
 void cariPasien(){
     int userChoice;
-    int userCount = 0;
-    User* users = getUserData("../../data/user.csv", &userCount);
 
     printf("Cari berdasarkan:\n");
     printf("1. ID\n");
@@ -156,7 +154,10 @@ void cariPasien(){
         }
 
     }
-
+    User *usersTemp = (User *)malloc(userCount * sizeof(User));
+    for(int i = 0; i < userCount; i++){
+        usersTemp[i] = users[i];
+    }
 
     if(userChoice == 2){ // Search by Username
         char targetUsername[128];
@@ -164,16 +165,16 @@ void cariPasien(){
         scanf("%s", targetUsername);
 
         // Step 1: Urutkan array berdasarkan username
-        qsort(users, userCount, sizeof(User), compareUsername);
+        qsort(usersTemp, userCount, sizeof(User), compareUsername);
 
         // Step 2: Binary search
-        int id = binarySearchUsername(users, userCount, targetUsername);
+        int index = binarySearchUsername(usersTemp, userCount, targetUsername);
 
-        if (id != -1) {
-            printf("Pengguna dengan ID %d:\n", id);
-            printPasien(users[id]);
+        if (index != -1) {
+            printf("Pasien dengan ID %d:\n", index);
+            printPasien(usersTemp[index]);
         } else {
-            printf("User dengan username '%s' tidak ditemukan.\n", targetUsername);
+            printf("Pasien dengan username '%s' tidak ditemukan.\n", targetUsername);
         }
     }
 
@@ -198,13 +199,12 @@ void cariPasien(){
             printf("Pasien dengan penyakit %s tidak ditemukan.", penyakit);
         }
     }
+    free(usersTemp);
     
 }
 
 void cariDokter(){
     int userChoice;
-    int userCount = 0;
-    User* users = getUserData("../../data/user.csv", &userCount);
 
     printf("Cari berdasarkan:\n");
     printf("1. ID\n");
@@ -217,8 +217,11 @@ void cariDokter(){
         printf("Cari ID: ");
         scanf("%d", &id);
 
-        if(id >= userCount || id < 0 || strcmp(users[id].role,"Dokter") != 0){
-            printf("User dengan username '%d' tidak ditemukan.\n", id);
+        if(id <= 0 || id>= userCount){
+            printf("ID tidak valid.\n");
+        }
+        else if(strcmp(users[id].role,"dokter") != 0){
+            printf("Dokter dengan ID '%d' tidak ditemukan.\n", id);
         }
         else if(strcmp(users[id].role,"dokter") == 0){
             printf("Dokter dengan ID %d:\n", id);
@@ -227,35 +230,35 @@ void cariDokter(){
 
     }
 
-
+    User *usersTemp = (User *)malloc(userCount * sizeof(User));
+    for(int i = 0; i < userCount; i++){
+        usersTemp[i] = users[i];
+    }
     if(userChoice == 2){ // Search by Username
         char targetUsername[128];
         printf("Cari Username: ");
         scanf("%s", targetUsername);
 
         // Step 1: Urutkan array berdasarkan username
-        qsort(users, userCount, sizeof(User), compareUsername);
+        qsort(usersTemp, userCount, sizeof(User), compareUsername);
 
         // Step 2: Binary search
-        int id = binarySearchUsername(users, userCount, targetUsername);
+        int index = binarySearchUsername(usersTemp, userCount, targetUsername);
         
-        if (id != -1 && strcmp(users[id].role,"dokter") == 0) {
-            printf("Menampilkan data Dokter dengan nama %s:\n", users[id].username);
-            printDokter(users[id]);
+        if (index!= -1 && strcmp(usersTemp[index].role,"dokter") == 0) {
+            printf("Menampilkan data Dokter dengan nama %s:\n", usersTemp[index].username);
+            printDokter(usersTemp[index]);
         } 
         else {
             printf("Dokter dengan username '%s' tidak ditemukan.\n", targetUsername);
         }
     }
-    //free(users);
+    free(usersTemp);
 }
 
 void cariUser(){
     
     int userChoice;
-    int userCount = 0;
-    User* users = getUserData("../../data/user.csv", &userCount);
-    
 
     printPilihan();
     scanf("%d", &userChoice);
@@ -275,25 +278,29 @@ void cariUser(){
 
     }
 
-
+    User *usersTemp = (User *)malloc(userCount * sizeof(User));
+    for(int i = 0; i < userCount; i++){
+        usersTemp[i] = users[i];
+    }
+    
     if(userChoice == 2){ // Search by Username
         char targetUsername[128];
         printf("Cari Username: ");
-        scanf("%s", targetUsername);
-
+        scanf("%s", targetUsername); 
         // Step 1: Urutkan array berdasarkan username
-        qsort(users, userCount, sizeof(User), compareUsername);
+        qsort(usersTemp, userCount, sizeof(User), compareUsername);
 
         // Step 2: Binary search
-        int index = binarySearchUsername(users, userCount, targetUsername);
+        int index = binarySearchUsername(usersTemp, userCount, targetUsername);
+        printf("%d\n", index);
         if (index != -1) {
-            printf("Menampilkan %s dengan nama %s:\n", users[index].role, users[index].username);
-            printUser_general(users[index]);
+            printf("Menampilkan %s dengan nama %s:\n", usersTemp[index].role, usersTemp[index].username);
+            printUser_general(usersTemp[index]);
         } else {
             printf("User dengan username '%s' tidak ditemukan.\n", targetUsername);
         }
     }
-    free(users);
+    free(usersTemp);
 }
 
 //int main(){

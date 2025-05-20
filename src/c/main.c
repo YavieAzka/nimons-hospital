@@ -1,3 +1,4 @@
+
 // Include any necessary headers
 #include <stdio.h>
 #include "../header/user.h"
@@ -26,20 +27,39 @@ void handleManager(User* user, Status* status) {
         scanf("%s", input);
 
         if (strcmp(input, "HELP") == 0) {
-            help(*user);
-        } else if (strcmp(input, "REGISTER") == 0) {
+            char* nextCommand = help(*user);     // dapat string hasil input setelah HELP
+            strcpy(input, nextCommand);          // salin ke userInput untuk dieksekusi di loop selanjutnya
+            free(nextCommand);
+        }
+        if (strcmp(input, "REGISTER") == 0) {
             //register_user();
-        } else if (strcmp(input, "CARI_USER") == 0) {
-            //cari_user();
-        } else if (strcmp(input, "LIHAT_USER") == 0) {
-            //lihat_user();
+        }
+        if (strcmp(input, "CARI_USER") == 0) {
+            cariUser();
+        }
+        if (strcmp(input, "CARI_DOKTER") == 0) {
+            cariDokter();
+        }
+        if (strcmp(input, "CARI_PASIEN") == 0) {
+            cariPasien();
+        } 
+        if (strcmp(input, "LIHAT_USER") == 0) {
             lihatUser(input);
-        } else if (strcmp(input, "SET_ROLE") == 0) {
+        }
+        if (strcmp(input, "LIHAT_PASIEN") == 0) {
+            lihatPasien(input);
+        }
+        if (strcmp(input, "LIHAT_DOKTER") == 0) {
+            lihatDokter(input);
+        }
+        if (strcmp(input, "SET_ROLE") == 0) {
             //set_role();
-        } else if (strcmp(input, "LOGOUT") == 0) {
+        } 
+        if (strcmp(input, "LOGOUT") == 0) {
             logout(user, status);
             return;
-        } else if (strcmp(input, "EXIT") == 0) {
+        } 
+        if (strcmp(input, "EXIT") == 0) {
             //*status = EXIT;
             //return;
         }
@@ -125,7 +145,7 @@ void printWelcomeMessage(){
 void printOpeningMessage(){
     printf("+===================================================+\n");
     printf("|    SILAKAN LOGIN DENGAN MENGETIK [LOGIN] ATAU     |\n");
-    printf("|    MELAKUKAN REGISTER DENGAN MENGETIK REGISTER    |\n");
+    printf("|    MELAKUKAN REGISTER DENGAN MENGETIK [REGISTER]  |\n");
     printf("+===================================================+\n");
 }
 
@@ -155,6 +175,16 @@ int main(int argc, char* argv[]) {
     while(status != EXIT){
         printf(">>> ");
         scanf("%s", userInput);
+        // ================ DEVMODE ================//
+
+        if(strcmp(userInput, "devmode") == 0){
+            status = MANAGER_LOGGED_IN;
+            strcpy(current_user.username, "sankai");
+            strcpy(current_user.role, "manager");
+            printf("[Konnichiwa, Developer-san! Semangat ngodingnya!! Langsung ketik [HELP] saja kalau lupa commandnya >V<] \n");
+            handleManager(&current_user, &status);
+        }
+
         //================ LOGIN ================//
         if(strcmp(userInput, "LOGIN") == 0){        
             current_user = login(&current_user);
@@ -194,22 +224,20 @@ int main(int argc, char* argv[]) {
         }
     }
     printf("Sampai jumpa di lain hari!\n");
-    printf("%d %d\n", panjang_denah, lebar_denah);
-    for(int i = 0; i < panjang_denah; i++){
-        for(int j = 0; j < lebar_denah; j++){
-            printf("%d\n", ruanganList[i][j].idDokter);
-        }
-    }
     return 0;
 }
 
 // gcc src/c/main.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/queue.c src/c/lupa_password.c -o main
 
 /*
+
 Applied module:
 F01 - LOGIN
 F02 - REGISTER
 F03 - LOGOUT
 F05 - Menu & Help
+F08 - Cari User
 F18 - EXIT
+
 */
+
