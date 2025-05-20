@@ -162,7 +162,6 @@ void handlePasien(User* user, Status* status) {
         if (strcmp(input, "LIHAT_RUANGAN") == 0) {
             char ruanganInput[10];
             printf("Masukkan ruangan yang ingin dilihat: ");
-            scanf("%s", ruanganInput);
             denahRumahSakit(ruanganInput);
             //return;
         }

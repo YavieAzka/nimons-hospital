@@ -87,7 +87,6 @@ void denahRumahSakit(char* str){
     } else if (strcmp(str, "LIHAT_RUANGAN") == 0)
     {
         char ruang[10];
-        printf("Masukkan ruangan yang ingin dilihat: ");
         scanf("%s", ruang);
 
         lihatRuang(ruang);
