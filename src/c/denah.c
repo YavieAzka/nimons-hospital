@@ -94,7 +94,7 @@ void denahRumahSakit(char* str){
 }
 
 
-int main(int argc, char* argv[]) {
+/*int main(int argc, char* argv[]) {
     if (argc != 2) {
         printf("Usage: %s <nama_folder>\n", argv[0]);
         return 1;
@@ -110,5 +110,5 @@ int main(int argc, char* argv[]) {
     denahRumahSakit("LIHAT_SEMUA_ANTRIAN");
     return 0;
 }
-
+*/
 //gcc src/c/denah.c src/c/queue.c src/c/lihat_antrian.c src/c/utils.c src/c/login.c -o test
