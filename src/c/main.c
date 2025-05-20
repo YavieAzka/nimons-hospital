@@ -72,6 +72,10 @@ void handleManager(User* user, Status* status) {
             denahRumahSakit(input);
             //return;
         }
+        if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0) {
+            denahRumahSakit(input);
+            //return;
+        }
         if (strcmp(input, "LOGOUT") == 0) {
             logout(user, status);
             return;
