@@ -4,7 +4,6 @@
 #include "../header/obat.h"
 #include "../header/obatPenyakit.h"
 #include "../header/load.h"
-#include "../header/global.h"
 
 #define MAX_MAPPING 100
 

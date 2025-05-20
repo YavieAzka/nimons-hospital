@@ -2,7 +2,7 @@
 #include "../header/register.h"
 #include "../header/login.h"
 #include "../header/load.h"
-
+#include "../header/user.h"
 //Read user.csv file and store it in users[] array.
 #include <stdio.h>
 #include <stdlib.h>
