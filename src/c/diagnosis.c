@@ -1,12 +1,28 @@
 #include "../header/diagnosis.h"
 #include "../header/penyakit.h"
 #include "../header/utils.h"
+#include "../header/config.h"
+#include "../header/load.h"
+#include "../header/ruangan.h"
 
 #include <stdbool.h>
 
 #define MAX_LINE_LENGTH 1024
 #define MAX_FIELD_LENGTH 256
-
+void searchRuangan(User user, Ruangan *ruangan){
+    for (int i = 0; i < panjang_denah; i++)
+    {
+        for (int j = 0; j < lebar_denah; i++)
+        {
+            if (ruanganList[i][j].idDokter == user.id)
+            {
+                ruangan = ruanganList[i][j];
+                break;
+            }
+        }
+    }
+    return;
+}
 bool cekSuhu(User user, Penyakit penyakit){
     if (user.suhu_tubuh >= penyakit.suhu_tubuh_min && user.suhu_tubuh <= penyakit.suhu_tubuh_max)
     {
@@ -101,6 +117,9 @@ char *cekPenyakit(User user, Penyakit* penyakit, int penyakitCount){
 }
 
 void diagnosis(User user){
+    Ruangan ruangan;
+    searchRuangan(user, &ruangan);
+
     char namaPenyakit[MAX_NAMA_PENYAKIT];
-    strcpy(namaPenyakit, cekPenyakit(user, penyakitList, penyakitCount));
+    strcpy(namaPenyakit, cekPenyakit(, penyakitList, penyakitCount));
 }
