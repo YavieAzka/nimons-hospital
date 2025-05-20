@@ -8,11 +8,12 @@
 #include "../header/lihat_antrian.h"
 #include "../header/queue.h"
 #include "../header/config.h"
+#include "../header/load.h"
 
 #define MAX_LINE_LENGTH 1024
 #define MAX_FIELD_LENGTH 256
 
-void lihatRuang(Ruangan* ruangan, char * str){
+void lihatRuang(char * str){
     int x, y;
     x = str[0] - 'A';
     y = stringToInt(&str[1]) - 1;
@@ -22,29 +23,29 @@ void lihatRuang(Ruangan* ruangan, char * str){
 
     if (ruanganList[x][y].idDokter != 0)
     {
-        printf("Dokter     : Dr. %s\n", ruangan[x][y].usernameDokter);
+        printf("Dokter     : Dr. %s\n", ruanganList[x][y].usernameDokter);
     }else
     {
         printf("Dokter     : -\n");
     }
 
     printf("Pasien di dalam ruangan:\n");
-    if (ruangan[x][y].totalPasien == 0)
+    if (ruanganList[x][y].totalPasien == 0)
     {
         printf("   Tidak ada pasien di dalam ruangan saat ini.\n");
-    } else if (ruang[x][y].totalPasien > 0)
+    } else if (ruanganList[x][y].totalPasien > 0)
     {
-        for (int i = 1; i <= ruangan[x][y].totalPasien; i++)
+        for (int i = 1; i <= ruanganList[x][y].totalPasien; i++)
         {
-            printf("   %d. %s\n", i, ruangan[x][y].usernamePasien[i - 1]);
+            printf("   %d. %s\n", i, ruanganList[x][y].usernamePasien[i - 1]);
         }
     }
     printf("------------------------------\n");   
 }
 
-void gambarDenah(Ruangan* ruangan){
+void gambarDenah(){
     printf("     ");
-    for (int k = 1; k <= ; k++)
+    for (int k = 1; k <= panjang_denah; k++)
     {
         printf("  %d   ", k);
     }
@@ -79,23 +80,35 @@ void gambarDenah(Ruangan* ruangan){
 void denahRumahSakit(char* str){
     if (strcmp(str ,"LIHAT_DENAH") == 0)
     {
-        gambarDenah(ruanganList);
+        gambarDenah();
     } else if (strcmp(str, "LIHAT_RUANGAN") == 0)
     {
         char ruang[10];
         scanf("%s", ruang);
 
-        lihatRuang(ruanganList, ruang);
+        lihatRuang(ruang);
     }
     else if(strcmp(str, "LIHAT_SEMUA_ANTRIAN") == 0){
-        lihatSemuaAntrian(denah);
+        lihatSemuaAntrian();
     }
 }
 
 
-// int main(){
-//     denahRumahSakit("LIHAT_DENAH");
-//     return 0;
-// }
+int main(int argc, char* argv[]) {
+    if (argc != 2) {
+        printf("Usage: %s <nama_folder>\n", argv[0]);
+        return 1;
+    }
+
+    char* folder = argv[1];
+
+    // ====================== LOAD FILE START ======================
+    printf("Loading...\n");
+    load_all_data(folder);
+    printf("Data berhasil dimuat dari folder: %s\n", folder);
+
+    denahRumahSakit("LIHAT_SEMUA_ANTRIAN");
+    return 0;
+}
 
 //gcc src/c/denah.c src/c/queue.c src/c/lihat_antrian.c src/c/utils.c src/c/login.c -o test
