@@ -28,10 +28,10 @@ int panjang_denah = 0;
 int lebar_denah = 0;
 int kapasitas_ruangan = 0;
 int jumlah_ruangan = 0;
-int panjang_denah_eff = 0;
-int lebar_denah_eff = 0;
+
 Ruangan ruanganList[MAX_RUANGAN];
 InventoryPasien daftar_inventory[MAX_INVENTORY];
+
 int jumlah_inventory = 0;
 // Membersihkan karakter newline atau carriage return
 void trim_newline(char* str) {
