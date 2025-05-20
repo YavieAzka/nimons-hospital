@@ -37,17 +37,23 @@ void handleManager(User* user, Status* status) {
             //register_user();
         }
         if (strcmp(input, "CARI_USER") == 0) {
-            cariUser();
+            //cariUser();
         }
         if (strcmp(input, "CARI_DOKTER") == 0) {
-            cariDokter();
+            //cariDokter();
         }
         if (strcmp(input, "CARI_PASIEN") == 0) {
-            cariPasien();
+            //cariPasien();
         } 
         if (strcmp(input, "LIHAT_USER") == 0) {
-            //lihat_user();
-        } 
+            lihatUser(input);
+        }
+        if (strcmp(input, "LIHAT_PASIEN") == 0) {
+            lihatPasien(input);
+        }
+        if (strcmp(input, "LIHAT_DOKTER") == 0) {
+            lihatDokter(input);
+        }
         if (strcmp(input, "SET_ROLE") == 0) {
             //set_role();
         } 
