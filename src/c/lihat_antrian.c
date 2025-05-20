@@ -5,7 +5,6 @@
 #include "../header/utils.h"
 #include "../header/login.h"
 #include "../header/user.h"
-#include "../header/denah.h"
 #include "../header/queue.h"
 
 void lihatSemuaAntrian(Denah denah) {
