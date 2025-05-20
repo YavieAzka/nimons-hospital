@@ -90,13 +90,19 @@ void denahRumahSakit(char* str){
         scanf("%s", ruang);
 
         lihatRuang(ruang);
-    }
+    } 
     else if(strcmp(str, "LIHAT_SEMUA_ANTRIAN") == 0){
         lihatSemuaAntrian();
-    } else if (strcmp(str, "UBAH_DENAH") == 0)
+    } 
+    else if (strcmp(str, "UBAH_DENAH") == 0)
     {
         ubahDenah();
+    } 
+    else if (strcmp(str, "PINDAH_DOKTER") == 0)
+    {
+        pindahDokter();
     }
+    
     
 }
 
@@ -130,6 +136,34 @@ void ubahDenah(){
     }
 }
 
+void pindahDokter(){
+    char ruang1[10], ruang2[10];
+    scanf("%s %s", ruang1, ruang2);
+    int baris1, kolom1, baris2, kolom2;
+
+    baris1 = ruang1[0] - 'A'; kolom1 = stringToInt(&ruang1[1]) - 1;
+    baris2 = ruang2[0] - 'A'; kolom2 = stringToInt(&ruang2[1]) - 1;
+    
+    Ruangan r1, r2;
+    
+    r1 = ruanganList[baris1][kolom1];
+    r2 = ruanganList[baris2][kolom2];
+
+    if (r1.idDokter == 0)
+    {
+        printf("Pemindahan gagal. Ruangan %c%d Kosong.\n", 'A' + baris1 + 1, kolom1 + 1);
+    } else{
+        if (r2.idDokter == 0)
+        {
+            ruanganList[baris2][kolom2] = r1;
+            ruanganList[baris1][kolom1] = r2; //jadi kosong
+            printf("Dr. %s berhasil dipindahkan dari ruangan %c%d ke ruangan %c%d.\n", r1.usernameDokter, 'A' + baris1, kolom1 + 1, 'A' +  baris2, kolom2 + 1);
+        } else{
+            printf("Pemindahan gagal. Ruangan %c%d Sudah ditempati.\n", 'A' + baris2, kolom2 + 1);
+        }
+    }
+}
+
 void cariRuang(int *baris, int *kolom, int newLebar, int newPanjang) {
     for (int i = 0; i < panjang_denah; i++) {
         for (int j = 0; j < lebar_denah; j++) {
@@ -144,7 +178,7 @@ void cariRuang(int *baris, int *kolom, int newLebar, int newPanjang) {
     }
 }
 
-/*int main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) {
     if (argc != 2) {
         printf("Usage: %s <nama_folder>\n", argv[0]);
         return 1;
@@ -164,6 +198,6 @@ void cariRuang(int *baris, int *kolom, int newLebar, int newPanjang) {
         denahRumahSakit(str);
     }
     return 0;
-}*/
+}
 
 //gcc src/c/denah.c src/c/queue.c src/c/lihat_antrian.c src/c/utils.c src/c/login.c src/c/load.c -o test

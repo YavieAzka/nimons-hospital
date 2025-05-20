@@ -8,6 +8,6 @@
 
 char *cekPenyakit(User user, Penyakit penyakit);
 void diagnosis();
-
+void pindahDokter();
 
 #endif

@@ -9,5 +9,6 @@ void lihatRuang(char * str);
 void gambarDenah();
 void ubahDenah();
 void cariRuang(int *baris, int *kolom, int newLebar, int newPanjang);
+void pindahDokter();
 
 #endif
