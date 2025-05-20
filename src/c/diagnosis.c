@@ -4,6 +4,7 @@
 #include "../header/config.h"
 #include "../header/load.h"
 #include "../header/ruangan.h"
+#include "../header/queue.h"
 
 #include <stdbool.h>
 
@@ -103,11 +104,12 @@ bool cekTrombosit(User user, Penyakit penyakit){
     return false;
 }
 
-char *cekPenyakit(User user, Penyakit* penyakit, int penyakitCount){
+char *cekPenyakit(User pasien, Penyakit* penyakit, int penyakitCount){
     int i = 0;
+    
     while (i < penyakitCount)
     {
-        if (cekSuhu(user, penyakit[i]) && cekTekananSistolik(user, penyakit[i]) && cekTekananDiastolik(user, penyakit[i]) && cekDetakJantung(user, penyakit[i]) && cekSaturasiOksigen(user, penyakit[i]) && cekKadarGulaDarah(user, penyakit[i]) && cekBeratBadan(user, penyakit[i]) && cekTinggiBadan(user, penyakit[i]) && cekKadarKolesterol(user, penyakit[i]) && cekTrombosit(user, penyakit[i]))
+        if (cekSuhu(pasien, penyakit[i]) && cekTekananSistolik(pasien, penyakit[i]) && cekTekananDiastolik(pasien, penyakit[i]) && cekDetakJantung(pasien, penyakit[i]) && cekSaturasiOksigen(pasien, penyakit[i]) && cekKadarGulaDarah(pasien, penyakit[i]) && cekBeratBadan(pasien, penyakit[i]) && cekTinggiBadan(pasien, penyakit[i]) && cekKadarKolesterol(pasien, penyakit[i]) && cekTrombosit(pasien, penyakit[i]))
         {
             return penyakitList[i].name_penyakit;
         }
@@ -120,6 +122,32 @@ void diagnosis(User user){
     Ruangan ruangan;
     searchRuangan(user, &ruangan);
 
+    User* pasien;
+    for (int i = 0; i < userCount; i++)
+    {
+        if (ruangan.antrianPasien.front->idPasien == users[i].id)
+        {
+            pasien = &users[i];
+        }
+    }
+
     char namaPenyakit[MAX_NAMA_PENYAKIT];
-    strcpy(namaPenyakit, cekPenyakit(, penyakitList, penyakitCount));
+    if (isEmptyQueue(ruangan.antrianPasien))
+    {
+        printf("Tidak ada pasien untuk diperiksa!\n");
+    } else{
+        strcpy(namaPenyakit, cekPenyakit(*pasien, penyakitList, penyakitCount));
+    
+        if (strcmp(namaPenyakit, "Nothing") == 0)
+        {
+            printf("%s tidak terdiagnosis penyakit apapun!\n", ruangan.antrianPasien.front->usernamePasien);
+        } else{
+            printf("%s terdiagnosa penyakit %s!\n", ruangan.antrianPasien.front->usernamePasien, namaPenyakit);
+            strcpy(pasien->riwayat_penyakit, namaPenyakit);
+        }
+    }
+    
+    
+    
+    
 }

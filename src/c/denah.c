@@ -109,6 +109,6 @@ void denahRumahSakit(char* str){
 
     denahRumahSakit("LIHAT_SEMUA_ANTRIAN");
     return 0;
-}
-*/
-//gcc src/c/denah.c src/c/queue.c src/c/lihat_antrian.c src/c/utils.c src/c/login.c -o test
+}*/
+
+//gcc src/c/denah.c src/c/queue.c src/c/lihat_antrian.c src/c/utils.c src/c/login.c src/c/load.c -o test
