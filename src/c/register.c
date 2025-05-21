@@ -3,6 +3,7 @@
 #include "../header/login.h"
 #include "../header/load.h"
 #include "../header/user.h"
+#include "../header/boolean.h"
 //Read user.csv file and store it in users[] array.
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,6 +26,15 @@
 
 //     fclose(file);
 // }
+boolean onlyAlfabet(const char *str) {
+    while (*str) {
+        if (!((*str >= 'A' && *str <= 'Z') || (*str >= 'a' && *str <= 'z'))) {
+            return false;
+        }
+        str++;
+    }
+    return true;
+}
 
 void usernameToLowerCase(const char* username, char* lowerUsername) {
     while (*username) {
@@ -65,7 +75,14 @@ void registerUser(){
     // input username
     printf("Username: ");
     scanf("%s", newUsername);
-
+    while (!onlyAlfabet(&newUsername))
+    {
+        printf("Masukkan new username hanya dengan Huruf A-Z, a-z!!\n");
+        printf("Username: ");
+        scanf("%s", newUsername);
+    }
+    
+    
     // input password
     printf("Password: ");
     scanf("%s", newPassword);
