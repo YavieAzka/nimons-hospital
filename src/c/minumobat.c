@@ -21,7 +21,7 @@ void minumObat(Obat list[], int nomorObat){
     }
 }
 
-int main(){
+/*int main(){
     Obat inventory[MAX_OBAT] = {
         {"Paracetamol", 1}, {"Amoxicillin", 1}, {"Panadol", 1}
         // inisialisasi semua obat di inventory itu tersedia
@@ -49,4 +49,4 @@ int main(){
     } while(masihAdaObat);
     printf("Semua obat udah kamu minum. Hati-hati bisa overdosis!\n");
     return 0;
-}
+}*/

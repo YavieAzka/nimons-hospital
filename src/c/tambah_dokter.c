@@ -4,18 +4,11 @@
 #include "../header/user.h"
 #include "../header/ruangan.h"
 #include "../header/tambah_dokter.h"
+#include "../header/utils.h"
 
 // Initialize UsernameSet
 void initUsernameSet(UsernameSet *set) {
     set->count = 0;
-}
-
-// Convert a single character to lowercase
-char char_toLower(char c) {
-    if (c >= 'A' && c <= 'Z') {
-        return c + 32; // Convert to lowercase
-    }
-    return c;
 }
 
 // Convert string to lowercase for case-insensitive comparison

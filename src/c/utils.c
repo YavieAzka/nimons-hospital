@@ -99,3 +99,11 @@ int parse_int(const char* str, int* idx) {
 
     return is_negative ? -value : value;
 }
+
+char char_toLower(char c) {
+    if (c >= 'A' && c <= 'Z') {
+        return c + 32;
+    } else {
+        return c;
+    }
+}
