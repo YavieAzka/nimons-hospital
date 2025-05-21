@@ -14,7 +14,7 @@ void usernameToLowerCase(const char* username, char* lowerUsername);
 //untuk mengecek username case-insensitive
 int isUsernameUnique(const char* username, Set users, int user_count); //untuk mengecek username unik
 
-//Menambahkan data Baru ke FILE CSV
-// void appendUserToFile(const char* filename, User user);
+//Mengecek username agar only alfabet
+boolean hanyaAlfabet(const char *str);
 
 #endif
