@@ -20,32 +20,101 @@
 #include "../header/config.h"
 #include "../header/denah.h"
 
-
+void devmode(User* user, Status *status){
+    char input[50];
+    while(*status == MANAGER_LOGGED_IN){
+        printf(">>> ");
+        scanf("%s", input);
+        if (strcmp(input, "HELP") == 0) {
+            help(*user);     // dapat string hasil input setelah HELP
+        }
+        else if (strcmp(input, "REGISTER") == 0) {
+            //register_user();
+        }
+        else if (strcmp(input, "CARI_USER") == 0) {
+            cariUser();
+        }
+        else if (strcmp(input, "CARI_DOKTER") == 0) {
+            cariDokter();
+        }
+        else if (strcmp(input, "CARI_PASIEN") == 0) {
+            cariPasien();
+        } 
+        else if (strcmp(input, "LIHAT_USER") == 0) {
+            lihatUser(input);
+        }
+        else if (strcmp(input, "LIHAT_PASIEN") == 0) {
+            lihatPasien(input);
+        }
+        else if (strcmp(input, "LIHAT_DOKTER") == 0) {
+            lihatDokter(input);
+        }
+        else if (strcmp(input, "SET_ROLE") == 0) {
+            //set_role();
+        } 
+        else if (strcmp(input, "LIHAT_DENAH") == 0) {
+            denahRumahSakit(input);
+            //return;
+        }
+        else if (strcmp(input, "LIHAT_RUANGAN") == 0) {
+            char ruanganInput[10];
+            printf("Masukkan ruangan yang ingin dilihat: ");
+            scanf("%s", ruanganInput);
+            lihatRuang(ruanganInput);
+            //return;
+        }
+        else if (strcmp(input, "UBAH_DENAH") == 0) {
+            denahRumahSakit(input);
+            //return;
+        }
+        else if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0) {
+            denahRumahSakit(input);
+            //return;
+        }
+        else if (strcmp(input, "LOGOUT") == 0) {
+            logout(user, status);
+            return;
+        } 
+        else if (strcmp(input, "DIAGNOSIS") == 0) {
+            //diagnosis(*user);
+        }
+        else if (strcmp(input, "NGOBATIN") == 0) {
+            // implementasi modul ngobatin(); // placeholder
+        }
+        else if (strcmp(input, "LOGOUT") == 0) {
+            logout(user, status);
+            return;
+        
+        }
+        else if (strcmp(input, "UBAH_DENAH") == 0) {
+            denahRumahSakit(input);
+            //return;
+        }
+    }
+        
+}
 
 void handleManager(User* user, Status* status) {
     char input[50];
     while (*status == MANAGER_LOGGED_IN) {
         printf(">>> ");
         scanf("%s", input);
-
         if (strcmp(input, "HELP") == 0) {
-            char* nextCommand = help(*user);     // dapat string hasil input setelah HELP
-            strcpy(input, nextCommand);          // salin ke userInput untuk dieksekusi di loop selanjutnya
-            free(nextCommand);
+            help(*user);     // dapat string hasil input setelah HELP
         }
-        if (strcmp(input, "REGISTER") == 0) {
+        else if (strcmp(input, "REGISTER") == 0) {
             //register_user();
         }
-        if (strcmp(input, "CARI_USER") == 0) {
-            //cariUser();
+        else if (strcmp(input, "CARI_USER") == 0) {
+            cariUser();
         }
-        if (strcmp(input, "CARI_DOKTER") == 0) {
-            //cariDokter();
+        else if (strcmp(input, "CARI_DOKTER") == 0) {
+            cariDokter();
         }
-        if (strcmp(input, "CARI_PASIEN") == 0) {
-            //cariPasien();
+        else if (strcmp(input, "CARI_PASIEN") == 0) {
+            cariPasien();
         } 
-        if (strcmp(input, "LIHAT_USER") == 0) {
+        else if (strcmp(input, "LIHAT_USER") == 0) {
             lihatUser(input);
         }
         if (strcmp(input, "LIHAT_PASIEN") == 0) {
@@ -69,6 +138,10 @@ void handleManager(User* user, Status* status) {
             //return;
         }
         if (strcmp(input, "UBAH_DENAH") == 0) {
+            denahRumahSakit(input);
+            //return;
+        }
+        if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0) {
             denahRumahSakit(input);
             //return;
         }
@@ -114,7 +187,7 @@ void handleDokter(User* user, Status* status) {
             denahRumahSakit(ruanganInput);
             //return;
         }
-        if (strcmp(input, "UBAH_DENAH") == 0) {
+        else if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0) {
             denahRumahSakit(input);
             //return;
         }
@@ -132,10 +205,8 @@ void handlePasien(User* user, Status* status) {
         scanf("%s", input);
 
         if (strcmp(input, "HELP") == 0) {
-            char* nextCommand = help(*user);;  // dapat string hasil input setelah HELP
-            strcpy(input, nextCommand);          // salin ke userInput untuk dieksekusi di loop selanjutnya
-            free(nextCommand);
-        } 
+            help(*user);
+        }
         if (strcmp(input, "DAFTAR_CHECKUP") == 0) {
             // implementasi modul daftar_checkup(); // placeholder
         } 
@@ -166,7 +237,7 @@ void handlePasien(User* user, Status* status) {
             lihatRuang(ruanganInput);
             //return;
         }
-        if (strcmp(input, "UBAH_DENAH") == 0) {
+        else if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0) {
             denahRumahSakit(input);
             //return;
         }
@@ -233,9 +304,6 @@ int main(int argc, char* argv[]) {
         //================ LOGIN ================//
         if(strcmp(userInput, "LOGIN") == 0){        
             current_user = login(&current_user);
-            if(current_user.id == 9999){
-                printf("Anda belum LOGIN. Silakan melakukan register terlebih dahulu dengan mengetik [REGISTER].\n");
-            }
             if(strcmp(current_user.role, "dokter") == 0){
                 status = DOKTER_LOGGED_IN;
             }
@@ -253,6 +321,11 @@ int main(int argc, char* argv[]) {
         }
 
         //================ LOGIN END ================//
+
+        //================ LUPA PASSWORD ================
+        if(strcmp(userInput, "LUPA_PASSWORD") == 0){
+            lupaPassword();
+        }
         switch (status) {
             case MANAGER_LOGGED_IN:
                 handleManager(&current_user, &status);
