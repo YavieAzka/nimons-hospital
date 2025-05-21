@@ -48,10 +48,10 @@ void save_data(const char* folder_name) {
     if (!exists) {
         mkdir(folder_name);
         printf("Folder \"%s\" belum ada. Membuat folder baru...\n", folder_name);
-        printf("Berhasil menyimpan data di folder baru.\n");
+        printf("Berhasil menyimpan data di folder %s.\n", folder_name);
     } else if (is_folder_empty(folder_name)) {
         printf("Folder \"%s\" ditemukan dan kosong.\n", folder_name);
-        printf("Berhasil menyimpan data di folder tersebut.\n");
+        printf("Berhasil menyimpan data di folder %s.\n", folder_name);
     }
 
     // Simulasi penyimpanan data (di dunia nyata, ini ambil dari memori)
