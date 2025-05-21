@@ -29,10 +29,12 @@ User login(User* user_now) {
             printf("Silakan ketik [HELP] untuk melihat daftar perintah.\n");
         } else {
             printf("Password salah untuk user %s.\n", users[index].username);
+            printf("Lupa password? Ketika [LUPA_PASSWORD] untuk mengganti password.\n");
         }
     } else {
         printf("Pengguna dengan username \"%s\" belum terdaftar.\n", username);
-        printf("Silakan lakukan REGISTER.\n");
+        printf("Silakan lakukan REGISTER dengan mengetik [REGISTER]\n");
+        printf("atau melakukan LOGIN dengan akun yang sudah terdaftar.\n");
     }
 
     return *user_now;

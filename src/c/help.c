@@ -57,7 +57,7 @@ void print_helpMessage_manager(User usernow){
     printf("    2. Jangan lupa untuk memasukkan input yang valid.\n");
 }
 
-char* help(User userNow){
+void help(User userNow){
 
     if(strcmp(userNow.role, "manager") == 0){
         print_helpMessage_manager(userNow);
@@ -75,10 +75,6 @@ char* help(User userNow){
         printf("Role tidak valid.\n");
     }
 
-    // get user input
-    char* input = (char*)malloc(MAX_COMMAND * sizeof(char));
-    printf(">>> ");
-    scanf("%s", input);
-    return input;
+    
 }
 

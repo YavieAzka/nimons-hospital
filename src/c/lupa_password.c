@@ -36,13 +36,13 @@ boolean validasiCode(const char* username, const char* inputCode){
     return isValid;
 }
 
-void lupaPassword(User* users, int userCount) {
+void lupaPassword() {
     char username[MAX_USERNAME];
     char kodeUnik[200];
     char newPassword[MAX_PASSWORD];
 
     // Input username
-    printf("\n=== Lupa Password ===\n");
+    printf("=== Lupa Password ===\n");
     printf("Username: ");
     if (scanf("%49s", username) != 1) {
         printf("Input tidak valid\n");
@@ -89,5 +89,6 @@ void lupaPassword(User* users, int userCount) {
     strncpy(users[userIndex].password, newPassword, MAX_PASSWORD - 1);
     users[userIndex].password[MAX_PASSWORD - 1] = '\0';
     
-    printf("Password berhasil diubah untuk user %s\n", username);
+    printf("Password berhasil diubah untuk user %s.\n", username);
+    printf("Silakan melakukan login kembali dengan mengetik [LOGIN].\n");
 }
