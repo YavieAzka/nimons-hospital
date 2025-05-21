@@ -26,12 +26,12 @@
 
 //     fclose(file);
 // }
-boolean onlyAlfabet(const char *str) {
-    while (*str) {
-        if (!((*str >= 'A' && *str <= 'Z') || (*str >= 'a' && *str <= 'z'))) {
+boolean onlyAlfabet(const char *username) {
+    while (*username) {
+        if (!((*username >= 'A' && *username <= 'Z') || (*username >= 'a' && *username <= 'z'))) {
             return false;
         }
-        str++;
+        username++;
     }
     return true;
 }
