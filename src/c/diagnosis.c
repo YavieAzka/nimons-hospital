@@ -5,8 +5,7 @@
 #include "../header/load.h"
 #include "../header/ruangan.h"
 #include "../header/queue.h"
-
-#include <stdbool.h>
+#include "../header/boolean.h"
 
 #define MAX_LINE_LENGTH 1024
 #define MAX_FIELD_LENGTH 256
