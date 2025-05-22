@@ -10,7 +10,10 @@
     "global.h": "c",
     "ruangan.h": "c",
     "config.h": "c",
-    "utils.h": "c"
+    "utils.h": "c",
+    "stat.h": "c",
+    "types.h": "c",
+    "string.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }
