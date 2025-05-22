@@ -15,6 +15,6 @@ void usernameToLowerCase(const char* username, char* lowerUsername);
 int isUsernameUnique(const char* username, Set users, int user_count); //untuk mengecek username unik
 
 //Mengecek username agar only alfabet
-boolean hanyaAlfabet(const char *str);
+boolean onlyAlfabet(const char *str);
 
 #endif
