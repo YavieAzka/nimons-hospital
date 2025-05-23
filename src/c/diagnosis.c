@@ -101,7 +101,7 @@ bool cekTrombosit(User user, Penyakit penyakit){
     {
         return true;
     }
-    r eturn false;
+    return false;
 }
 
 char * cekPenyakit(User pasien){
