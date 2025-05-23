@@ -11,8 +11,6 @@ void minumObat(User* user, Inventory* inv, Stack* perut) {
     for (int i = 0; i < inv->count; i++) {
         int id = inv->obat_id[i];
         printf("%d. %s\n", i + 1, obatList[id].nama);
-    }
-
     int pilihan;
     printf("\nPilih nomor obat yang mau kamu minum (1-%d): ", inv->count);
     scanf("%d", &pilihan);
