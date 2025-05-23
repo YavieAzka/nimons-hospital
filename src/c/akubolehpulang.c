@@ -4,6 +4,7 @@
 #include "../header/diagnosis.h"
 #include "../header/help.h"
 #include "../header/minumobat.h"
+#include "../header/minumpenawar.h"
 
 bool checkDiagnosis(User *pasien) {
     if(strcmp(pasien->riwayat_penyakit, "") == 0) {
@@ -17,7 +18,7 @@ bool checkDiagnosis(User *pasien) {
 
 bool checkObatHabis(Obat list[], int jumlah) {
     bool belumHabis = false;
-    //check sudah habis atau belum
+    //check sudah habis semua atau belum
     for(int i = 0; i < jumlah; i++) {
         if(list[i].tersedia == 1) {
             belumHabis = true;
@@ -25,10 +26,6 @@ bool checkObatHabis(Obat list[], int jumlah) {
     }
 
     return belumHabis;    
-}
-
-bool checkNgobatin() {
-
 }
 
 void akuBolehPulang(User *pasien) {
@@ -45,9 +42,24 @@ void akuBolehPulang(User *pasien) {
         if() {
             //Belum menghabiskan seluruh obat
             printf("Masih ada obat yang belum kamu habiskan, minum semuanya dulu yukk! :3\n");
-        } else if() {
+        } else if(checkUrutanMinum(list, getIdPenyakitByRiwayat(pasien->riwayat_penyakit), P, urutanMinumObat, &idxUrutanMinum) == 0) {
             //Sudah minum tapi urutan salah
-            printf("Urutan peminum obat yang kamu minum:\n");
+
+            int jumlahObat = 0; //Jumlah obat yang dibinum
+            for(int i = 0; i < obatPenyakitCount; i++) {
+                P[i].IdObat = obatPenyakitList[i].id_obat;
+                P[i].urutanMinum = obatPenyakitList[i].jumlah_obat;
+                    jumlahObat++;     
+            }
+
+            printf("Urutan peminum obat yang harus kamu minum:\n");
+            for(int i = 0; i < jumlahObat; i++) {
+                if(i != jumlahObat - 1) {
+                    printf("%s -> ", getNamaObatById(P[i].IdObat));
+                } else {
+                    printf("%s", getNamaObatById(P[i].IdObat));
+                }
+            }
             printf("Silahkan kunjungi dokter untuk meminta penawar yang sesuai! :]\n");
 
         } else {
