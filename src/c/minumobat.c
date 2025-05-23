@@ -2,7 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include "../header/minumobat.h"
+#include "../header/minumpenawar.h"
 
+int idxUrutanMinum = 0;
 void daftarObat(Obat list[], int jumlah){ //array dan jumlah obat yang ada
     printf(">>> MINUM_OBAT ===========\n");
     printf("========== DAFTAR OBAT ==========\n");
@@ -16,6 +18,7 @@ void minumObat(Obat list[], int nomorObat){
     if(list[nomorObat].tersedia){
         printf("GLEKGLEKGLEK... %s berhasil diminum!!!\n\n", list[nomorObat].nama);
         list[nomorObat].tersedia = 0; //obat udah tidak tersedia abis dipilih
+        getUrutanMinum(list, nomorObat, &idxUrutanMinum);
     } else{ // Apabila obat yang dipilih tidak ada
         printf("Pilihan nomor tidak tersedia!\n");
     }

@@ -13,7 +13,9 @@
     "utils.h": "c",
     "stat.h": "c",
     "types.h": "c",
-    "string.h": "c"
+    "string.h": "c",
+    "akubolehpulang.h": "c",
+    "obatpenyakit.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

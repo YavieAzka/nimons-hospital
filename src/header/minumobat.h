@@ -9,6 +9,8 @@ typedef struct {
     int tersedia;         // 1 jika tersedia, 0 jika tidak tersedia
 } Obat;
 
+extern Obat list[MAX_OBAT];
+
 // Untuk menampilkan daftar obat yang tersedia
 void daftarObat(Obat list[], int jumlah);
 
