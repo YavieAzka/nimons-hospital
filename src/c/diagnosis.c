@@ -101,7 +101,7 @@ bool cekTrombosit(User user, Penyakit penyakit){
     {
         return true;
     }
-    return false;
+    r eturn false;
 }
 
 char * cekPenyakit(User pasien){
@@ -127,25 +127,34 @@ void diagnosis(User user){
     {
         printf("Tidak ada pasien untuk diperiksa!\n");
     } else{
-        User* pasien;
-        
-        for (int i = 0; i < userCount; i++)
+        if (ruangan.totalPasien == kapasitas_ruangan)
         {
-            if (ruangan.antrianPasien.front->idPasien == users[i].id)
-            {
-                pasien = &users[i];
-                break;
-            }
+            printf("Ruangan penuh tidak dapat mendiagnosa Pasien dalam antrian\n");
         }
+        else{
+            User* pasien;
+                
+            for (int i = 0; i < userCount; i++)
+            {
+                if (ruangan.antrianPasien.front->idPasien == users[i].id)
+                {
+                    pasien = &users[i];
+                    break;
+                }
+            }
 
-        strcpy(namaPenyakit, cekPenyakit(*pasien));
-    
-        if (strcmp(namaPenyakit, "Nothing") == 0)
-        {
-            printf("%s tidak terdiagnosis penyakit apapun!\n", ruangan.antrianPasien.front->usernamePasien);
-        } else{
-            printf("%s terdiagnosa penyakit %s!\n", ruangan.antrianPasien.front->usernamePasien, namaPenyakit);
-            strcpy(pasien->riwayat_penyakit, namaPenyakit);
+            strcpy(namaPenyakit, cekPenyakit(*pasien));
+        
+            if (strcmp(namaPenyakit, "Nothing") == 0)
+            {
+                printf("%s tidak terdiagnosis penyakit apapun!\n", ruangan.antrianPasien.front->usernamePasien);
+            } else{
+                printf("%s terdiagnosa penyakit %s!\n", ruangan.antrianPasien.front->usernamePasien, namaPenyakit);
+                strcpy(pasien->riwayat_penyakit, namaPenyakit);
+            }
+
+            dequeue(&ruangan.antrianPasien, &ruangan.idPasien[ruangan.totalPasien], &ruangan.usernamePasien[ruangan.totalPasien]); //Pasien yang telah didiagnosa masuk ke dalam ruangan
+            ruangan.totalPasien++; //menambahkan total pasien dalam ruangan
         }
     }
 }

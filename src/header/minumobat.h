@@ -1,6 +1,8 @@
 #ifndef MINUMOBAT_H
 #define MINUMOBAT_H
 
+/*header*/
+
 #include "user.h"
 #include "obat.h"
 #include "inventory.h"
