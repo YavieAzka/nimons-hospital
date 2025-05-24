@@ -27,4 +27,5 @@ void minumObat(User* user, Inventory* inv, Stack* perut) {
 
     removeInventory(inv, pilihan - 1); 
     printf("Inventory diperbarui. Obat %s udah keluar dari kantong ajaib kamu!\n", obatList[id_obat].nama);
+    }
 }
