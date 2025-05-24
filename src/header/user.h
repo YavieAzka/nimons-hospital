@@ -7,12 +7,9 @@
 #define MAX_RIWAYAT 100
 #define MAX_USERS 100
 
-
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
 
 typedef struct {
     int id;
@@ -20,6 +17,7 @@ typedef struct {
     char password[MAX_PASSWORD];
     char role[MAX_ROLE]; // "manager", "dokter", "pasien"
     char riwayat_penyakit[MAX_RIWAYAT]; // Riwayat penyakit (string deskripsi)
+
     // Atribut kesehatan pasien
     float suhu_tubuh;
     int tekanan_darah_sistolik;
@@ -32,15 +30,13 @@ typedef struct {
     int kadar_kolesterol;
     int kadar_kolesterol_ldl;
     int trombosit;
-
 } User;
 
-User* getUserData(const char* filename, int* count);
-
-extern User* users;
+extern User users[MAX_USERS];
 extern int userCount;
 
+void loadUsers(const char* filename);
+
+User* findUserByUsername(const char* username);
+
 #endif
-
-
-

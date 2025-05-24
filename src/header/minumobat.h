@@ -1,20 +1,13 @@
 #ifndef MINUMOBAT_H
 #define MINUMOBAT_H
 
-#define MAX_OBAT 3
+/*header*/
 
-// Untuk mendefinisikan obat
-typedef struct {
-    char nama[50];        // Nama obat
-    int tersedia;         // 1 jika tersedia, 0 jika tidak tersedia
-} Obat;
+#include "user.h"
+#include "obat.h"
+#include "inventory.h"
+#include "stack.h"
 
-extern Obat list[MAX_OBAT];
-
-// Untuk menampilkan daftar obat yang tersedia
-void daftarObat(Obat list[], int jumlah);
-
-// Untuk minum obat
-void minumObat(Obat list[], int nomorObat);
+void minumObat(User* user, Inventory* inv, Stack* perut);
 
 #endif 

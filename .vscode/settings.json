@@ -15,7 +15,8 @@
     "types.h": "c",
     "string.h": "c",
     "akubolehpulang.h": "c",
-    "obatpenyakit.h": "c"
+    "obatpenyakit.h": "c",
+    "inventory.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }
