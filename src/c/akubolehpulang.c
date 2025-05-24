@@ -47,7 +47,7 @@ int getjumlahObat(User *pasien) {
 }
 
 //Dipanggil kalau semua obat sudah habis
-int checkUrutanObat(User *pasien, Stack *perut, Inventory *inv) {
+int checkUrutanObat(User *pasien, Stack *perut) {
     //Cek isi perut (Cek urutan_minum dari obat yang sudah diminum sesuai atau tidak)
     int urutBenar = 1;
     int nomorUrutan = 9999;
@@ -110,7 +110,7 @@ void akubolehpulang(User *pasien, Stack *perut, Inventory *inv) {
         if(inv->count != 0) {
             printf("Masih ada obat yang belum kamu habiskan, minum semuanya dulu yukk! :3\n");
 
-        } else if(inv->count == 0 && checkUrutanObat(pasien, perut, inv) == 0){ 
+        } else if(inv->count == 0 && checkUrutanObat(pasien, perut) == 0){ 
             // Urutan salah
             printf("Urutan obat yang diharapkan:\n");
             urutanHarapan(pasien, perut, inv);
