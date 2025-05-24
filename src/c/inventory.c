@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "inventory.h"
-#include "obat.h"
+#include "../header/inventory.h"
+#include "../header/obat.h"
 
 void initInventory(Inventory* inv) {
     inv->count = 0;

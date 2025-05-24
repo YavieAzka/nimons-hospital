@@ -1,4 +1,4 @@
-#include "stack.h"
+#include "../header/stack.h"
 
 void initStack(Stack* s) {
     s->top = -1;

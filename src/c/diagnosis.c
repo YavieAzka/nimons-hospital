@@ -153,7 +153,7 @@ void diagnosis(User user){
                 strcpy(pasien->riwayat_penyakit, namaPenyakit);
             }
 
-            dequeue(&ruangan.antrianPasien, &ruangan.idPasien[ruangan.totalPasien], &ruangan.usernamePasien[ruangan.totalPasien]); //Pasien yang telah didiagnosa masuk ke dalam ruangan
+            dequeue(&ruangan.antrianPasien, &ruangan.idPasien[ruangan.totalPasien], ruangan.usernamePasien[ruangan.totalPasien]); //Pasien yang telah didiagnosa masuk ke dalam ruangan
             ruangan.totalPasien++; //menambahkan total pasien dalam ruangan
         }
     }
