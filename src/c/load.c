@@ -11,7 +11,7 @@
 
 
 // Variabel global
-User* users = NULL;
+User users[MAX_USERS];
 int userCount = 0;
 
 Obat* obatList = NULL;
@@ -318,36 +318,22 @@ void str_toLower(char *str) {
     }
 }
 
-User* getUserData(const char* filename, int* user_count) {
+void getUserData(const char* filename) {
     FILE* file = fopen(filename, "r");
-    if (file == NULL) {
-        printf("Error: Could not open file %s\n", filename);
-        return NULL;
+    if (!file) {
+        printf("Error: Cannot open file %s\n", filename);
+        return;
     }
-    
-    User* users = (User*)malloc(MAX_USERS * sizeof(User));
-    if (users == NULL) {
-        printf("Error: Memory allocation failed\n");
-        fclose(file);
-        return NULL;
-    }
-    
+
     char line[MAX_LINE_LENGTH];
     int line_count = 0;
-    *user_count = 0;
-    
-    // Baca file baris per baris
-    while (fgets(line, MAX_LINE_LENGTH, file) != NULL) {
-        line_count++;
-        
-        // Lewati baris header atau baris yang dimulai dengan //
-        if (line_count == 1 || (line[0] == '/' && line[1] == '/')) {
-            continue;
-        }
-        
-        User current_user = {0}; // Inisialisasi semua nilai dengan nol
-        
-        // Proses setiap atribut menggunakan fungsi spesifik
+    userCount = 0;
+
+    while (fgets(line, MAX_LINE_LENGTH, file)) {
+        if (++line_count == 1) continue;
+
+        User current_user = {0};
+
         current_user.id = getId(line);
         getUsername(line, current_user.username);
         getPassword(line, current_user.password);
@@ -364,21 +350,14 @@ User* getUserData(const char* filename, int* user_count) {
         current_user.kadar_kolesterol = getKadarKolesterol(line);
         current_user.kadar_kolesterol_ldl = getKadarKolesterolLDL(line);
         current_user.trombosit = getTrombosit(line);
-        
-        // Tambahkan user ke array users
-        users[*user_count] = current_user;
-        (*user_count)++;
-        
-        // Periksa jika melebihi batas maksimum user
-        if (*user_count >= MAX_USERS) {
-            printf("Warning: Maximum number of users reached (%d)\n", MAX_USERS);
-            break;
-        }
+
+        users[userCount++] = current_user;
+        if (userCount >= MAX_USERS) break;
     }
-    
+
     fclose(file);
-    return users;
 }
+
 
 const char* getUsernameById(int id) {
     for (int i = 0; i < userCount; i++) {
@@ -495,7 +474,7 @@ void load_all_data(const char* folder) {
     char path[256];
 
     sprintf(path, "%s/user.csv", folder);
-    users = getUserData(path, &userCount);
+    getUserData(path);
 
     sprintf(path, "%s/obat.csv", folder);
     obatList = getObatData(path, &obatCount);

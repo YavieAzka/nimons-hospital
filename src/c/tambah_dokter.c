@@ -1,133 +1,77 @@
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
 #include "../header/user.h"
 #include "../header/ruangan.h"
 #include "../header/tambah_dokter.h"
 #include "../header/utils.h"
+#include "../header/set.h"
+#include "../header/config.h"
 
-// Initialize UsernameSet
-void initUsernameSet(UsernameSet *set) {
-    set->count = 0;
-}
+extern User users[MAX_USERS];
+extern int userCount;
+extern Ruangan ruanganList[MAX_RUANGAN][MAX_RUANGAN];
+extern int panjang_denah, lebar_denah;
 
-// Convert string to lowercase for case-insensitive comparison
+Set usernameSet;
+
 void toLowerCase(const char *str, char *result) {
-    for (int i = 0; str[i]; i++) {
+    int i = 0;
+    while (str[i]) {
         result[i] = char_toLower(str[i]);
+        i++;
     }
-    result[strlen(str)] = '\0';
+    result[i] = '\0';
 }
 
-// Check if username exists in set (case-insensitive)
-int isUsernameExists(UsernameSet *set, const char *username) {
-    char lowerUsername[MAX_USERNAME];
-    char lowerSetUsername[MAX_USERNAME];
-    toLowerCase(username, lowerUsername);
-    
-    for (int i = 0; i < set->count; i++) {
-        toLowerCase(set->usernames[i], lowerSetUsername);
-        if (strcmp(lowerUsername, lowerSetUsername) == 0) {
-            return 1; // Username exists
-        }
-    }
-    return 0; // Username does not exist
-}
-
-// Add username to set
-void addUsernameToSet(UsernameSet *set, const char *username) {
-    if (set->count < MAX_SET_SIZE) {
-        strcpy(set->usernames[set->count], username);
-        set->count++;
-    }
-}
-
-// Validate username (letters only)
-int isValidUsername(const char *username) {
+int isValidUsername(const char* username) {
     for (int i = 0; username[i]; i++) {
         if (!((username[i] >= 'A' && username[i] <= 'Z') || (username[i] >= 'a' && username[i] <= 'z'))) {
-            return 0; // Invalid if contains non-letter characters
+            return 0;
         }
     }
     return 1;
 }
 
-// Find next available user ID
-int getNextUserId(User *users, int userCount) {
+int getNextUserId() {
     int maxId = 0;
     for (int i = 0; i < userCount; i++) {
-        if (users[i].id > maxId) {
-            maxId = users[i].id;
-        }
+        if (users[i].id > maxId) maxId = users[i].id;
     }
     return maxId + 1;
 }
 
-// Find available room (kept for potential future use)
-int findAvailableRoom(Ruangan *ruangan, int ruanganCount) {
-    for (int i = 0; i < ruanganCount; i++) {
-        if (ruangan[i].idDokter == 0) {
-            return i;
-        }
-    }
-    return -1;
-}
-
-// Read config.txt to determine ruanganCount
-int readHospitalSize() {
-    FILE *file = fopen("../../data/config.txt", "r");
-    if (!file) {
-        printf("Gagal membuka config.txt\n");
-        return -1;
+void tambahDokter() {
+    // Initialize usernameSet from existing users
+    createEmptySet(&usernameSet);
+    for (int i = 0; i < userCount; i++) {
+        insert(&usernameSet, users[i].username);
     }
 
-    int rows, columns;
-    if (fscanf(file, "%d %d", &rows, &columns) != 2) {
-        printf("Gagal membaca ukuran rumah sakit dari config.txt\n");
-        fclose(file);
-        return -1;
-    }
-
-    fclose(file);
-    int ruanganCount = rows * columns;
-    if (ruanganCount <= 0) {
-        printf("Ukuran rumah sakit tidak valid (ruanganCount = %d, maksimum = %d)\n", ruanganCount, 1000);
-        return -1;
-    }
-
-    return ruanganCount;
-}
-
-// Procedure to add a new doctor
-void tambahDokter(User *users, int *userCount, UsernameSet *usernameSet) {
-    if (*userCount >= MAX_USERS) {
+    if (userCount >= MAX_USERS) {
         printf("Kapasitas pengguna penuh!\n");
         return;
     }
 
-    char username[MAX_USERNAME];
-    char password[MAX_PASSWORD];
+    char username[MAX_USERNAME], password[MAX_PASSWORD];
+
     printf("Masukkan username dokter baru: ");
     scanf("%s", username);
 
-    // Validate username format
     if (!isValidUsername(username)) {
-        printf("Username hanya boleh terdiri dari huruf besar dan kecil!\n");
+        printf("Username hanya boleh terdiri dari huruf!\n");
         return;
     }
 
-    // Validate username uniqueness
-    if (isUsernameExists(usernameSet, username)) {
-        printf("Username sudah digunakan! Silakan pilih username lain.\n");
+    if (contains(usernameSet, username)) {
+        printf("Username sudah digunakan. Silakan pilih username lain.\n");
         return;
     }
 
     printf("Masukkan password dokter baru: ");
     scanf("%s", password);
 
-    // Add new doctor to users
     User newDokter;
-    newDokter.id = getNextUserId(users, *userCount);
+    newDokter.id = getNextUserId();
     strcpy(newDokter.username, username);
     strcpy(newDokter.password, password);
     strcpy(newDokter.role, "dokter");
@@ -144,98 +88,108 @@ void tambahDokter(User *users, int *userCount, UsernameSet *usernameSet) {
     newDokter.kadar_kolesterol_ldl = 0;
     newDokter.trombosit = 0;
 
-    users[*userCount] = newDokter;
-    (*userCount)++;
-    addUsernameToSet(usernameSet, username);
+    users[userCount++] = newDokter;
+    insert(&usernameSet, username);
+
     printf("Dokter %s berhasil ditambahkan dengan ID %d.\n", username, newDokter.id);
 }
 
-// Procedure to assign a doctor to a room
-void assignDokter(User *users, int userCount, Ruangan *ruangan, int ruanganCount) {
+void assignDokter() {
     char username[MAX_USERNAME];
     printf("Masukkan username dokter yang akan diassign: ");
     scanf("%s", username);
 
-    // Find the doctor
-    int doctorIndex = -1;
+    int dokterId = -1;
     for (int i = 0; i < userCount; i++) {
         if (strcmp(users[i].username, username) == 0 && strcmp(users[i].role, "dokter") == 0) {
-            doctorIndex = i;
+            dokterId = users[i].id;
             break;
         }
     }
 
-    if (doctorIndex == -1) {
+    if (dokterId == -1) {
         printf("Dokter dengan username %s tidak ditemukan.\n", username);
         return;
     }
 
-    // Check if doctor is already assigned to a room
-    for (int i = 0; i < ruanganCount; i++) {
-        if (ruangan[i].idDokter == users[doctorIndex].id) {
-            printf("Dokter %s sudah diassign ke ruangan %d.\n", username, i + 1);
-            return;
+    // Cek apakah sudah diassign ke suatu ruangan
+    for (int i = 0; i < panjang_denah; i++) {
+        for (int j = 0; j < lebar_denah; j++) {
+            if (ruanganList[i][j].idDokter == dokterId) {
+                printf("Dokter sudah diassign ke ruangan %c%d.\n", 'A' + i, j + 1);
+                return;
+            }
         }
     }
 
-    // Prompt for room number (1-based)
-    int roomNumber;
-    printf("Masukkan nomor ruangan (1-%d): ", ruanganCount);
-    scanf("%d", &roomNumber);
+    char input[10];
+    printf("Masukkan kode ruangan (misal A1, B3, dst): ");
+    scanf("%s", input);
 
-    // Validate room number
-    if (roomNumber < 1 || roomNumber > ruanganCount) {
-        printf("Nomor ruangan tidak valid. Harus antara 1 dan %d.\n", ruanganCount);
+    // Validasi panjang input minimal 2 (1 huruf + 1 digit)
+    if (strlen(input) < 2) {
+        printf("Format ruangan tidak valid.\n");
         return;
     }
 
-    // Convert to 0-based index
-    int roomIndex = roomNumber - 1;
-
-    // Check if room is already occupied
-    if (ruangan[roomIndex].idDokter != 0) {
-        printf("Ruangan %d sudah diisi oleh dokter %s.\n", roomNumber, ruangan[roomIndex].usernameDokter);
+    char rowChar = input[0];
+    if (rowChar < 'A' || rowChar >= 'A' + panjang_denah) {
+        printf("Baris tidak valid. Maksimum baris adalah %c.\n", 'A' + panjang_denah - 1);
         return;
     }
 
-    // Assign doctor to room
-    ruangan[roomIndex].idDokter = users[doctorIndex].id;
-    strcpy(ruangan[roomIndex].usernameDokter, username);
-    ruangan[roomIndex].totalPasien = 0;
-    initQueue(&ruangan[roomIndex].antrianPasien);
-    printf("Dokter %s diassign ke ruangan %d.\n", username, roomNumber);
+    int row = rowChar - 'A';
+    int col = atoi(input + 1) - 1;
+
+    if (col < 0 || col >= lebar_denah) {
+        printf("Kolom tidak valid. Harus antara 1 hingga %d.\n", lebar_denah);
+        return;
+    }
+
+    // Cek apakah ruangan sudah diisi
+    if (ruanganList[row][col].idDokter != 0) {
+        printf("Ruangan %c%d sudah diisi oleh dokter %s.\n", 'A' + row, col + 1, ruanganList[row][col].usernameDokter);
+        return;
+    }
+
+    // Assign dokter
+    ruanganList[row][col].idDokter = dokterId;
+    strcpy(ruanganList[row][col].usernameDokter, username);
+    ruanganList[row][col].totalPasien = 0;
+    initQueue(&ruanganList[row][col].antrianPasien);
+
+    printf("Dokter %s berhasil diassign ke ruangan %c%d.\n", username, 'A' + row, col + 1);
 }
 
-// Procedure to display doctors and their assigned rooms
-void tampilkanDokterDanRuangan(User *users, int userCount, Ruangan *ruangan, int ruanganCount) {
-    printf("\nDaftar Dokter dan Ruangan:\n");
+void tampilkanDokterDanRuangan() {
     printf("ID\tUsername\tRuangan\n");
-    printf("--------------------------------\n");
+    printf("------------------------------------\n");
 
     int found = 0;
     for (int i = 0; i < userCount; i++) {
         if (strcmp(users[i].role, "dokter") == 0) {
             found = 1;
             printf("%d\t%s\t\t", users[i].id, users[i].username);
-            
-            // Check if the doctor is assigned to a room
-            int roomAssigned = -1;
-            for (int j = 0; j < ruanganCount; j++) {
-                if (ruangan[j].idDokter == users[i].id) {
-                    roomAssigned = j;
-                    break;
+
+            int assigned = 0;
+            for (int x = 0; x < panjang_denah; x++) {
+                for (int y = 0; y < lebar_denah; y++) {
+                    if (ruanganList[x][y].idDokter == users[i].id) {
+                        printf("(%d,%d)\n", x + 1, y + 1);
+                        assigned = 1;
+                        break;
+                    }
                 }
+                if (assigned) break;
             }
-            if (roomAssigned != -1) {
-                printf("Ruangan %d\n", roomAssigned + 1);
-            } else {
-                printf("Belum diassign\n");
-            }
+
+            if (!assigned) printf("Belum diassign\n");
         }
     }
 
     if (!found) {
         printf("Tidak ada dokter yang terdaftar.\n");
     }
-    printf("--------------------------------\n");
+
+    printf("------------------------------------\n");
 }
