@@ -1,0 +1,150 @@
+#include "daftar-check-up.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+bool sudahTerdaftar(int pasienID) {
+    for (int i = 0; i < panjang_denah_eff; i++) {
+        for (int j = 0; j < lebar_denah_eff; j++) {
+            Node* current = ruanganList[i][j].antrian.front;
+            while (current != NULL) {
+                if (current->idPasien == pasienID) return true;
+                current = current->next;
+            }
+        }
+    }
+    return false;
+}
+
+void daftarCheckUp(User* userNow) {
+    if (sudahTerdaftar(userNow->id)) {
+        printf("\nEh, kamu udah daftar buat check-up nih!\n");
+        printf("Yuk, tunggu giliran dulu. Nanti aja daftarnya lagi.\n");
+        return;
+    }
+
+    printf("\n--- FORMULIR CHECK-UP PASIEN ---\n");
+    printf("Masukin data kesehatan kamu dulu ya. Jangan asal, ini penting!\n");
+
+    float suhu;
+    int sistol, diastol, detak;
+    float saturasi;
+    int gula;
+    float berat;
+    int tinggi;
+    int kolesterol, ldl, trombosit;
+
+    do {
+        printf("Suhu Tubuh (°C): ");
+        scanf("%f", &suhu);
+        if (suhu <= 0) printf("Suhu tubuh harus di atas nol yaa.\n");
+    } while (suhu <= 0);
+
+    do {
+        printf("Tekanan Darah (sistol dan diastol): ");
+        scanf("%d %d", &sistol, &diastol);
+        if (sistol <= 0 || diastol <= 0) printf("Hmm... tekanan darah gak bisa negatif dong.\n");
+    } while (sistol <= 0 || diastol <= 0);
+
+    do {
+        printf("Detak Jantung (bpm): ");
+        scanf("%d", &detak);
+        if (detak <= 0) printf("Detak jantung kamu ilang? Masukin lagi yg bener.\n");
+    } while (detak <= 0);
+
+    do {
+        printf("Saturasi Oksigen (%%): ");
+        scanf("%f", &saturasi);
+        if (saturasi <= 0) printf("Jangan ngasal... Napas dulu baru isi!\n");
+    } while (saturasi <= 0);
+
+    do {
+        printf("Gula Darah (mg/dL): ");
+        scanf("%d", &gula);
+        if (gula <= 0) printf("Manis dikit gapapa, asal jangan kosong!\n");
+    } while (gula <= 0);
+
+    do {
+        printf("Berat Badan (kg): ");
+        scanf("%f", &berat);
+        if (berat <= 0) printf("Yakin berat badan kamu 0? Coba isi ulang.\n");
+    } while (berat <= 0);
+
+    do {
+        printf("Tinggi Badan (cm): ");
+        scanf("%d", &tinggi);
+        if (tinggi <= 0) printf("Coba diukur lagi tinggi badannya.\n");
+    } while (tinggi <= 0);
+
+    do {
+        printf("Kolesterol Total (mg/dL): ");
+        scanf("%d", &kolesterol);
+        if (kolesterol <= 0) printf("Kolesterol gak boleh minus yaa.\n");
+    } while (kolesterol <= 0);
+
+    do {
+        printf("Kolesterol LDL (mg/dL): ");
+        scanf("%d", &ldl);
+        if (ldl <= 0) printf("LDL-nya juga jangan kosongin dong.\n");
+    } while (ldl <= 0);
+
+    do {
+        printf("Trombosit (ribu/µL): ");
+        scanf("%d", &trombosit);
+        if (trombosit <= 0) printf("Trombositnya harus diisi yang bener yaa.\n");
+    } while (trombosit <= 0);
+
+    userNow->suhu_tubuh = suhu;
+    userNow->tekanan_darah_sistolik = sistol;
+    userNow->tekanan_darah_diastolik = diastol;
+    userNow->detak_jantung = detak;
+    userNow->saturasi_oksigen = saturasi;
+    userNow->kadar_gula_darah = gula;
+    userNow->berat_badan = berat;
+    userNow->tinggi_badan = tinggi;
+    userNow->kadar_kolesterol = kolesterol;
+    userNow->kadar_kolesterol_ldl = ldl;
+    userNow->trombosit = trombosit;
+
+    printf("\n--- DOKTER YANG SIAP NANGGEPIN KAMU ---\n");
+    int opsi[100][2];
+    int count = 0;
+
+    for (int i = 0; i < panjang_denah_eff; i++) {
+        for (int j = 0; j < lebar_denah_eff; j++) {
+            if (ruanganList[i][j].dokter.id != -1) {
+                printf("%d. Dr. %s - Ruangan %s (Antrian: %d pasien)\n",
+                    count + 1,
+                    ruanganList[i][j].dokter.username,
+                    ruanganList[i][j].nama,
+                    ruanganList[i][j].antrian.length);
+                opsi[count][0] = i;
+                opsi[count][1] = j;
+                count++;
+            }
+        }
+    }
+
+    if (count == 0) {
+        printf("Ups... Semua dokter lagi istirahat nih. Coba lagi nanti ya!\n");
+        return;
+    }
+
+    int pilihan;
+    do {
+        printf("Pilih dokter (1 - %d): ", count);
+        scanf("%d", &pilihan);
+        if (pilihan < 1 || pilihan > count) {
+            printf("Nomor pilihan gak valid, cek daftar lagi yaa!\n");
+        }
+    } while (pilihan < 1 || pilihan > count);
+
+    int i = opsi[pilihan - 1][0];
+    int j = opsi[pilihan - 1][1];
+    enqueue(&ruanganList[i][j].antrian, userNow->id, userNow->username);
+
+    printf("\nMantap! Check-up kamu udah masuk daftar.\n");
+    printf("Antrian kamu sekarang di Dr. %s - Ruangan %s\n",
+           ruanganList[i][j].dokter.username,
+           ruanganList[i][j].nama);
+    printf("Nomor urut kamu: %d\n", ruanganList[i][j].antrian.length);
+}
