@@ -97,6 +97,7 @@ void registerUser(){
         strcpy(users[userCount].username, newUsername);
         strcpy(users[userCount].password, newPassword);
         strcpy(users[userCount].role, "pasien");
+        strcpy(users[userCount].id, userCount + 1);
 
         userCount = userCount + 1;
 
