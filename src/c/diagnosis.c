@@ -101,7 +101,7 @@ bool cekTrombosit(User user, Penyakit penyakit){
     {
         return true;
     }
-    r eturn false;
+    return false;
 }
 
 char * cekPenyakit(User pasien){
@@ -151,9 +151,9 @@ void diagnosis(User user){
             }
 
         } else{
-            printf("Kamu sudah terdiagnosis, segera menuju ke Ngobatin.\n")
+            printf("Kamu sudah terdiagnosis, segera menuju ke Ngobatin.\n");
         }
         
-        
+
     }
 }
