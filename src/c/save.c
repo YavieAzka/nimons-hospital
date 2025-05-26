@@ -56,17 +56,71 @@ void save_data(const char* folder_name) {
 
     // Simulasi penyimpanan data (di dunia nyata, ini ambil dari memori)
     snprintf(path, sizeof(path), "%s/user.csv", folder_name);
-    write_file(path, "id,nama,role\n1,Alice,dokter\n");
-
+    write_file(path,
+    "id;username;password;role;riwayat_penyakit;suhu_tubuh;"
+    "tekanan_darah_sistolik;tekanan_darah_diastolik;detak_jantung;"
+    "saturasi_oksigen;kadar_gula_darah;berat_badan;tinggi_badan;"
+    "kadar_kolesterol;kadar_kolesterol_ldl;trombosit\n"
+    "1;nimonsslatte;nimonatutgajah23;manager;;;;;;;;;;;;\n"
+    "2;neroifa;Neroifa123;dokter;maag;36.5;120;80;65;98;110;60;165;200;120;250000\n"
+    "3;gro;NeirofaCantik123;pasien;;;;;;;;;;;;\n"
+    "4;furinadefontaine;sekaiwonekkyounouzuni;pasien;;;;;;;;;;;;\n"
+    "5;jeje;NewJeje;pasien;;;;;;;;;;;;\n"
+    );
+    
     snprintf(path, sizeof(path), "%s/obat.csv", folder_name);
-    write_file(path, "id,nama,stok\n101,Paracetamol,50\n");
+    write_file(path,
+        "obat_id;nama_obat\n"
+        "1;Oseltamivir\n"
+        "2;Vitamin C\n"
+        "3;Remdesivir\n"
+        "4;Lisinopril\n"
+        "5;Metformin\n"
+    );
 
     snprintf(path, sizeof(path), "%s/penyakit.csv", folder_name);
-    write_file(path, "id,nama\n201,Demam\n");
+    write_file(path,
+        "id;nama_penyakit;suhu_tubuh_min;suhu_tubuh_max;"
+        "tekanan_darah_sistolik_min;tekanan_darah_sistolik_max;"
+        "tekanan_darah_diastolik_min;tekanan_darah_diastolik_max;"
+        "detak_jantung_min;detak_jantung_max;saturasi_oksigen_min;"
+        "saturasi_oksigen_max;kadar_gula_darah_min;kadar_gula_darah_max;"
+        "berat_badan_min;berat_badan_max;tinggi_badan_min;tinggi_badan_max;"
+        "kadar_kolesterol_min;kadar_kolesterol_max;trombosit_min;trombosit_max\n"
+    
+        "1;Influenza;36.0;38.5;90;120;60;80;60;100;95.0;100.0;70.0;140.0;45.0;90.0;150;185;150;240;150;450\n"
+        "2;COVID-19;36.0;39.0;90;130;60;85;60;120;90.0;100.0;70.0;180.0;45.0;90.0;150;185;150;240;150;450\n"
+        "3;Hipertensi;36.0;37.5;140;180;90;120;60;100;90.0;100.0;70.0;140.0;45.0;90.0;150;185;150;240;150;450\n"
+        "4;Diabetes Mellitus;36.0;37.5;90;140;60;90;60;100;90.0;100.0;126.0;200.0;45.0;90.0;150;185;150;240;150;450\n"
+        "5;Anemia;36.0;37.0;90;120;60;80;60;100;95.0;100.0;70.0;140.0;45.0;90.0;150;185;150;240;150;450\n"
+    );
 
     snprintf(path, sizeof(path), "%s/obat_penyakit.csv", folder_name);
-    write_file(path, "obat_id,penyakit_id\n101,201\n");
+    write_file(path,
+        "obat_id;penyakit_id;urutan_minum\n"
+        "1;1;1\n"
+        "2;1;2\n"
+        "3;2;1\n"
+        "4;3;1\n"
+        "5;4;1\n"
+        "3;5;1\n"
+        "4;5;3\n"
+        "5;5;2\n"
+    );
 
     snprintf(path, sizeof(path), "%s/config.txt", folder_name);
-    write_file(path, "konfigurasi=default\n");
+    write_file(path,
+        "2 3\n"
+        "3\n"
+        "2 3 4 5\n"
+        "0\n"
+        "0\n"
+        "0\n"
+        "0\n"
+        "0\n"
+        "2\n"
+        "3 1 2 3 4\n"
+        "5 2 3 42 3\n"
+    );
+
 }

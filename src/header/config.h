@@ -9,6 +9,7 @@
 extern int panjang_denah;
 extern int lebar_denah;
 extern int kapasitas_ruangan;
+extern int kapasitas_antrian;
 extern int jumlah_ruangan;
 extern int panjang_denah_eff;
 extern int lebar_denah_eff;

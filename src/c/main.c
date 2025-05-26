@@ -19,6 +19,10 @@
 #include "../header/load.h"
 #include "../header/config.h"
 #include "../header/denah.h"
+#include "../header/exit.h"
+#include "../header/save.h"
+#include "../header/tambah_dokter.h"
+#include "../header/stack.h"
 
 void devmode(User* user, Status *status){
     char input[50];
@@ -27,6 +31,12 @@ void devmode(User* user, Status *status){
         scanf("%s", input);
         if (strcmp(input, "HELP") == 0) {
             help(*user);     // dapat string hasil input setelah HELP
+        }
+        else if(strcmp(input, "TAMBAH_DOKTER") == 0){
+            tambahDokter();
+        }
+        else if(strcmp(input, "ASSIGN_DOKTER") == 0){
+            assignDokter();
         }
         else if (strcmp(input, "REGISTER") == 0) {
             //register_user();
@@ -51,6 +61,7 @@ void devmode(User* user, Status *status){
         }
         else if (strcmp(input, "SET_ROLE") == 0) {
             //set_role();
+            
         } 
         else if (strcmp(input, "LIHAT_DENAH") == 0) {
             denahRumahSakit(input);
@@ -89,6 +100,11 @@ void devmode(User* user, Status *status){
         else if (strcmp(input, "UBAH_DENAH") == 0) {
             denahRumahSakit(input);
             //return;
+        }
+        else if(strcmp(input, "EXIT") == 0){
+            //exit_program();
+            *status = EXIT;
+            return;
         }
     }
         
@@ -145,6 +161,12 @@ void handleManager(User* user, Status* status) {
             denahRumahSakit(input);
             //return;
         }
+        else if(strcmp(input, "TAMBAH_DOKTER") == 0){
+            tambahDokter();
+        }
+        else if(strcmp(input, "ASSIGN_DOKTER") == 0){
+            assignDokter();
+        }
         if (strcmp(input, "LOGOUT") == 0) {
             logout(user, status);
             return;
@@ -169,7 +191,7 @@ void handleDokter(User* user, Status* status) {
             // implementasi modul lihat_antrian(); // placeholder
         }
         if (strcmp(input, "DIAGNOSIS") == 0) {
-            //diagnosis(*user);
+            diagnosis(*user);
         }
         if (strcmp(input, "NGOBATIN") == 0) {
             // implementasi modul ngobatin(); // placeholder
@@ -240,12 +262,12 @@ void handlePasien(User* user, Status* status) {
         else if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0) {
             denahRumahSakit(input);
             //return;
-        }
-        if (strcmp(input, "EXIT") == 0) {
-            *status = EXIT;
-            return;
         } 
-        
+        else if(strcmp(input, "EXIT") == 0){
+            *status = EXIT;
+            //exit_program();
+            return;
+        }
     }
 }
 
@@ -298,7 +320,7 @@ int main(int argc, char* argv[]) {
             strcpy(current_user.username, "sankai");
             strcpy(current_user.role, "manager");
             printf("[Konnichiwa, Developer-san! Semangat ngodingnya!! Langsung ketik [HELP] saja kalau lupa commandnya >V<] \n");
-            handleManager(&current_user, &status);
+            devmode(&current_user, &status);
         }
 
         //================ LOGIN ================//
@@ -346,7 +368,7 @@ int main(int argc, char* argv[]) {
 }
 
 // gcc src/c/main.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/denah.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lihat_antrian.c src/c/queue.c src/c/lupa_password.c -o main
-
+// gcc src/c/main.c src/c/stack.c src/c/diagnosis.c src/c/tambah_dokter.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/denah.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lihat_antrian.c src/c/queue.c src/c/lupa_password.c -o main
 /*
 
 Applied module:

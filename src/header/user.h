@@ -7,40 +7,34 @@
 #define MAX_RIWAYAT 100
 #define MAX_USERS 100
 
-
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
+#include "stack.h"
 
 typedef struct {
     int id;
     char username[MAX_USERNAME];
     char password[MAX_PASSWORD];
     char role[MAX_ROLE]; // "manager", "dokter", "pasien"
-    char riwayat_penyakit[MAX_RIWAYAT]; // Riwayat penyakit (string deskripsi)
+    char riwayat_penyakit[MAX_RIWAYAT]; 
+
     // Atribut kesehatan pasien
     float suhu_tubuh;
     int tekanan_darah_sistolik;
     int tekanan_darah_diastolik;
     int detak_jantung;
-    int saturasi_oksigen;
+    float saturasi_oksigen;
     int kadar_gula_darah;
     float berat_badan;
-    float tinggi_badan;
+    int tinggi_badan;                  
     int kadar_kolesterol;
     int kadar_kolesterol_ldl;
     int trombosit;
-
+    Stack perut;
 } User;
 
-User* getUserData(const char* filename, int* count);
-
-extern User* users;
+extern User users[MAX_USERS];
 extern int userCount;
 
 #endif
-
-
-

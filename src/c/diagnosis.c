@@ -121,7 +121,6 @@ char * cekPenyakit(User pasien){
 void diagnosis(User user){
     Ruangan ruangan;
     searchRuangan(user, &ruangan);
-
     char namaPenyakit[MAX_NAMA_PENYAKIT];
     if (isEmptyQueue(&ruangan.antrianPasien))
     {
@@ -153,7 +152,11 @@ void diagnosis(User user){
                 strcpy(pasien->riwayat_penyakit, namaPenyakit);
             }
 
+<<<<<<< HEAD
             dequeue(&ruangan.antrianPasien, &ruangan.idPasien[ruangan.totalPasien], &ruangan.usernamePasien[ruangan.totalPasien]); //Pasien yang telah didiagnosa masuk ke dalam ruangan
+=======
+            dequeue(&ruangan.antrianPasien, &ruangan.idPasien[ruangan.totalPasien], ruangan.usernamePasien[ruangan.totalPasien]); //Pasien yang telah didiagnosa masuk ke dalam ruangan
+>>>>>>> main
             ruangan.totalPasien++; //menambahkan total pasien dalam ruangan
         }
     }

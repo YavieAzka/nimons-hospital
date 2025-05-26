@@ -6,12 +6,13 @@
 #include "../header/load.h"
 #include "../header/config.h"
 #include "../header/queue.h"
+#include "../header/stack.h"
 
 #define MAX_MAPPING 100
 
 
 // Variabel global
-User* users = NULL;
+User users[MAX_USERS];
 int userCount = 0;
 
 Obat* obatList = NULL;
@@ -27,6 +28,7 @@ int obatPenyakitCount = 0;
 int panjang_denah = 0;
 int lebar_denah = 0;
 int kapasitas_ruangan = 0;
+int kapasitas_antrian = 0;
 int jumlah_ruangan = 0;
 
 Ruangan ruanganList[MAX_RUANGAN][MAX_RUANGAN];
@@ -318,36 +320,22 @@ void str_toLower(char *str) {
     }
 }
 
-User* getUserData(const char* filename, int* user_count) {
+void getUserData(const char* filename) {
     FILE* file = fopen(filename, "r");
-    if (file == NULL) {
-        printf("Error: Could not open file %s\n", filename);
-        return NULL;
+    if (!file) {
+        printf("Error: Cannot open file %s\n", filename);
+        return;
     }
-    
-    User* users = (User*)malloc(MAX_USERS * sizeof(User));
-    if (users == NULL) {
-        printf("Error: Memory allocation failed\n");
-        fclose(file);
-        return NULL;
-    }
-    
+
     char line[MAX_LINE_LENGTH];
     int line_count = 0;
-    *user_count = 0;
-    
-    // Baca file baris per baris
-    while (fgets(line, MAX_LINE_LENGTH, file) != NULL) {
-        line_count++;
-        
-        // Lewati baris header atau baris yang dimulai dengan //
-        if (line_count == 1 || (line[0] == '/' && line[1] == '/')) {
-            continue;
-        }
-        
-        User current_user = {0}; // Inisialisasi semua nilai dengan nol
-        
-        // Proses setiap atribut menggunakan fungsi spesifik
+    userCount = 0;
+
+    while (fgets(line, MAX_LINE_LENGTH, file)) {
+        if (++line_count == 1) continue;
+
+        User current_user = {0};
+
         current_user.id = getId(line);
         getUsername(line, current_user.username);
         getPassword(line, current_user.password);
@@ -364,21 +352,14 @@ User* getUserData(const char* filename, int* user_count) {
         current_user.kadar_kolesterol = getKadarKolesterol(line);
         current_user.kadar_kolesterol_ldl = getKadarKolesterolLDL(line);
         current_user.trombosit = getTrombosit(line);
-        
-        // Tambahkan user ke array users
-        users[*user_count] = current_user;
-        (*user_count)++;
-        
-        // Periksa jika melebihi batas maksimum user
-        if (*user_count >= MAX_USERS) {
-            printf("Warning: Maximum number of users reached (%d)\n", MAX_USERS);
-            break;
-        }
+
+        users[userCount++] = current_user;
+        if (userCount >= MAX_USERS) break;
     }
-    
+
     fclose(file);
-    return users;
 }
+
 
 const char* getUsernameById(int id) {
     for (int i = 0; i < userCount; i++) {
@@ -413,6 +394,15 @@ int readIntsFromLine(const char* line, int* output, int maxInts) {
 }
 
 
+User* getUserById(int id) {
+    for (int i = 0; i < userCount; i++) {
+        if (users[i].id == id) {
+            return &users[i];
+        }
+    }
+    return NULL;
+}
+
 void loadConfig(const char* folder) {
     char path[256];
     sprintf(path, "%s/config.txt", folder);
@@ -424,49 +414,54 @@ void loadConfig(const char* folder) {
     }
 
     char line[256];
-    int data[20];
+    int data[40];
 
-    // Baris 1: panjang dan lebar denah
+    // Baris 1: ukuran denah
     fgets(line, sizeof(line), file);
-    int n = readIntsFromLine(line, data, 2);
+    readIntsFromLine(line, data, 2);
     panjang_denah = data[0];
     lebar_denah = data[1];
     jumlah_ruangan = panjang_denah * lebar_denah;
 
-    // Baris 2: kapasitas ruangan
+    // Baris 2: kapasitas ruangan dan antrian
     fgets(line, sizeof(line), file);
-    readIntsFromLine(line, data, 1);
+    readIntsFromLine(line, data, 2);
     kapasitas_ruangan = data[0];
+    kapasitas_antrian = data[1];
 
-    // Baris 3 sampai jumlah_ruangan + 2: data ruangan
+    // Baris 3–(3 + jumlah_ruangan - 1): ruangan
     for (int i = 0; i < jumlah_ruangan; i++) {
         fgets(line, sizeof(line), file);
-        int nums[20];
-        int count = readIntsFromLine(line, nums, 20);
+        int nums[40];
+        int count = readIntsFromLine(line, nums, 40);
 
-        int row = i  / lebar_denah;
-        int col = i  % lebar_denah;
+        int row = i / lebar_denah;
+        int col = i % lebar_denah;
         Ruangan* r = &ruanganList[row][col];
 
-        r->totalPasien = 0;
         r->idDokter = (count > 0) ? nums[0] : 0;
         strcpy(r->usernameDokter, getUsernameById(r->idDokter));
+        initQueue(&(r->antrianPasien));
+        r->totalPasien = 0;
 
-        for (int j = 1; j < count; j++) {
-            r->idPasien[r->totalPasien] = nums[j];
-            strcpy(r->usernamePasien[r->totalPasien], getUsernameById(nums[j]));
+        for (int j = 1; j <= kapasitas_ruangan && j < count; j++) {
+            int id_pasien = nums[j];
+            r->idPasien[r->totalPasien] = id_pasien;
+            strcpy(r->usernamePasien[r->totalPasien], getUsernameById(id_pasien));
             r->totalPasien++;
         }
 
-        initQueue(&(r->antrianPasien)); // kosong
+        for (int j = 1 + kapasitas_ruangan; j < count; j++) {
+            int id_pasien = nums[j];
+            enqueue(&(r->antrianPasien), id_pasien, getUsernameById(id_pasien));
+        }
     }
 
-    // Baris selanjutnya: jumlah pasien yang punya inventory
+    // Inventory
     fgets(line, sizeof(line), file);
     readIntsFromLine(line, data, 1);
     jumlah_inventory = data[0];
 
-    // Baris setelahnya: daftar inventory
     for (int i = 0; i < jumlah_inventory; i++) {
         fgets(line, sizeof(line), file);
         int nums[20];
@@ -483,9 +478,33 @@ void loadConfig(const char* folder) {
         }
     }
 
+    // Perut (stack)
+    fgets(line, sizeof(line), file);
+    readIntsFromLine(line, data, 1);
+    int jumlah_stack_perut = data[0];
+
+    for (int i = 0; i < jumlah_stack_perut; i++) {
+        fgets(line, sizeof(line), file);
+        int nums[20];
+        int count = readIntsFromLine(line, nums, 20);
+        if (count == 0) continue;
+
+        int pasien_id = nums[0];
+        User* u = getUserById(pasien_id);
+        if (u == NULL) continue;
+
+        initStack(&(u->perut));
+
+        // Push dari kiri ke kanan untuk urutan: bawah → atas
+        for (int j = 1; j < count; j++) {
+            push(&(u->perut), nums[j]);
+        }
+    }
+
     fclose(file);
     printf("Konfigurasi berhasil dimuat dari %s\n", path);
 }
+
 
 
 
@@ -495,7 +514,7 @@ void load_all_data(const char* folder) {
     char path[256];
 
     sprintf(path, "%s/user.csv", folder);
-    users = getUserData(path, &userCount);
+    getUserData(path);
 
     sprintf(path, "%s/obat.csv", folder);
     obatList = getObatData(path, &obatCount);
