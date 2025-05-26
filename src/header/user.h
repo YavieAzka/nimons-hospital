@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "stack.h"
 
 typedef struct {
     int id;
@@ -30,6 +31,7 @@ typedef struct {
     int kadar_kolesterol;
     int kadar_kolesterol_ldl;
     int trombosit;
+    Stack perut;
 } User;
 
 extern User users[MAX_USERS];

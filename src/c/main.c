@@ -22,6 +22,7 @@
 #include "../header/exit.h"
 #include "../header/save.h"
 #include "../header/tambah_dokter.h"
+#include "../header/stack.h"
 
 void devmode(User* user, Status *status){
     char input[50];
@@ -60,6 +61,7 @@ void devmode(User* user, Status *status){
         }
         else if (strcmp(input, "SET_ROLE") == 0) {
             //set_role();
+            
         } 
         else if (strcmp(input, "LIHAT_DENAH") == 0) {
             denahRumahSakit(input);
@@ -100,7 +102,7 @@ void devmode(User* user, Status *status){
             //return;
         }
         else if(strcmp(input, "EXIT") == 0){
-            exit_program();
+            //exit_program();
             *status = EXIT;
             return;
         }
