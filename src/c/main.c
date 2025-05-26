@@ -100,7 +100,7 @@ void devmode(User* user, Status *status){
             //return;
         }
         else if(strcmp(input, "EXIT") == 0){
-            //exit_program();
+            exit_program();
             *status = EXIT;
             return;
         }

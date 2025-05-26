@@ -1,5 +1,9 @@
-/*#include "header/tes.h"
+#include "../header/exit.h"
+#include <stdio.h>
 
-void tes() {
+
+int main(){
     printf("Hello, World TES!\n");
-}*/
+    exit_program();
+    return 0;
+}
