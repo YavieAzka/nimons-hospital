@@ -3,7 +3,10 @@
 
 #include "stack.h"
 #include "inventory.h"
-bool checkDiagnosis(User *pasien);
+#include "user.h"
+#include "boolean.h"
+
+boolean checkDiagnosis(User *pasien);
 int getIdFromPenyakit(User *pasien);
 int getjumlahObat(User *pasien);
 int checkUrutanObat(User *pasien, Stack *perut);

@@ -14,15 +14,15 @@ void antrianSaya(User* userNow) {
 
     for (int i = 0; i < panjang_denah_eff; i++) {
         for (int j = 0; j < lebar_denah_eff; j++) {
-            Queue q = ruanganList[i][j].antrian;
+            Queue q = ruanganList[i][j].antrianPasien;
             Node* current = q.front;
             int posisi = 1;
 
             while (current != NULL) {
                 if (strcmp(current->usernamePasien, userNow->username) == 0) {
                     printf("\n==== STATUS ANTRIAN KAMU ====\n");
-                    printf("Ketemu! Kamu lagi nunggu di ruangan %s bareng Dokter %s.\n", 
-                           ruanganList[i][j].nama, ruanganList[i][j].dokter.username);
+                    printf("Ketemu! Kamu lagi nunggu di ruangan %c%d bareng Dokter %s.\n", 
+                           'A' - i, j + 1, ruanganList[i][j].dokter.username);
                     printf("Posisimu sekarang di antrian: %d dari %d pasien.\n", posisi, q.length);
                     printf("Sabar ya... sebentar lagi giliranmu!\n\n");
                     found = 1;

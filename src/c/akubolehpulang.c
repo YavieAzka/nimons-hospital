@@ -8,7 +8,7 @@
 #include "../header/obatPenyakit.h"
 
 //Check sudah diagnosis atau belum
-bool checkDiagnosis(User *pasien) {
+boolean checkDiagnosis(User *pasien) {
     if(strcmp(pasien->riwayat_penyakit, "") == 0) {
         return false; //belum terdiagnosis
     } else if(strcmp(pasien->riwayat_penyakit, "Nothing") == 0) {
@@ -52,13 +52,13 @@ int checkUrutanObat(User *pasien, Stack *perut) {
     int urutBenar = 1;
     int nomorUrutan = 9999;
 
-    while((!isStackEmpty(perut))) {
-        int idObat = peek(perut);
+    while((!isStackEmpty(*perut))) {
+        int idObat = peek(*perut);
         pop(perut);
 
         int urutanNow = -1;
         for(int i = 0; i < obatPenyakitCount; i++) {
-            if(idObat == obatPenyakitList[i].id_obat && getIdFromPenyakit(pasien) == obatPenyakitList[i].id_penyakit) {
+            if(idObat == *obatPenyakitList[i].id_obat && getIdFromPenyakit(pasien) == obatPenyakitList[i].id_penyakit) {
                 urutanNow = obatPenyakitList[i].jumlah_obat;
                 break;
             }
@@ -79,9 +79,9 @@ void urutanHarapan(User *pasien, Stack *perut, Inventory *inv) {
     int urutanNow = 1;
     
     for(int j = 0; j < obatPenyakitCount; j ++) {
-        int idObat = obatPenyakitList[j].id_obat;
+        int idObat = *obatPenyakitList[j].id_obat;
         for(int i = 0; i < obatPenyakitCount; i++) {
-            if(idObat == obatPenyakitList[i].id_obat && getIdFromPenyakit(pasien) == obatPenyakitList[i].id_penyakit && urutanNow == obatPenyakitList[i].jumlah_obat) {
+            if(idObat == *obatPenyakitList[i].id_obat && getIdFromPenyakit(pasien) == obatPenyakitList[i].id_penyakit && urutanNow == obatPenyakitList[i].jumlah_obat) {
                 if(urutanNow != getjumlahObat(pasien)) {
                     printf("%s -> ", obatList[idObat].nama);
                 } else {
