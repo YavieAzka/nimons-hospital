@@ -25,7 +25,7 @@ void lihatSemuaAntrian() {
 
                 printf("Pasien di dalam ruangan:\n");
                 bool adaPasienDalam = false;
-                for (int k = 0; k < kapasitas_ruangan && k < r.totalPasien; k++) {
+                for (int k = 0; k < kapasitas_ruangan + kapasitas_antrian && k < r.totalPasien; k++) {
                     // WORKAROUND for Room B3 displaying "1. -"
                     // If totalPasien is 1 and that single patient's username is "-",
                     // treat it as if there are no actual patients for display purposes.
