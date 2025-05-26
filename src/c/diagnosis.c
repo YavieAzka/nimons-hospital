@@ -137,7 +137,7 @@ void diagnosis(User user){
             }
         }
 
-        if (strcmp(user.riwayat_penyakit, "") == 0)
+        if (strcmp(pasien->riwayat_penyakit, "") == 0)
         {
             strcpy(namaPenyakit, cekPenyakit(*pasien));
         
@@ -151,7 +151,7 @@ void diagnosis(User user){
             }
 
         } else{
-            printf("Kamu sudah terdiagnosis, segera menuju ke Ngobatin.\n");
+            printf("Pasian telah terdiagnosis, arahkan pasien menuju ke Ngobatin.\n");
         }
         
 
