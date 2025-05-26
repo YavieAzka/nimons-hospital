@@ -6,6 +6,7 @@
 #include "../header/load.h"
 #include "../header/config.h"
 #include "../header/queue.h"
+#include "../header/stack.h"
 
 #define MAX_MAPPING 100
 
@@ -27,6 +28,7 @@ int obatPenyakitCount = 0;
 int panjang_denah = 0;
 int lebar_denah = 0;
 int kapasitas_ruangan = 0;
+int kapasitas_antrian = 0;
 int jumlah_ruangan = 0;
 
 Ruangan ruanganList[MAX_RUANGAN][MAX_RUANGAN];
@@ -392,6 +394,15 @@ int readIntsFromLine(const char* line, int* output, int maxInts) {
 }
 
 
+User* getUserById(int id) {
+    for (int i = 0; i < userCount; i++) {
+        if (users[i].id == id) {
+            return &users[i];
+        }
+    }
+    return NULL;
+}
+
 void loadConfig(const char* folder) {
     char path[256];
     sprintf(path, "%s/config.txt", folder);
@@ -403,52 +414,54 @@ void loadConfig(const char* folder) {
     }
 
     char line[256];
-    int data[20];
+    int data[40];
 
-    // Baris 1: panjang dan lebar denah
+    // Baris 1: ukuran denah
     fgets(line, sizeof(line), file);
-    int n = readIntsFromLine(line, data, 2);
+    readIntsFromLine(line, data, 2);
     panjang_denah = data[0];
     lebar_denah = data[1];
     jumlah_ruangan = panjang_denah * lebar_denah;
 
-    // Baris 2: kapasitas ruangan
+    // Baris 2: kapasitas ruangan dan antrian
     fgets(line, sizeof(line), file);
-    readIntsFromLine(line, data, 1);
+    readIntsFromLine(line, data, 2);
     kapasitas_ruangan = data[0];
+    kapasitas_antrian = data[1];
 
-    // Baris 3 sampai jumlah_ruangan + 2: data ruangan
+    // Baris 3–(3 + jumlah_ruangan - 1): ruangan
     for (int i = 0; i < jumlah_ruangan; i++) {
         fgets(line, sizeof(line), file);
-        int nums[20];
-        int count = readIntsFromLine(line, nums, 20);
+        int nums[40];
+        int count = readIntsFromLine(line, nums, 40);
 
-        int row = i  / lebar_denah;
-        int col = i  % lebar_denah;
+        int row = i / lebar_denah;
+        int col = i % lebar_denah;
         Ruangan* r = &ruanganList[row][col];
 
-        r->totalPasien = 0;
         r->idDokter = (count > 0) ? nums[0] : 0;
         strcpy(r->usernameDokter, getUsernameById(r->idDokter));
+        initQueue(&(r->antrianPasien));
+        r->totalPasien = 0;
 
-        initQueue(&(r->antrianPasien)); // kosong
-
-        for (int j = 1; j < count; j++) {
-            r->idPasien[r->totalPasien] = nums[j];
-            strcpy(r->usernamePasien[r->totalPasien], getUsernameById(nums[j]));
-            enqueue(&(r->antrianPasien), r->idPasien[r->totalPasien], r->usernamePasien[r->totalPasien]);
+        for (int j = 1; j <= kapasitas_ruangan && j < count; j++) {
+            int id_pasien = nums[j];
+            r->idPasien[r->totalPasien] = id_pasien;
+            strcpy(r->usernamePasien[r->totalPasien], getUsernameById(id_pasien));
             r->totalPasien++;
         }
 
-        
+        for (int j = 1 + kapasitas_ruangan; j < count; j++) {
+            int id_pasien = nums[j];
+            enqueue(&(r->antrianPasien), id_pasien, getUsernameById(id_pasien));
+        }
     }
 
-    // Baris selanjutnya: jumlah pasien yang punya inventory
+    // Inventory
     fgets(line, sizeof(line), file);
     readIntsFromLine(line, data, 1);
     jumlah_inventory = data[0];
 
-    // Baris setelahnya: daftar inventory
     for (int i = 0; i < jumlah_inventory; i++) {
         fgets(line, sizeof(line), file);
         int nums[20];
@@ -465,9 +478,33 @@ void loadConfig(const char* folder) {
         }
     }
 
+    // Perut (stack)
+    fgets(line, sizeof(line), file);
+    readIntsFromLine(line, data, 1);
+    int jumlah_stack_perut = data[0];
+
+    for (int i = 0; i < jumlah_stack_perut; i++) {
+        fgets(line, sizeof(line), file);
+        int nums[20];
+        int count = readIntsFromLine(line, nums, 20);
+        if (count == 0) continue;
+
+        int pasien_id = nums[0];
+        User* u = getUserById(pasien_id);
+        if (u == NULL) continue;
+
+        initStack(&(u->perut));
+
+        // Push dari kiri ke kanan untuk urutan: bawah → atas
+        for (int j = 1; j < count; j++) {
+            push(&(u->perut), nums[j]);
+        }
+    }
+
     fclose(file);
     printf("Konfigurasi berhasil dimuat dari %s\n", path);
 }
+
 
 
 
