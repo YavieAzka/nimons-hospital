@@ -121,7 +121,6 @@ char * cekPenyakit(User pasien){
 void diagnosis(User user){
     Ruangan ruangan;
     searchRuangan(user, &ruangan);
-
     char namaPenyakit[MAX_NAMA_PENYAKIT];
     if (isEmptyQueue(&ruangan.antrianPasien))
     {

@@ -189,7 +189,7 @@ void handleDokter(User* user, Status* status) {
             // implementasi modul lihat_antrian(); // placeholder
         }
         if (strcmp(input, "DIAGNOSIS") == 0) {
-            //diagnosis(*user);
+            diagnosis(*user);
         }
         if (strcmp(input, "NGOBATIN") == 0) {
             // implementasi modul ngobatin(); // placeholder
@@ -365,8 +365,8 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
-// gcc src/c/main.c src/c/exit.c src/c/save.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/denah.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lihat_antrian.c src/c/queue.c src/c/lupa_password.c -o main
-// gcc src/c/main.c src/c/tambah_dokter.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/denah.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lihat_antrian.c src/c/queue.c src/c/lupa_password.c -o main
+// gcc src/c/main.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/denah.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lihat_antrian.c src/c/queue.c src/c/lupa_password.c -o main
+// gcc src/c/main.c src/c/diagnosis.c src/c/tambah_dokter.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/denah.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lihat_antrian.c src/c/queue.c src/c/lupa_password.c -o main
 /*
 
 Applied module:
