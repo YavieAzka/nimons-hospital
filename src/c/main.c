@@ -369,7 +369,7 @@ int main(int argc, char* argv[]) {
 }
 
 // gcc src/c/main.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/denah.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lihat_antrian.c src/c/queue.c src/c/lupa_password.c -o main
-// gcc src/c/main.c src/c/stack.c src/c/antrian-saya.c src/c/diagnosis.c src/c/tambah_dokter.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/denah.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lihat_antrian.c src/c/queue.c src/c/lupa_password.c -o main
+// gcc src/c/main.c src/c/antrian-saya.c src/c/stack.c src/c/diagnosis.c src/c/tambah_dokter.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/denah.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lihat_antrian.c src/c/queue.c src/c/lupa_password.c -o main
 /*
 
 Applied module:

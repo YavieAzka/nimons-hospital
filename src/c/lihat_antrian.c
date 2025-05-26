@@ -13,9 +13,9 @@ void lihatSemuaAntrian() {
 
     for (int i = 0; i < panjang_denah; i++) {
         for (int j = 0; j < lebar_denah; j++) {
-            Ruangan r = ruanganList[i][j]; 
+            Ruangan r = ruanganList[i][j]; // Get the room data
 
-            if (r.idDokter != 0) {
+            if (r.idDokter != 0) { // Only if a doctor is present
                 char namaRuang[4];
                 sprintf(namaRuang, "%c%d", 'A' + i, j + 1);
 
@@ -23,29 +23,34 @@ void lihatSemuaAntrian() {
                 printf("Kapasitas  : %d\n", kapasitas_ruangan);
                 printf("Dokter     : Dr. %s\n", r.usernameDokter);
 
+                // --- Display patients IN ROOM by iterating the first part of the queue ---
                 printf("Pasien di dalam ruangan:\n");
                 bool adaPasienDalam = false;
-                for (int k = 0; k < kapasitas_ruangan && k < r.totalPasien; k++) {
-                    if (r.totalPasien == 1 && strcmp(r.usernamePasien[k], "-") == 0) {
-                        continue; 
-                    }
-                    printf("  %d. %s\n", k + 1, r.usernamePasien[k]);
+                Node* currentNode = r.antrianPasien.front; // Start from the front of the room's queue
+                int pasienDiRuanganCount = 0;
+
+                while (currentNode != NULL && pasienDiRuanganCount < kapasitas_ruangan) {
+                    printf("  %d. %s\n", pasienDiRuanganCount + 1, currentNode->usernamePasien);
                     adaPasienDalam = true;
+                    currentNode = currentNode->next; // Move to next patient in the overall list
+                    pasienDiRuanganCount++;
                 }
                 if (!adaPasienDalam) {
                     printf("  Tidak ada pasien di dalam ruangan saat ini.\n");
                 }
 
+                // --- Display patients IN QUEUE (remaining patients) ---
+                // currentNode now points to the first patient actually waiting in queue,
+                // or NULL if the queue was exhausted by "Pasien di dalam ruangan".
                 printf("Pasien di antrian:\n");
+                // Instead of directly using your printQueue (which prints all), we continue iterating:
                 bool adaPasienAntrian = false;
-                for (int l = kapasitas_ruangan; l < r.totalPasien; l++) {
-                    // This check is for the B3-like scenario where a single "-" might be the first in queue
-                    // For A1, if totalPasien is 5, this 'if' won't prevent valid queue display
-                    if (r.totalPasien == (kapasitas_ruangan + 1) && strcmp(r.usernamePasien[l], "-") == 0) {
-                        continue;
-                    }
-                    printf("  %d. %s\n", l - kapasitas_ruangan + 1, r.usernamePasien[l]);
+                int pasienDiAntrianCount = 0;
+                while (currentNode != NULL) {
+                    printf("  %d. %s\n", pasienDiAntrianCount + 1, currentNode->usernamePasien);
                     adaPasienAntrian = true;
+                    currentNode = currentNode->next;
+                    pasienDiAntrianCount++;
                 }
                 if (!adaPasienAntrian) {
                     printf("  Tidak ada pasien di antrian saat ini.\n");
