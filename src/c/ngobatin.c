@@ -2,12 +2,34 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "../header/boolean.h"
 #include "../header/user.h"
 #include "../header/penyakit.h"
 #include "../header/obat.h"
 #include "../header/obatPenyakit.h"
 #include "../header/ngobatin.h"
+#include "../header/config.h"
+#include "../header/stack.h"
+#include "../header/queue.h"
+
+Ruangan* cariRuanganDokter(const char* usernameDokter) {
+    for (int i = 0; i < panjang_denah_eff; i++) {
+        for (int j = 0; j < lebar_denah_eff; j++) {
+            if (strcmp(ruanganList[i][j].usernameDokter, usernameDokter) == 0) {
+                return &ruanganList[i][j];
+            }
+        }
+    }
+    return NULL;
+}
+
+User* cariUserByUsername(const char* username) {
+    for (int i = 0; i < userCount; i++) {
+        if (strcmp(users[i].username, username) == 0) {
+            return &users[i];
+        }
+    }
+    return NULL;
+}
 
 void ngobatin() {
     extern User currentUser;
@@ -16,51 +38,64 @@ void ngobatin() {
         return;
     }
 
-    printf("Yuk, saatnya bantu pasien sembuh!\n");
-
-    char nama_pasien[MAX_USERNAME];
-    printf("Masukkan username pasien yang mau diobatin: ");
-    scanf(" %[^\n]", nama_pasien);
-
-    User* target = NULL;
-    for (int i = 0; i < userCount; i++) {
-        if (strcmp(users[i].username, nama_pasien) == 0 && strcmp(users[i].role, "pasien") == 0) {
-            target = &users[i];
-            break;
-        }
-    }
-
-    if (target == NULL) {
-        printf("Hmm... pasien dengan username '%s' nggak ketemu nih. Coba cek lagi ya.\n", nama_pasien);
+    Ruangan* ruanganSaya = cariRuanganDokter(currentUser.username);
+    if (ruanganSaya == NULL) {
+        printf("Dok, Anda belum ditugaskan di ruangan manapun. Coba minta manager assign dulu ya!\n");
         return;
     }
 
-    if (strcmp(target->riwayat_penyakit, "") == 0) {
-        printf("Pasien ini belum ada diagnosis penyakit, dok. Kasih diagnosis dulu ya biar bisa dikasih obat yang tepat.\n");
+    if (isEmptyQueue(&ruanganSaya->antrianPasien)) {
+        printf("Tidak ada pasien di ruangan saat ini. Silakan tunggu pasien berikutnya.\n");
+        return;
+    }
+
+    int idPasien;
+    char usernamePasien[MAX_USERNAME];
+    peekFront(&ruanganSaya->antrianPasien, &idPasien, usernamePasien);
+
+    User* pasien = cariUserByUsername(usernamePasien);
+    if (pasien == NULL) {
+        printf("Data pasien dengan username %s tidak ditemukan. Ada yang aneh nih!\n", usernamePasien);
+        return;
+    }
+
+    if (strcmp(pasien->riwayat_penyakit, "") == 0) {
+        printf("Pasien %s belum didiagnosis, dok. Tolong lakukan diagnosis dulu sebelum ngobatin!\n", pasien->username);
+        return;
+    }
+
+    if (!isStackEmpty(pasien->perut)) {
+        printf("Pasien %s masih dalam proses pengobatan sebelumnya. Harap tunggu hingga selesai dan pulang dulu ya.\n", pasien->username);
         return;
     }
 
     int id_penyakit = -1;
     for (int i = 0; i < penyakitCount; i++) {
-        if (strcmp(penyakitList[i].name_penyakit, target->riwayat_penyakit) == 0) {
+        if (strcmp(penyakitList[i].name_penyakit, pasien->riwayat_penyakit) == 0) {
             id_penyakit = penyakitList[i].id;
             break;
         }
     }
 
     if (id_penyakit == -1) {
-        printf("Wah, nama penyakit '%s' nggak ada di database kita, dok. Coba dicek lagi, mungkin typo.\n", target->riwayat_penyakit);
+        printf("Wah, penyakit '%s' tidak dikenali dalam database penyakit. Coba dicek lagi ya.\n", pasien->riwayat_penyakit);
         return;
     }
 
     int found = 0;
     for (int i = 0; i < obatPenyakitCount; i++) {
         if (obatPenyakitList[i].id_penyakit == id_penyakit) {
-            printf("\nPasien '%s' terdiagnosis menderita %s.\n", target->username, target->riwayat_penyakit);
-            printf("Berikut daftar obat yang harus diberikan, urutannya jangan sampai kebalik ya!\n\n");
+            printf("\nDokter sedang mengobati pasien %s.\n", pasien->username);
+            printf("Pasien terdiagnosis penyakit %s\n", pasien->riwayat_penyakit);
+            printf("Obat yang harus diberikan:\n");
+
+            initStack(&pasien->perut); 
 
             for (int j = 0; j < obatPenyakitList[i].jumlah_obat; j++) {
                 int id_obat = obatPenyakitList[i].id_obat[j];
+
+                push(&pasien->perut, id_obat);
+
                 int foundObat = 0;
                 for (int k = 0; k < obatCount; k++) {
                     if (obatList[k].id == id_obat) {
@@ -70,17 +105,17 @@ void ngobatin() {
                     }
                 }
                 if (!foundObat) {
-                    printf(">> Obat ke-%d: [Data obat dengan ID %d nggak ditemukan, ada yang janggal nih!]\n", j + 1, id_obat);
+                    printf(">> Obat ke-%d: [ID %d tidak ditemukan!]\n", j + 1, id_obat);
                 }
             }
 
-            printf("\nPastikan obat diberikan satu per satu sesuai urutan di atas ya. Semangat menyembuhkan pasien!\n");
+            printf("\nPastikan pasien meminum obat sesuai urutan ya, dok!\n");
             found = 1;
             break;
         }
     }
 
     if (!found) {
-        printf("Sepertinya belum ada data obat untuk penyakit '%s'. Coba input dulu di sistem ya, dok!\n", target->riwayat_penyakit);
+        printf("Belum ada data obat untuk penyakit '%s'. Silakan tambahkan dulu di database, dok!\n", pasien->riwayat_penyakit);
     }
 }
