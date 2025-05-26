@@ -1,6 +1,7 @@
 #ifndef NGOBATIN_H
 #define NGOBATIN_H
 
-void ngobatin(User currentUser);
+// Fungsi utama ngobatin: hanya dokter yang bisa menjalankan
+void ngobatin();
 
 #endif
