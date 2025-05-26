@@ -2,28 +2,28 @@
 #include "../header/inventory.h"
 #include "../header/obat.h"
 
-void initInventory(Inventory* inv) {
-    inv->count = 0;
+InventoryPasien inventoryPasien;
+
+void initInventory() {
+    inventoryPasien.count = 0;
 }
 
-void addInventory(Inventory* inv, int id_obat) {
-    if (inv->count < MAX_INVENTORY) {
-        inv->obat_id[inv->count++] = id_obat;
+void addInventory(int id_obat) {
+    if (inventoryPasien.count < MAX_INVENTORY) {
+        inventoryPasien.obat_id[inventoryPasien.count++] = id_obat;
     }
 }
 
-void removeInventory(Inventory* inv, int index) {
-    if (index >= 0 && index < inv->count) {
-        for (int i = index; i < inv->count - 1; i++) {
-            inv->obat_id[i] = inv->obat_id[i + 1];
-        }
-        inv->count--;
+void removeInventory(int index) {
+    for (int i = index; i < inventoryPasien.count - 1; i++) {
+        inventoryPasien.obat_id[i] = inventoryPasien.obat_id[i + 1];
     }
+    inventoryPasien.count--;
 }
 
-void printInventory(Inventory inv) {
-    printf("== INVENTORY ==\n");
-    for (int i = 0; i < inv.count; i++) {
-        printf("%d. %s\n", i + 1, obatList[inv.obat_id[i]].nama);
+void printInventory() {
+    printf("== Inventory ==\n");
+    for (int i = 0; i < inventoryPasien.count; i++) {
+        printf("%d. %s\n", i + 1, obatList[inventoryPasien.obat_id[i]].nama);
     }
 }
