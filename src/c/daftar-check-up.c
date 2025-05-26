@@ -1,11 +1,11 @@
-#include "daftar-check-up.h"
+#include "../header/daftar-check-up.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 bool sudahTerdaftar(int pasienID) {
     for (int i = 0; i < panjang_denah_eff; i++) {
         for (int j = 0; j < lebar_denah_eff; j++) {
-            Node* current = ruanganList[i][j].antrian.front;
+            Node* current = ruanganList[i][j].antrianPasien.front;
             while (current != NULL) {
                 if (current->idPasien == pasienID) return true;
                 current = current->next;
@@ -111,12 +111,12 @@ void daftarCheckUp(User* userNow) {
 
     for (int i = 0; i < panjang_denah_eff; i++) {
         for (int j = 0; j < lebar_denah_eff; j++) {
-            if (ruanganList[i][j].dokter.id != -1) {
-                printf("%d. Dr. %s - Ruangan %s (Antrian: %d pasien)\n",
+            if (ruanganList[i][j].idDokter != -1) {
+                printf("%d. Dr. %s - Ruangan %c%d (Antrian: %d pasien)\n",
                     count + 1,
-                    ruanganList[i][j].dokter.username,
-                    ruanganList[i][j].nama,
-                    ruanganList[i][j].antrian.length);
+                    ruanganList[i][j].usernameDokter,
+                    'A' + i, j + 1,
+                    ruanganList[i][j].antrianPasien.length);
                 opsi[count][0] = i;
                 opsi[count][1] = j;
                 count++;
@@ -140,11 +140,11 @@ void daftarCheckUp(User* userNow) {
 
     int i = opsi[pilihan - 1][0];
     int j = opsi[pilihan - 1][1];
-    enqueue(&ruanganList[i][j].antrian, userNow->id, userNow->username);
+    enqueue(&ruanganList[i][j].antrianPasien, userNow->id, userNow->username);
 
     printf("\nMantap! Check-up kamu udah masuk daftar.\n");
-    printf("Antrian kamu sekarang di Dr. %s - Ruangan %s\n",
-           ruanganList[i][j].dokter.username,
-           ruanganList[i][j].nama);
-    printf("Nomor urut kamu: %d\n", ruanganList[i][j].antrian.length);
+    printf("Antrian kamu sekarang di Dr. %s - Ruangan %c%d\n",
+           ruanganList[i][j].usernameDokter,
+           'A' + i, j + 1);
+    printf("Nomor urut kamu: %d\n", ruanganList[i][j].antrianPasien.length);
 }

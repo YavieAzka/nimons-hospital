@@ -26,6 +26,18 @@
 
 //     fclose(file);
 // }
+
+int searchMaxID(){
+    int max = 0;
+    for (int i = 0; i < userCount; i++)
+    {
+        if (max < users[i].id)
+        {
+            max = users[i].id;
+        }
+    }
+    return max;
+}
 boolean onlyAlfabet(const char *username) {
     while (*username) {
         if (!((*username >= 'A' && *username <= 'Z') || (*username >= 'a' && *username <= 'z'))) {
@@ -97,7 +109,8 @@ void registerUser(){
         strcpy(users[userCount].username, newUsername);
         strcpy(users[userCount].password, newPassword);
         strcpy(users[userCount].role, "pasien");
-        users[userCount].id = userCount + 1;
+        int maxID = searchMaxID();
+        users[userCount].id = maxID + 1;
 
         userCount = userCount + 1;
 
