@@ -110,7 +110,7 @@ void registerUser(){
         strcpy(users[userCount].password, newPassword);
         strcpy(users[userCount].role, "pasien");
         int maxID = searchMaxID();
-        users[userCount].id = maxID;
+        users[userCount].id = maxID + 1;
 
         userCount = userCount + 1;
 

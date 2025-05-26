@@ -17,4 +17,6 @@ int isUsernameUnique(const char* username, Set users, int user_count); //untuk m
 //Mengecek username agar only alfabet
 boolean onlyAlfabet(const char *str);
 
+//mencari Max ID
+int searchMaxID();
 #endif
