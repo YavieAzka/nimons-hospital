@@ -1,13 +1,11 @@
 #ifndef MINUMOBAT_H
 #define MINUMOBAT_H
 
-/*header*/
-
 #include "user.h"
 #include "obat.h"
 #include "inventory.h"
 #include "stack.h"
 
-void minumObat(User* user, Inventory* inv, Stack* perut);
+void minumObat(User* user, Stack* perut);
 
 #endif 
