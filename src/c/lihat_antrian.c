@@ -24,16 +24,30 @@ void lihatSemuaAntrian() {
                 printf("Dokter     : Dr. %s\n", r.usernameDokter);
 
                 printf("Pasien di dalam ruangan:\n");
+                int k;
                 if (r.totalPasien == 0) {
                     printf("  Tidak ada pasien di dalam ruangan saat ini.\n");
                 } else {
-                    for (int k = 0; k < r.totalPasien; k++) {
-                        printf("  %d. %s\n", k + 1, r.usernamePasien[k]);
+                    for (k = 0; k < kapasitas_ruangan; k++) {
+                        if(k < r.antrianPasien.length){
+                            printf("  %d. %s\n", k + 1, r.usernamePasien[k]);
+                        }
+                        
                     }
                 }
 
                 printf("Pasien di antrian:\n");
-                printQueue(&r.antrianPasien);
+                if(k >= r.antrianPasien.length){
+                    printf("  Tidak ada pasien di antrian saat ini.\n");
+                }
+                else{
+                    for (int l = k; l < r.antrianPasien.length; l++) {
+                        if(l < r.antrianPasien.length){
+                            printf("  %d. %s\n", k + 1, r.usernamePasien[l]);
+                        }
+                        
+                    }
+                }
             }
         }
     }

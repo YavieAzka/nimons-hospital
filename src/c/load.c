@@ -431,13 +431,16 @@ void loadConfig(const char* folder) {
         r->idDokter = (count > 0) ? nums[0] : 0;
         strcpy(r->usernameDokter, getUsernameById(r->idDokter));
 
+        initQueue(&(r->antrianPasien)); // kosong
+
         for (int j = 1; j < count; j++) {
             r->idPasien[r->totalPasien] = nums[j];
             strcpy(r->usernamePasien[r->totalPasien], getUsernameById(nums[j]));
+            enqueue(&(r->antrianPasien), r->idPasien[r->totalPasien], r->usernamePasien[r->totalPasien]);
             r->totalPasien++;
         }
 
-        initQueue(&(r->antrianPasien)); // kosong
+        
     }
 
     // Baris selanjutnya: jumlah pasien yang punya inventory
