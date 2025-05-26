@@ -110,7 +110,6 @@ void save_data(const char* folder_name) {
 
     snprintf(path, sizeof(path), "%s/config.txt", folder_name);
     write_file(path,
-        "konfigurasi=default\n"
         "2 3\n"
         "3\n"
         "2 3 4 5\n"
