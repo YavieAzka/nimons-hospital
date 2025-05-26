@@ -17,7 +17,8 @@
     "akubolehpulang.h": "c",
     "obatpenyakit.h": "c",
     "inventory.h": "c",
-    "stack.h": "c"
+    "stack.h": "c",
+    "ngobatin.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

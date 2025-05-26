@@ -9,8 +9,7 @@
 #include "../header/obatPenyakit.h"
 #include "../header/ngobatin.h"
 
-void ngobatin() {
-    extern User currentUser;
+void ngobatin(User currentUser) {
     if (strcmp(currentUser.role, "dokter") != 0) {
         printf("Maaf ya, fitur ini cuma bisa dipakai sama dokter. Coba panggil dokternya dulu deh!\n");
         return;

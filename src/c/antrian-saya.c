@@ -22,7 +22,7 @@ void antrianSaya(User* userNow) {
                 if (strcmp(current->usernamePasien, userNow->username) == 0) {
                     printf("\n==== STATUS ANTRIAN KAMU ====\n");
                     printf("Ketemu! Kamu lagi nunggu di ruangan %c%d bareng Dokter %s.\n", 
-                           'A' - i, j + 1, ruanganList[i][j].dokter.username);
+                           'A' + i, j + 1, ruanganList[i][j].usernameDokter);
                     printf("Posisimu sekarang di antrian: %d dari %d pasien.\n", posisi, q.length);
                     printf("Sabar ya... sebentar lagi giliranmu!\n\n");
                     found = 1;
