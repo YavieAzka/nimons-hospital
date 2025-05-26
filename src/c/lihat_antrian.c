@@ -14,7 +14,7 @@ void lihatSemuaAntrian() {
     for (int i = 0; i < panjang_denah; i++) {
         for (int j = 0; j < lebar_denah; j++) {
             Ruangan r = ruanganList[i][j]; 
-            int k;
+
             if (r.idDokter != 0) {
                 char namaRuang[4];
                 sprintf(namaRuang, "%c%d", 'A' + i, j + 1);
@@ -25,7 +25,7 @@ void lihatSemuaAntrian() {
 
                 printf("Pasien di dalam ruangan:\n");
                 bool adaPasienDalam = false;
-                for (k = 0; k < kapasitas_ruangan && k < r.totalPasien; k++) {
+                for (int k = 0; k < kapasitas_ruangan && k < r.totalPasien; k++) {
                     if (r.totalPasien == 1 && strcmp(r.usernamePasien[k], "-") == 0) {
                         continue; 
                     }
@@ -38,8 +38,7 @@ void lihatSemuaAntrian() {
 
                 printf("Pasien di antrian:\n");
                 bool adaPasienAntrian = false;
-                for (int l = k; l < r.totalPasien; l++) {
-                    
+                for (int l = kapasitas_ruangan; l < r.totalPasien; l++) {
                     // This check is for the B3-like scenario where a single "-" might be the first in queue
                     // For A1, if totalPasien is 5, this 'if' won't prevent valid queue display
                     if (r.totalPasien == (kapasitas_ruangan + 1) && strcmp(r.usernamePasien[l], "-") == 0) {
