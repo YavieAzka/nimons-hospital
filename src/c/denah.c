@@ -38,7 +38,7 @@ void lihatRuang(char * str){
         printf("   Tidak ada pasien di dalam ruangan saat ini.\n");
     } else if (ruanganList[x][y].totalPasien > 0)
     {
-        for (int i = 1; i <= ruanganList[x][y].totalPasien; i++)
+        for (int i = 1; i <= ruanganList[x][y].totalPasien && i <= kapasitas_ruangan ; i++)
         {
             printf("   %d. %s\n", i, ruanganList[x][y].usernamePasien[i - 1]);
         }
