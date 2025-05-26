@@ -9,12 +9,12 @@
 #include "../header/config.h"
 
 void lihatSemuaAntrian() {
-    gambarDenah(); // Menampilkan grid denah ruangan
+    gambarDenah(); 
 
     for (int i = 0; i < panjang_denah; i++) {
         for (int j = 0; j < lebar_denah; j++) {
             Ruangan r = ruanganList[i][j]; 
-
+            int k;
             if (r.idDokter != 0) {
                 char namaRuang[4];
                 sprintf(namaRuang, "%c%d", 'A' + i, j + 1);
@@ -25,34 +25,26 @@ void lihatSemuaAntrian() {
 
                 printf("Pasien di dalam ruangan:\n");
                 bool adaPasienDalam = false;
-                for (int k = 0; k < kapasitas_ruangan && k < r.totalPasien; k++) {
-                    // WORKAROUND for Room B3 displaying "1. -"
-                    // If totalPasien is 1 and that single patient's username is "-",
-                    // treat it as if there are no actual patients for display purposes.
+                for (k = 0; k < kapasitas_ruangan && k < r.totalPasien; k++) {
                     if (r.totalPasien == 1 && strcmp(r.usernamePasien[k], "-") == 0) {
-                        // This will ensure adaPasienDalam is not set to true by this placeholder,
-                        // leading to "Tidak ada pasien..." being printed later.
                         continue; 
                     }
-                    
                     printf("  %d. %s\n", k + 1, r.usernamePasien[k]);
                     adaPasienDalam = true;
                 }
-
                 if (!adaPasienDalam) {
                     printf("  Tidak ada pasien di dalam ruangan saat ini.\n");
                 }
 
                 printf("Pasien di antrian:\n");
                 bool adaPasienAntrian = false;
-                for (int l = kapasitas_ruangan; l < r.totalPasien; l++) {
-                    // Similar workaround could be applied here if "-" could appear in queue
-                    // and should be ignored, but based on current issue, focusing on "in room".
-                    // If the only "queued patient" (after filling capacity) is "-", and totalPasien reflects this.
+                for (int l = k; l < r.totalPasien; l++) {
+                    
+                    // This check is for the B3-like scenario where a single "-" might be the first in queue
+                    // For A1, if totalPasien is 5, this 'if' won't prevent valid queue display
                     if (r.totalPasien == (kapasitas_ruangan + 1) && strcmp(r.usernamePasien[l], "-") == 0) {
                         continue;
                     }
-
                     printf("  %d. %s\n", l - kapasitas_ruangan + 1, r.usernamePasien[l]);
                     adaPasienAntrian = true;
                 }

@@ -23,6 +23,7 @@
 #include "../header/save.h"
 #include "../header/tambah_dokter.h"
 #include "../header/stack.h"
+#include "../header/antrian-saya.h"
 
 void devmode(User* user, Status *status){
     char input[50];
@@ -233,7 +234,7 @@ void handlePasien(User* user, Status* status) {
             // implementasi modul daftar_checkup(); // placeholder
         } 
         if (strcmp(input, "ANTRIAN_SAYA") == 0) {
-            // implementasi modul antrian_saya(); // placeholder
+            antrianSaya(user);
         } 
         if (strcmp(input, "MINUM_OBAT") == 0) {
             // implementasi modul minum_obat(); // placeholder
@@ -368,7 +369,7 @@ int main(int argc, char* argv[]) {
 }
 
 // gcc src/c/main.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/denah.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lihat_antrian.c src/c/queue.c src/c/lupa_password.c -o main
-// gcc src/c/main.c src/c/stack.c src/c/diagnosis.c src/c/tambah_dokter.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/denah.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lihat_antrian.c src/c/queue.c src/c/lupa_password.c -o main
+// gcc src/c/main.c src/c/stack.c src/c/antrian-saya.c src/c/diagnosis.c src/c/tambah_dokter.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/denah.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lihat_antrian.c src/c/queue.c src/c/lupa_password.c -o main
 /*
 
 Applied module:
