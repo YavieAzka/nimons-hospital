@@ -310,7 +310,6 @@ int main(int argc, char* argv[]) {
 
     printWelcomeMessage();
     printOpeningMessage();
-
     while(status != EXIT){
         printf(">>> ");
         scanf("%s", userInput);

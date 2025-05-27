@@ -130,36 +130,62 @@ ObatPenyakit* getObatPenyakitData(const char* filename, int* count) {
     FILE* file = fopen(filename, "r");
     if (!file) {
         printf("Error: Cannot open file %s\n", filename);
+        *count = 0; // Ensure count is 0 on error
         return NULL;
     }
 
+    // Allocate memory for the list of mappings
+    // Using a sufficiently large MAX_MAPPING or dynamic resizing would be robust.
     ObatPenyakit* list = malloc(MAX_MAPPING * sizeof(ObatPenyakit));
-    *count = 0;
+    if (!list) {
+        printf("Error: Memory allocation failed for ObatPenyakit list.\n");
+        fclose(file);
+        *count = 0;
+        return NULL;
+    }
+
+    *count = 0; // Initialize the number of records found
 
     char line[MAX_LINE_LENGTH];
-    fgets(line, sizeof(line), file); // skip header
+    char field_buffer[64]; // Buffer to temporarily hold string fields from CSV
 
-    while (fgets(line, sizeof(line), file)) {
-        ObatPenyakit op;
-        char field[64];
+    // Skip the header line
+    if (fgets(line, sizeof(line), file) == NULL) {
+        // File is empty or only has a header (or header read failed)
+        fclose(file);
+        // list is allocated but count is 0, which is acceptable.
+        return list; 
+    }
 
-        getFieldAt(line, 0, field, 64);
-        op.id_penyakit = stringToInt(field);
-        op.jumlah_obat = 0;
+    // Read each data line
+    while (fgets(line, sizeof(line), file) && *count < MAX_MAPPING) {
+        ObatPenyakit current_op;
 
-        for (int i = 1; i <= MAX_OBAT_PER_PENYAKIT; i++) {
-            getFieldAt(line, i, field, 64);
-            trim_newline(field);
-            if (field[0] == '\0') break;
-            op.id_obat[op.jumlah_obat++] = stringToInt(field);
-        }
+        // Field 0: obat_id
+        getFieldAt(line, 0, field_buffer, sizeof(field_buffer));
+        trim_newline(field_buffer); // Important if getFieldAt doesn't handle it
+        if (strlen(field_buffer) == 0) continue; // Skip if field is empty after trim
+        current_op.obat_id = stringToInt(field_buffer);
 
-        list[*count] = op;
+        // Field 1: penyakit_id
+        getFieldAt(line, 1, field_buffer, sizeof(field_buffer));
+        trim_newline(field_buffer);
+        if (strlen(field_buffer) == 0) continue; 
+        current_op.penyakit_id = stringToInt(field_buffer);
+
+        // Field 2: urutan_minum
+        getFieldAt(line, 2, field_buffer, sizeof(field_buffer));
+        trim_newline(field_buffer);
+        if (strlen(field_buffer) == 0) continue; 
+        current_op.urutan_minum = stringToInt(field_buffer);
+
+        // Add the parsed struct to list
+        list[*count] = current_op;
         (*count)++;
-        if (*count >= MAX_MAPPING) break;
     }
 
     fclose(file);
+
     return list;
 }
 // ================== USER ======================

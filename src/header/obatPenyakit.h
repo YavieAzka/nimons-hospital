@@ -4,9 +4,9 @@
 #define MAX_OBAT_PER_PENYAKIT 20  // <-- ini penting
 
 typedef struct {
-    int id_penyakit;
-    int id_obat[MAX_OBAT_PER_PENYAKIT];
-    int jumlah_obat;
+    int obat_id;
+    int penyakit_id;
+    int urutan_minum;
 } ObatPenyakit;
 
 // Array dan count global (harus extern di header ini jika dideklarasi di load.c)
