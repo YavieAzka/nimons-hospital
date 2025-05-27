@@ -4,6 +4,7 @@
 #define MAX_INVENTORY 100
 
 typedef struct {
+    int pasien_id;
     int obat_id[MAX_INVENTORY];
     int count;
 } InventoryPasien;

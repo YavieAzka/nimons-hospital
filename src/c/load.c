@@ -420,6 +420,9 @@ User* getUserById(int id) {
     return NULL;
 }
 
+// Perbaikan fungsi loadConfig() sesuai spesifikasi terbaru config.txt
+// Dibuat dengan asumsi struktur global dan ADT yang telah kamu definisikan
+
 void loadConfig(const char* folder) {
     char path[256];
     sprintf(path, "%s/config.txt", folder);
@@ -431,114 +434,73 @@ void loadConfig(const char* folder) {
     }
 
     char line[256];
-    int data[40]; // General purpose array for reading ints from a line
+    int data[40];
 
     // Baris 1: ukuran denah
-    if (!fgets(line, sizeof(line), file)) { /* Handle error or EOF */ fclose(file); return; }
+    fgets(line, sizeof(line), file);
     readIntsFromLine(line, data, 2);
     panjang_denah = data[0];
     lebar_denah = data[1];
     jumlah_ruangan = panjang_denah * lebar_denah;
 
-    // Baris 2: kapasitas ruangan
-    if (!fgets(line, sizeof(line), file)) { /* Handle error or EOF */ fclose(file); return; }
-    // Assuming config.txt line 2 strictly has only one value for kapasitas_ruangan as per spec
-    readIntsFromLine(line, data, 1); // Read only 1 integer for capacity
+    // Baris 2: kapasitas ruangan dan antrian
+    fgets(line, sizeof(line), file);
+    readIntsFromLine(line, data, 2);
     kapasitas_ruangan = data[0];
-    // If your config.txt genuinely has a second number for 'kapasitas_antrian' and you use it:
-    // int count_kapasitas = readIntsFromLine(line, data, 2);
-    // kapasitas_ruangan = data[0];
-    // if (count_kapasitas > 1) kapasitas_antrian = data[1];
+    kapasitas_antrian = data[1];
 
-
-    // Baris 3–(3 + jumlah_ruangan - 1): ruangan data
+    // Baris 3–8: data ruangan
     for (int i = 0; i < jumlah_ruangan; i++) {
-        if (!fgets(line, sizeof(line), file)) { /* Handle error or EOF */ fclose(file); return; }
-        
-        int room_config_nums[40]; // Holds numbers from one room line: docID, patientID1, ...
-        int num_count_on_line = readIntsFromLine(line, room_config_nums, 40);
+        fgets(line, sizeof(line), file);
+        int nums[40];
+        int count = readIntsFromLine(line, nums, 40);
 
         int row = i / lebar_denah;
         int col = i % lebar_denah;
         Ruangan* r = &ruanganList[row][col];
 
-        // Initialize room
-        r->idDokter = 0;
-        strcpy(r->usernameDokter, ""); // Default to empty
-        initQueue(&(r->antrianPasien)); // CRITICAL: Initialize the queue for the room
+        r->idDokter = (count > 0) ? nums[0] : 0;
+        strcpy(r->usernameDokter, getUsernameById(r->idDokter));
+        r->totalPasien = 0;
+        initQueue(&(r->antrianPasien));
 
-        if (num_count_on_line > 0) { // If there's at least a doctor ID
-            r->idDokter = room_config_nums[0];
-            if (r->idDokter != 0) {
-                const char* doc_username = getUsernameById(r->idDokter);
-                if (doc_username) {
-                    strcpy(r->usernameDokter, doc_username);
-                }
-            }
+        if (r->idDokter == 0) continue;
+
+        // Pasien dalam ruangan
+        for (int j = 1; j <= kapasitas_ruangan && j < count; j++) {
+            int id_pasien = nums[j];
+            r->idPasien[r->totalPasien] = id_pasien;
+            strcpy(r->usernamePasien[r->totalPasien], getUsernameById(id_pasien));
+            r->totalPasien++;
         }
 
-        if (r->idDokter == 0) { // If no doctor or invalid doctor ID, skip patient processing for this room
-            continue; 
+        // Pasien di antrian
+        for (int j = 1 + kapasitas_ruangan; j < count; j++) {
+            int id_pasien = nums[j];
+            const char* uname = getUsernameById(id_pasien);
+            enqueue(&(r->antrianPasien), id_pasien, uname);
         }
-
-        // Enqueue all valid patient IDs listed for this doctor into r->antrianPasien
-        // Patient IDs start from room_config_nums[1] up to room_config_nums[num_count_on_line-1]
-        for (int j = 1; j < num_count_on_line; j++) {
-            int id_pasien = room_config_nums[j];
-
-            if (id_pasien == 0) {
-                // Patient ID 0 signifies end of actual patient list OR no patients if it's the first.
-                // If this is encountered, no more valid patients on this line.
-                break; 
-            }
-
-            const char* patient_username = getUsernameById(id_pasien);
-                                    
-            if (patient_username) { // Ensure a valid username string was returned
-                // The B3 issue (showing "1.-") should be resolved because if id_pasien is 0,
-                // we break above, and the queue for B3 will be empty.
-                // If getUsernameById returns "-" for a *non-zero* unknown ID, that patient "-" will be enqueued.
-                enqueue(&(r->antrianPasien), id_pasien, patient_username);
-            } else {
-                // Optional: Handle case where getUsernameById might return NULL (though yours returns "-")
-                // enqueue(&(r->antrianPasien), id_pasien, "UNKNOWN_PATIENT");
-            }
-        }
-        // After this loop, r->antrianPasien.length correctly reflects the total actual patients.
-        // The Ruangan struct members like r->totalPasien, r->idPasien[], r->usernamePasien[][]
-        // are not the primary source for lihatSemuaAntrian if it reads from the queue.
-        // You could set r->totalPasien = r->antrianPasien.length; if it's used elsewhere.
     }
-
-    // ... (Rest of your loadConfig for Inventory and Perut (Stack)) ...
-    // Ensure fgets checks and error handling for subsequent file reads too.
-
-    fclose(file);
-    printf("Konfigurasi berhasil dimuat dari %s\n", path);
-
 
     // Inventory
     fgets(line, sizeof(line), file);
     readIntsFromLine(line, data, 1);
     jumlah_inventory = data[0];
-    
+
     for (int i = 0; i < jumlah_inventory; i++) {
         fgets(line, sizeof(line), file);
         int nums[20];
         int count = readIntsFromLine(line, nums, 20);
 
-        if (count >= 1) {
-            InventoryPasien* inv = &daftar_inventory[i];
-            inv->pasien_id = nums[0];
-            inv->jumlah_obat = 0;
-
-            for (int j = 1; j < count; j++) {
-                inv->obat_ids[inv->jumlah_obat++] = nums[j];
-            }
+        InventoryPasien* inv = &daftar_inventory[i];
+        inv->pasien_id = nums[0];
+        inv->jumlah_obat = 0;
+        for (int j = 1; j < count; j++) {
+            inv->obat_ids[inv->jumlah_obat++] = nums[j];
         }
     }
 
-    // Perut (stack)
+    // Stack perut
     fgets(line, sizeof(line), file);
     readIntsFromLine(line, data, 1);
     int jumlah_stack_perut = data[0];
@@ -554,8 +516,6 @@ void loadConfig(const char* folder) {
         if (u == NULL) continue;
 
         initStack(&(u->perut));
-
-        // Push dari kiri ke kanan untuk urutan: bawah → atas
         for (int j = 1; j < count; j++) {
             push(&(u->perut), nums[j]);
         }
@@ -564,6 +524,7 @@ void loadConfig(const char* folder) {
     fclose(file);
     printf("Konfigurasi berhasil dimuat dari %s\n", path);
 }
+
 
 
 
