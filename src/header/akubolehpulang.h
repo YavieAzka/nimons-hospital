@@ -5,6 +5,7 @@
 #include "inventory.h"
 #include "user.h"
 #include "boolean.h"
+#include "ruangan.h"
 
 boolean checkDiagnosis(User *pasien);
 int getIdFromPenyakit(User *pasien);

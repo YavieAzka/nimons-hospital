@@ -16,15 +16,6 @@ extern int lebar_denah_eff;
 
 // Daftar ruangan (index ke-i = ruangan ke-i dalam bentuk linear)
 extern Ruangan ruanganList[MAX_RUANGAN][MAX_RUANGAN];
-
-
-// Inventory pasien
-typedef struct {
-    int pasien_id;
-    int obat_ids[10];
-    int jumlah_obat;
-} InventoryPasien;
-
 extern InventoryPasien daftar_inventory[MAX_INVENTORY];
 extern int jumlah_inventory;
 
