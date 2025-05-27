@@ -141,7 +141,7 @@ void daftarCheckUp(User* userNow) {
     int i = opsi[pilihan - 1][0];
     int j = opsi[pilihan - 1][1];
     enqueue(&ruanganList[i][j].antrianPasien, userNow->id, userNow->username);
-
+    
     printf("\nMantap! Check-up kamu udah masuk daftar.\n");
     printf("Antrian kamu sekarang di Dr. %s - Ruangan %c%d\n",
            ruanganList[i][j].usernameDokter,

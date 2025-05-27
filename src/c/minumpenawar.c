@@ -8,13 +8,13 @@
 #include "../header/stack.h"
 #include "../header/inventory.h"
 
-void minumPenawar(User *pasien, Stack *perut, Inventory *inv) {
+void minumPenawar(User *pasien) {
     char namaObatKeluar[MAX_NAMA_PENYAKIT] = "";
-    if(perut->top == -1) {
+    if(pasien->perut.top == -1) {
         printf("Perut kosong!! Belum ada obat yang dimakan. :O\n");
     } else {
-        if (checkUrutanObat(pasien, perut) == 0) {
-            int idObatKeluar = pop(perut);
+        if (checkUrutanObat(pasien) == 0) {
+            int idObatKeluar = pop(pasien->perut);
             for(int i = 0; i < obatCount; i++) {
                 if(idObatKeluar == obatList[i].id) {
                     strcpy(namaObatKeluar, obatList[i].nama);
@@ -22,9 +22,9 @@ void minumPenawar(User *pasien, Stack *perut, Inventory *inv) {
                 }
             }
             //Keluarkan obat dari perut
-            pop(perut);
+            pop(pasien->perut);
             printf("Uwekkk :O !!! %s keluar dan kembali ke inventory\n", namaObatKeluar);
-            addInventory(inv, idObatKeluar);
+            addInventory(idObatKeluar);
         }
     }
 }

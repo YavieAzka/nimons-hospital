@@ -6,11 +6,13 @@
 typedef struct {
     int obat_id[MAX_INVENTORY];
     int count;
-} Inventory;
+} InventoryPasien;
 
-void initInventory(Inventory* inv);
-void addInventory(Inventory* inv, int id_obat);
-void removeInventory(Inventory* inv, int index);
-void printInventory(Inventory inv);
+extern InventoryPasien inventoryPasien; 
+
+void initInventory();
+void addInventory(int id_obat);
+void removeInventory(int index);
+void printInventory();
 
 #endif

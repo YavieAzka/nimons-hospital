@@ -10,6 +10,7 @@
 #include "../header/ngobatin.h"
 
 void ngobatin(User currentUser) {
+    
     if (strcmp(currentUser.role, "dokter") != 0) {
         printf("Maaf ya, fitur ini cuma bisa dipakai sama dokter. Coba panggil dokternya dulu deh!\n");
         return;
