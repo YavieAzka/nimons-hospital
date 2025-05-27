@@ -9,8 +9,10 @@
 boolean checkDiagnosis(User *pasien);
 int getIdFromPenyakit(User *pasien);
 int getjumlahObat(User *pasien);
-int checkUrutanObat(User *pasien, Stack *perut);
-void urutanHarapan(User *pasien, Stack *perut, Inventory *inv);
-void akubolehpulang(User *pasien, Stack *perut, Inventory *inv);
+int checkUrutanObat(User *pasien);
+void urutanHarapan(User *pasien);
+void akubolehpulang(User *pasien);
+Ruangan *cariRuanganPasien(User *pasien);
+Ruangan* cekAntrianPasien(User* pasien, Ruangan *ruanganPasien);
 
 #endif
