@@ -29,7 +29,6 @@ typedef struct {
     float berat_badan;
     int tinggi_badan;                  
     int kadar_kolesterol;
-    int kadar_kolesterol_ldl;
     int trombosit;
     Stack perut;
 } User;

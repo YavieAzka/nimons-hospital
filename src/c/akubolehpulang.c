@@ -193,5 +193,3 @@ void akubolehpulang(User *pasien) {
             }
         }
     }
-}
-
