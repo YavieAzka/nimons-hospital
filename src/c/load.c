@@ -420,8 +420,6 @@ User* getUserById(int id) {
     return NULL;
 }
 
-// Perbaikan fungsi loadConfig() sesuai spesifikasi terbaru config.txt
-// Dibuat dengan asumsi struktur global dan ADT yang telah kamu definisikan
 
 void loadConfig(const char* folder) {
     char path[256];
@@ -443,13 +441,13 @@ void loadConfig(const char* folder) {
     lebar_denah = data[1];
     jumlah_ruangan = panjang_denah * lebar_denah;
 
-    // Baris 2: kapasitas ruangan dan antrian
+    // Baris 2: kapasitas ruangan dan kapasitas antrian
     fgets(line, sizeof(line), file);
     readIntsFromLine(line, data, 2);
     kapasitas_ruangan = data[0];
     kapasitas_antrian = data[1];
 
-    // Baris 3–8: data ruangan
+    // Baris 3–n: data ruangan
     for (int i = 0; i < jumlah_ruangan; i++) {
         fgets(line, sizeof(line), file);
         int nums[40];
@@ -466,23 +464,21 @@ void loadConfig(const char* folder) {
 
         if (r->idDokter == 0) continue;
 
-        // Pasien dalam ruangan
-        for (int j = 1; j <= kapasitas_ruangan && j < count; j++) {
-            int id_pasien = nums[j];
-            r->idPasien[r->totalPasien] = id_pasien;
-            strcpy(r->usernamePasien[r->totalPasien], getUsernameById(id_pasien));
-            r->totalPasien++;
-        }
-
-        // Pasien di antrian
-        for (int j = 1 + kapasitas_ruangan; j < count; j++) {
+        for (int j = 1; j < count; j++) {
             int id_pasien = nums[j];
             const char* uname = getUsernameById(id_pasien);
             enqueue(&(r->antrianPasien), id_pasien, uname);
         }
+
+        Node* cur = r->antrianPasien.front;
+        for (int j = 0; j < kapasitas_ruangan && cur != NULL; j++) {
+            r->idPasien[r->totalPasien] = cur->idPasien;
+            strcpy(r->usernamePasien[r->totalPasien], cur->usernamePasien);
+            r->totalPasien++;
+            cur = cur->next;
+        }
     }
 
-    // Inventory
     fgets(line, sizeof(line), file);
     readIntsFromLine(line, data, 1);
     jumlah_inventory = data[0];
@@ -500,7 +496,6 @@ void loadConfig(const char* folder) {
         }
     }
 
-    // Stack perut
     fgets(line, sizeof(line), file);
     readIntsFromLine(line, data, 1);
     int jumlah_stack_perut = data[0];
@@ -524,8 +519,6 @@ void loadConfig(const char* folder) {
     fclose(file);
     printf("Konfigurasi berhasil dimuat dari %s\n", path);
 }
-
-
 
 
 
