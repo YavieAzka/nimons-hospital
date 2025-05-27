@@ -85,7 +85,6 @@ void tambahDokter() {
     newDokter.berat_badan = 0.0;
     newDokter.tinggi_badan = 0.0;
     newDokter.kadar_kolesterol = 0;
-    newDokter.kadar_kolesterol_ldl = 0;
     newDokter.trombosit = 0;
 
     users[userCount++] = newDokter;

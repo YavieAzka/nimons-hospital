@@ -87,9 +87,7 @@ Penyakit* getPenyakitData(const char* filename, int* count) {
 
     char line[MAX_LINE_LENGTH];
     fgets(line, sizeof(line), file); // skip header
-    int line_number = 0;
     while (fgets(line, sizeof(line), file)) {
-        if (line_number++ == 0) continue;
         char field[64];
         Penyakit p;
 
@@ -104,16 +102,17 @@ Penyakit* getPenyakitData(const char* filename, int* count) {
         getFieldAt(line, 8, field, 64); p.detak_jantung_min = stringToInt(field);
         getFieldAt(line, 9, field, 64); p.detak_jantung_max = stringToInt(field);
         getFieldAt(line, 10, field, 64); p.saturasi_oksigen_min = stringToFloat(field);
-        getFieldAt(line, 11, field, 64); p.kadar_gula_darah_min = stringToInt(field);
-        getFieldAt(line, 12, field, 64); p.kadar_gula_darah_max = stringToInt(field);
-        getFieldAt(line, 13, field, 64); p.berat_badan_min = stringToFloat(field);
-        getFieldAt(line, 14, field, 64); p.berat_badan_max = stringToFloat(field);
-        getFieldAt(line, 15, field, 64); p.tinggi_badan_min = stringToInt(field);
-        getFieldAt(line, 16, field, 64); p.tinggi_badan_max = stringToInt(field);
-        getFieldAt(line, 17, field, 64); p.kadar_kolesterol_min = stringToInt(field);
-        getFieldAt(line, 18, field, 64); p.kadar_kolesterol_max = stringToInt(field);
-        getFieldAt(line, 19, field, 64); p.trombosit_min = stringToInt(field);
-        getFieldAt(line, 20, field, 64); p.trombosit_max = stringToInt(field);
+        getFieldAt(line, 11, field, 64); p.saturasi_oksigen_max = stringToFloat(field);
+        getFieldAt(line, 12, field, 64); p.kadar_gula_darah_min = stringToFloat(field);
+        getFieldAt(line, 13, field, 64); p.kadar_gula_darah_max = stringToFloat(field);
+        getFieldAt(line, 14, field, 64); p.berat_badan_min = stringToFloat(field);
+        getFieldAt(line, 15, field, 64); p.berat_badan_max = stringToFloat(field);
+        getFieldAt(line, 16, field, 64); p.tinggi_badan_min = stringToInt(field);
+        getFieldAt(line, 17, field, 64); p.tinggi_badan_max = stringToInt(field);
+        getFieldAt(line, 18, field, 64); p.kadar_kolesterol_min = stringToInt(field);
+        getFieldAt(line, 19, field, 64); p.kadar_kolesterol_max = stringToInt(field);
+        getFieldAt(line, 20, field, 64); p.trombosit_min = stringToInt(field);
+        getFieldAt(line, 21, field, 64); p.trombosit_max = stringToInt(field);
 
         list[*count] = p;
         (*count)++;
@@ -231,7 +230,7 @@ int getDetakJantung(char* line) {
 int getSaturasiOksigen(char* line) {
     char field[MAX_FIELD_LENGTH];
     getFieldAt(line, 9, field, MAX_FIELD_LENGTH);
-    return stringToInt(field);
+    return stringToFloat(field);
 }
 
 // Fungsi untuk mengambil kadar gula darah dari baris CSV (field index 10)
@@ -262,17 +261,10 @@ int getKadarKolesterol(char* line) {
     return stringToInt(field);
 }
 
-// Fungsi untuk mengambil kadar kolesterol LDL dari baris CSV (field index 14)
-int getKadarKolesterolLDL(char* line) {
-    char field[MAX_FIELD_LENGTH];
-    getFieldAt(line, 14, field, MAX_FIELD_LENGTH);
-    return stringToInt(field);
-}
-
 // Fungsi untuk mengambil trombosit dari baris CSV (field index 15)
 int getTrombosit(char* line) {
     char field[MAX_FIELD_LENGTH];
-    getFieldAt(line, 15, field, MAX_FIELD_LENGTH);
+    getFieldAt(line, 14,field, MAX_FIELD_LENGTH);
     return stringToInt(field);
 }
 
@@ -350,7 +342,6 @@ void getUserData(const char* filename) {
         current_user.berat_badan = getBeratBadan(line);
         current_user.tinggi_badan = getTinggiBadan(line);
         current_user.kadar_kolesterol = getKadarKolesterol(line);
-        current_user.kadar_kolesterol_ldl = getKadarKolesterolLDL(line);
         current_user.trombosit = getTrombosit(line);
 
         users[userCount++] = current_user;
@@ -504,7 +495,7 @@ void loadConfig(const char* folder) {
     fgets(line, sizeof(line), file);
     readIntsFromLine(line, data, 1);
     jumlah_inventory = data[0];
-
+    
     for (int i = 0; i < jumlah_inventory; i++) {
         fgets(line, sizeof(line), file);
         int nums[20];
