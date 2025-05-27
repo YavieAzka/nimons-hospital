@@ -5,7 +5,7 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include "../header/save.h"
-
+#include "../header/load.h"
 void write_file(const char* path, const char* content) {
     FILE* file = fopen(path, "w");
     if (file != NULL) {
@@ -61,12 +61,9 @@ void save_data(const char* folder_name) {
     "tekanan_darah_sistolik;tekanan_darah_diastolik;detak_jantung;"
     "saturasi_oksigen;kadar_gula_darah;berat_badan;tinggi_badan;"
     "kadar_kolesterol;kadar_kolesterol_ldl;trombosit\n"
-    "1;nimonsslatte;nimonatutgajah23;manager;;;;;;;;;;;;\n"
-    "2;neroifa;Neroifa123;dokter;maag;36.5;120;80;65;98;110;60;165;200;120;250000\n"
-    "3;gro;NeirofaCantik123;pasien;;;;;;;;;;;;\n"
-    "4;furinadefontaine;sekaiwonekkyounouzuni;pasien;;;;;;;;;;;;\n"
-    "5;jeje;NewJeje;pasien;;;;;;;;;;;;\n"
-    );
+    )
+    
+   
     
     snprintf(path, sizeof(path), "%s/obat.csv", folder_name);
     write_file(path,

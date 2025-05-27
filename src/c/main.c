@@ -343,6 +343,9 @@ int main(int argc, char* argv[]) {
         if(strcmp(userInput, "REGISTER") == 0){        
             registerUser();
         }
+        if(strcmp(userInput, "SAVE") == 0){
+            save_data("newData");
+        }
 
         //================ LOGIN END ================//
 
