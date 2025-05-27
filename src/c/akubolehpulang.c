@@ -75,7 +75,7 @@ int checkUrutanObat(User *pasien, Stack *perut) {
 }
 
 //Dipanggil kalau semua obat sudah habis
-void urutanHarapan(User *pasien, Stack *perut, Inventory *inv) {
+void urutanHarapan(User *pasien, Stack *perut, InventoryPasien *inv) {
     int urutanNow = 1;
     
     for(int j = 0; j < obatPenyakitCount; j ++) {
@@ -131,5 +131,3 @@ void akubolehpulang(User *pasien, Stack *perut, Inventory *inv) {
             printf("Kamu sudah dinyatakan sembuh oleh dokter. Silahkan pulang dan semoga sehat selalu! :3\n");
         }        
     }
-}
-

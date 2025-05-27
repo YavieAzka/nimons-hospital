@@ -73,7 +73,7 @@ char * cekPenyakit(User pasien){
         }
         i++;
     }
-    return "Sehat";
+    return "";
 }
 
 void diagnosis(User user){
@@ -85,7 +85,7 @@ void diagnosis(User user){
         printf("Tidak ada pasien untuk diperiksa!\n");
     } else{
         User* pasien;
-            
+        
         for (int i = 0; i < userCount; i++)
         {
             if (ruangan.antrianPasien.front->idPasien == users[i].id)
@@ -94,7 +94,8 @@ void diagnosis(User user){
                 break;
             }
         }
-
+        
+        printf("%d\n", pasien->tinggi_badan);
         if (strcmp(pasien->riwayat_penyakit, "") == 0)
         {
             strcpy(namaPenyakit, cekPenyakit(*pasien));
@@ -111,7 +112,5 @@ void diagnosis(User user){
         } else{
             printf("Pasian telah terdiagnosis, arahkan pasien menuju ke Ngobatin.\n");
         }
-        
-
     }
 }
