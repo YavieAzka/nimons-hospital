@@ -311,9 +311,7 @@ int main(int argc, char* argv[]) {
     printWelcomeMessage();
     printOpeningMessage();
 
-    for(int i = 0; i < jumlah_inventory; i++){
-        printf("%d %d\n", daftar_inventory[i].pasien_id, daftar_inventory[i].jumlah_obat);
-    }
+    
     while(status != EXIT){
         printf(">>> ");
         scanf("%s", userInput);
