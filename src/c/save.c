@@ -46,7 +46,7 @@ void save_data(const char* folder_name) {
     int exists = folder_exists(folder_name);
 
     if (!exists) {
-        mkdir(folder_name, 0777);
+        mkdir(folder_name);
         printf("Folder \"%s\" belum ada. Membuat folder baru...\n", folder_name);
         printf("Berhasil menyimpan data di folder %s.\n", folder_name);
     } else if (is_folder_empty(folder_name)) {
@@ -61,7 +61,7 @@ void save_data(const char* folder_name) {
     "tekanan_darah_sistolik;tekanan_darah_diastolik;detak_jantung;"
     "saturasi_oksigen;kadar_gula_darah;berat_badan;tinggi_badan;"
     "kadar_kolesterol;kadar_kolesterol_ldl;trombosit\n"
-    )
+    );
     
    
     

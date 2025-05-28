@@ -1,7 +1,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include "ruangan.h" // Pastikan ADT Ruangan dideklarasikan di sini
+#include "ruangan.h"
+#include "inventory.h"
 
 #define MAX_INVENTORY 100
 
