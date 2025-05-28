@@ -115,6 +115,6 @@ void registerUser(){
         userCount = userCount + 1;
 
         printf("Pasien %s berhasil ditambahkan!\n", newUsername);
-        printf("Silakan melakukan login dengan mengetik [LOGIN].");
+        printf("Silakan melakukan login dengan mengetik [LOGIN].\n");
     }
 } //register function

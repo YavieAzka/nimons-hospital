@@ -26,7 +26,6 @@ User login(User* user_now) {
         if (strcmp(users[index].password, password) == 0) {
             *user_now = users[index];
             printf("Login Berhasil! Selamat datang %s %s.\n", user_now->role, user_now->username);
-            printf("Silakan ketik [HELP] untuk melihat daftar perintah.\n");
         } else {
             printf("Password salah untuk user %s.\n", users[index].username);
             printf("Lupa password? Ketika [LUPA_PASSWORD] untuk mengganti password.\n");
