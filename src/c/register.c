@@ -89,7 +89,7 @@ void registerUser(){
     scanf("%s", newUsername);
     while (!onlyAlfabet(newUsername))
     {
-        printf("Masukkan new username hanya dengan Huruf A-Z, a-z!!\n");
+        printf("Masukkan username hanya dengan Huruf A-Z, a-z!!\n");
         printf("Username: ");
         scanf("%s", newUsername);
     }
