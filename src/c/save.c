@@ -46,7 +46,7 @@ void save_data(const char* folder_name) {
     int exists = folder_exists(folder_name);
 
     if (!exists) {
-        mkdir(folder_name);
+        mkdir(folder_name, 0777);
         printf("Folder \"%s\" belum ada. Membuat folder baru...\n", folder_name);
         printf("Berhasil menyimpan data di folder %s.\n", folder_name);
     } else if (is_folder_empty(folder_name)) {
