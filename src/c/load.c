@@ -7,6 +7,7 @@
 #include "../header/config.h"
 #include "../header/queue.h"
 #include "../header/stack.h"
+#include "../header/inventory.h"
 
 #define MAX_MAPPING 100
 
@@ -490,9 +491,9 @@ void loadConfig(const char* folder) {
 
         InventoryPasien* inv = &daftar_inventory[i];
         inv->pasien_id = nums[0];
-        inv->jumlah_obat = 0;
+        inv->count = 0;
         for (int j = 1; j < count; j++) {
-            inv->obat_ids[inv->jumlah_obat++] = nums[j];
+            inv->obat_id[(inv->count)++] = nums[j];
         }
     }
 

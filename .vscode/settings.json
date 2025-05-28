@@ -19,7 +19,8 @@
     "inventory.h": "c",
     "stack.h": "c",
     "ngobatin.h": "c",
-    "tambah_dokter.h": "c"
+    "tambah_dokter.h": "c",
+    "queue.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }
