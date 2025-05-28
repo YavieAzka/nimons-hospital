@@ -193,3 +193,4 @@ void akubolehpulang(User *pasien) {
             }
         }
     }
+}
