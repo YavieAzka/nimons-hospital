@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "../header/minum-obat.h"
-#include "../header/inventory.h"
 
 InventoryPasien* getInventoryByUser(User* user) {
     for (int i = 0; i < jumlah_inventory; i++) {
