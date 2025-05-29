@@ -115,7 +115,9 @@ void printPilihan(){
     printf("Cari berdasarkan:\n");
     printf("1. ID\n");
     printf("2. Nama\n");
+    printf("Masukkan angka pilihan: \n");
     printf(">>> ");
+    
 }
 
 void printDokter(User U){
@@ -137,29 +139,37 @@ void cariPasien(){
     printf("1. ID\n");
     printf("2. Nama\n");
     printf("3. Penyakit\n");
+    printf("Masukkan angka pilihan: \n");
     printf(">>> ");
 
     scanf("%d", &userChoice);
-    if(userChoice == 1){ // Search by ID
-        int id;
-        printf("Cari ID: ");
-        scanf("%d", &id);
 
-        if(id >= userCount || id < 0){
-            printf("User dengan username '%d' tidak ditemukan.\n", id);
-        }
-        else{
-            printf("Pengguna dengan ID %d:\n", id);
-            printPasien(users[id]);
-        }
-
-    }
     User *usersTemp = (User *)malloc(userCount * sizeof(User));
     for(int i = 0; i < userCount; i++){
         usersTemp[i] = users[i];
     }
 
-    if(userChoice == 2){ // Search by Username
+    if(userChoice == 1){ // Search by ID
+        int idx;
+        printf("Cari ID: ");
+        scanf("%d", &idx);
+
+        if(idx >= userCount || idx < 0){
+            printf("User dengan username '%d' tidak ditemukan.\n", idx);
+        }
+        else{
+            printf("Pengguna dengan ID %d:\n", idx);
+            for(int i = 0; i < userCount; i++){
+                if(users[i].id == idx){
+                    printUser_general(users[i]);
+                    break;
+                }
+            }
+        }
+
+    }
+    
+    else if(userChoice == 2){ // Search by Username
         char targetUsername[128];
         printf("Cari Username: ");
         scanf("%s", targetUsername);
@@ -178,10 +188,15 @@ void cariPasien(){
         }
     }
 
-    if(userChoice == 3){  // Search by riwayat_penyakit
+    else if(userChoice == 3){  // Search by riwayat_penyakit
         char penyakit[32];
         printf("Cari penyakit: ");
-        scanf("%s", penyakit);
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
+
+        // Ambil input penyakit
+        fgets(penyakit, sizeof(penyakit), stdin);
+        penyakit[strcspn(penyakit, "\n")] = '\0';  // Hapus newline dari fgets
         int countPenyakit = 0;
         for(int i = 0; i < userCount; i++){
             if(strcmp(users[i].riwayat_penyakit, penyakit) == 0){
@@ -199,6 +214,9 @@ void cariPasien(){
             printf("Pasien dengan penyakit %s tidak ditemukan.", penyakit);
         }
     }
+    else{
+        printf("Pilihan tidak valid. Mohon masukkan pilihan yang benar!.\n");
+    }
     free(usersTemp);
     
 }
@@ -209,32 +227,40 @@ void cariDokter(){
     printf("Cari berdasarkan:\n");
     printf("1. ID\n");
     printf("2. Nama\n");
+    printf("Masukkan angka pilihan: \n");
     printf(">>> ");
 
     scanf("%d", &userChoice);
-    if(userChoice == 1){ // Search by ID
-        int id;
-        printf("Cari ID: ");
-        scanf("%d", &id);
-
-        if(id <= 0 || id>= userCount){
-            printf("ID tidak valid.\n");
-        }
-        else if(strcmp(users[id].role,"dokter") != 0){
-            printf("Dokter dengan ID '%d' tidak ditemukan.\n", id);
-        }
-        else if(strcmp(users[id].role,"dokter") == 0){
-            printf("Dokter dengan ID %d:\n", id);
-            printDokter(users[id]);
-        }
-
-    }
-
     User *usersTemp = (User *)malloc(userCount * sizeof(User));
     for(int i = 0; i < userCount; i++){
         usersTemp[i] = users[i];
     }
-    if(userChoice == 2){ // Search by Username
+
+    if(userChoice == 1){ // Search by ID
+        int idx;
+        printf("Cari ID: ");
+        scanf("%d", &idx);
+
+        if(idx <= 0 || idx >= userCount){
+            printf("ID tidak valid.\n");
+        }
+        else if(strcmp(users[idx].role,"dokter") != 0){
+            printf("Dokter dengan ID '%d' tidak ditemukan.\n", idx);
+        }
+        else if(strcmp(users[idx].role,"dokter") == 0){
+            printf("Dokter dengan ID %d:\n", idx);
+            for(int i = 0; i < userCount; i++){
+                if(users[i].id == idx){
+                    printUser_general(users[i]);
+                    break;
+                }
+            }
+        }
+
+    }
+
+    
+    else if(userChoice == 2){ // Search by Username
         char targetUsername[128];
         printf("Cari Username: ");
         scanf("%s", targetUsername);
@@ -253,6 +279,9 @@ void cariDokter(){
             printf("Dokter dengan username '%s' tidak ditemukan.\n", targetUsername);
         }
     }
+    else{
+        printf("Pilihan tidak valid. Mohon masukkan pilihan yang benar!.\n");
+    }
     free(usersTemp);
 }
 
@@ -263,27 +292,33 @@ void cariUser(){
     printPilihan();
     scanf("%d", &userChoice);
 
-    if(userChoice == 1){ // Search by ID
-        int id;
-        printf("Cari ID: ");
-        scanf("%d", &id);
-
-        if(id >= userCount || id < 0){
-            printf("ID user tidak ditemukan!");
-        }
-        else{
-            printf("Pengguna dengan ID %d:\n", id);
-            printUser_general(users[id]);
-        }
-
-    }
-
     User *usersTemp = (User *)malloc(userCount * sizeof(User));
     for(int i = 0; i < userCount; i++){
         usersTemp[i] = users[i];
     }
+
+    if(userChoice == 1){ // Search by ID
+        int idx;
+        printf("Cari ID: ");
+        scanf("%d", &idx);
+
+        if(idx >= userCount || idx < 0){
+            printf("ID user tidak ditemukan!\n");
+        }
+        else{
+            printf("Pengguna dengan ID %d:\n", idx);
+            for(int i = 0; i < userCount; i++){
+                if(users[i].id == idx){
+                    printUser_general(users[i]);
+                    break;
+                }
+            }
+        }
+
+    }
+
     
-    if(userChoice == 2){ // Search by Username
+    else if(userChoice == 2){ // Search by Username
         char targetUsername[128];
         printf("Cari Username: ");
         scanf("%s", targetUsername); 
@@ -292,13 +327,15 @@ void cariUser(){
 
         // Step 2: Binary search
         int index = binarySearchUsername(usersTemp, userCount, targetUsername);
-        printf("%d\n", index);
         if (index != -1) {
             printf("Menampilkan %s dengan nama %s:\n", usersTemp[index].role, usersTemp[index].username);
             printUser_general(usersTemp[index]);
         } else {
             printf("User dengan username '%s' tidak ditemukan.\n", targetUsername);
         }
+    }
+    else{
+        printf("Pilihan tidak valid. Mohon masukkan pilihan yang benar!.\n");
     }
     free(usersTemp);
 }

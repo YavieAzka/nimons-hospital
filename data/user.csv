@@ -18,3 +18,4 @@ id;username;password;role;riwayat_penyakit;suhu_tubuh;tekanan_darah_sistolik;tek
 16;tobokan;pass1234;pasien;;36.8;114;74;61;94.6;100;80.6;173;152;386
 20;popokan;passpopokan;pasien;;36.9;110;85;73;98.7;152;62.8;157;184;390
 100;pendatang;pendatangbaru;pasien;;;;;;;;;;;
+111;furina;fufurinafafa;pasien;Diabetes Mellitus;36.9;110;85;73;98.7;152;62.8;157;184;390

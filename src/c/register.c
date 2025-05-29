@@ -85,7 +85,7 @@ void registerUser(){
     }
     
     // input username
-    printf("Username: ");
+    printf("\033[34mUsername: \033[0m");
     scanf("%s", newUsername);
     while (!onlyAlfabet(newUsername))
     {
@@ -96,7 +96,7 @@ void registerUser(){
     
     
     // input password
-    printf("Password: ");
+    printf("\033[34mPassword: \033[0m");
     scanf("%s", newPassword);
 
     char lowerNewUsername[512];

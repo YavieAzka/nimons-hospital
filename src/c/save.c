@@ -128,7 +128,7 @@ void save_data(const char* folder_name) {
     int exists = folder_exists(folder_name);
 
     if (!exists) {
-        mkdir(folder_name,0777);
+        mkdir(folder_name);
         printf("Folder \"%s\" belum ada. Membuat folder baru...\n", folder_name);
     } else if (is_folder_empty(folder_name)) {
         printf("Folder \"%s\" ditemukan dan kosong.\n", folder_name);
@@ -168,7 +168,7 @@ void save_data(const char* folder_name) {
     if (f_penyakit) {
         fprintf(f_penyakit, "id;nama_penyakit;suhu_tubuh_min;suhu_tubuh_max;tekanan_darah_sistolik_min;tekanan_darah_sistolik_max;tekanan_darah_diastolik_min;tekanan_darah_diastolik_max;detak_jantung_min;detak_jantung_max;saturasi_oksigen_min;saturasi_oksigen_max;kadar_gula_darah_min;kadar_gula_darah_max;berat_badan_min;berat_badan_max;tinggi_badan_min;tinggi_badan_max;kadar_kolesterol_min;kadar_kolesterol_max;trombosit_min;trombosit_max\n");
         for (int i = 0; i < penyakitCount; i++) {
-            fprintf(f_penyakit, "%d;%s;%.1f;%.1f;%d;%d;%d;%d;%d;%d;%.1f;%.1f;%.1f;%.1f;%.1f;%.1f;%d;%d;%d;%d;%d;%d\n",
+            fprintf(f_penyakit, "%d;%s;%.1f;%.1f;%d;%d;%d;%d;%d;%d;%.1f;%.1f;%.1d;%.1d;%.1f;%.1f;%d;%d;%d;%d;%d;%d\n",
                 penyakitList[i].id, penyakitList[i].name_penyakit,
                 penyakitList[i].suhu_tubuh_min, penyakitList[i].suhu_tubuh_max,
                 penyakitList[i].tekanan_darah_sistolik_min, penyakitList[i].tekanan_darah_sistolik_max,

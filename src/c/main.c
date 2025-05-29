@@ -25,8 +25,12 @@
 #include "../header/save.h"
 #include "../header/tambah_dokter.h"
 #include "../header/stack.h"
-//#include "../header/antrian-saya.h"
+#include "../header/antrian-saya.h"
 #include "../header/ngobatin.h"
+// #include "../header/daftar-check-up.h"
+// #include "../header/akubolehpulang.h"
+// #include "../header/minum-obat.h"
+// #include "../header/minumpenawar.h"
 
 void printCommandMessage(){
     printf("\033[1;35m--------------------------------------------------------------\033[0m\n");
@@ -252,19 +256,19 @@ void handlePasien(User* user, Status* status) {
             help(*user);
         }
         else if (strcmp(input, "DAFTAR_CHECKUP") == 0) {
-            // implementasi modul daftar_checkup(); // placeholder
+            //daftarCheckUp(user);
         } 
         else if (strcmp(input, "ANTRIAN_SAYA") == 0) {
             //antrianSaya(user);
         } 
         else if (strcmp(input, "MINUM_OBAT") == 0) {
-            // implementasi modul minum_obat(); // placeholder
+            //minumObat(user);
         } 
         else if (strcmp(input, "MINUM_PENAWAR") == 0) {
-            // implementasi modul minum_penawar(); // placeholder
+            //minumPenawar(user);
         } 
         else if (strcmp(input, "DOK_AKU_MAU_PULANG") == 0) {
-            // implementasi modul pulang(); // placeholder
+            //akubolehpulang(user);
         } 
         else if (strcmp(input, "LOGOUT") == 0) {
             logout(user, status);
@@ -400,6 +404,7 @@ int main(int argc, char* argv[]) {
 }
 
 // gcc src/c/main.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/denah.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lihat_antrian.c src/c/queue.c src/c/lupa_password.c -o main
+// gcc src/c/main.c src/c/antrian-saya.c src/c/akubolehpulang.c src/c/minum-obat.c src/c/minumpenawar.c src/c/exit.c src/c/ngobatin.c src/c/save.c src/c/stack.c src/c/diagnosis.c src/c/tambah_dokter.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/denah.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lihat_antrian.c src/c/queue.c src/c/lupa_password.c -o main
 // gcc src/c/main.c src/c/exit.c src/c/ngobatin.c src/c/save.c src/c/stack.c src/c/diagnosis.c src/c/tambah_dokter.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/denah.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lihat_antrian.c src/c/queue.c src/c/lupa_password.c -o main
 /*
 
