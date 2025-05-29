@@ -146,10 +146,5 @@ void ngobatin(User currentUser) {
         }
     }
 
-    // Hapus pasien dari antrian
-    int temp_id;
-    char temp_user[MAX_USERNAME];
-    dequeue(&ruanganDokter->antrianPasien, &temp_id, temp_user);
-
     printf("\nPastikan obat diberikan satu per satu sesuai urutan di atas ya. Semangat menyembuhkan pasien!\n");
 }
