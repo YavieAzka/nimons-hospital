@@ -24,7 +24,6 @@ void removeInventoryByUser(InventoryPasien* inv, int index) {
 void minumObat(User* user) {
     InventoryPasien* inv = getInventoryByUser(user);
 
-    printf(">>> MINUM_OBAT\n");
 
     if (inv == NULL || inv->count == 0) {
         printf("Eh, obatmu kosong loh! Gak ada yang bisa diminum sekarang :)\n");
