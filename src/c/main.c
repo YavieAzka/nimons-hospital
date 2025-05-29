@@ -24,6 +24,8 @@
 #include "../header/tambah_dokter.h"
 #include "../header/stack.h"
 #include "../header/antrian-saya.h"
+#include "../header/akubolehpulang.h"
+#include "../header/minumpenawar.h"
 
 void printCommandMessage(){
     printf("--------------------------------------------------------------\n");
@@ -258,10 +260,10 @@ void handlePasien(User* user, Status* status) {
             // implementasi modul minum_obat(); // placeholder
         } 
         else if (strcmp(input, "MINUM_PENAWAR") == 0) {
-            // implementasi modul minum_penawar(); // placeholder
+            // minumPenawar(user); //Testing
         } 
         else if (strcmp(input, "DOK_AKU_MAU_PULANG") == 0) {
-            // implementasi modul pulang(); // placeholder
+            // akubolehpulang(user); //Testing
         } 
         else if (strcmp(input, "LOGOUT") == 0) {
             logout(user, status);
