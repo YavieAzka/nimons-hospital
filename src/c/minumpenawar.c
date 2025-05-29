@@ -4,7 +4,7 @@
 #include "../header/user.h"
 #include "../header/stack.h"
 #include "../header/inventory.h"
-
+#include "../header/akubolehpulang.h"
 // Yang dicomment hapus aja kalau memang sudah fix (itu buat testing):)
 
 // Global variabel for testing 
