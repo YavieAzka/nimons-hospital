@@ -29,7 +29,7 @@
 #include "../header/ngobatin.h"
 #include "../header/daftar-check-up.h"
 // #include "../header/akubolehpulang.h"
-// #include "../header/minum-obat.h"
+#include "../header/minum-obat.h"
 // #include "../header/minumpenawar.h"
 
 void printCommandMessage(){
@@ -262,7 +262,7 @@ void handlePasien(User* user, Status* status) {
             //antrianSaya(user);
         } 
         else if (strcmp(input, "MINUM_OBAT") == 0) {
-            //minumObat(user);
+            minumObat(user);
         } 
         else if (strcmp(input, "MINUM_PENAWAR") == 0) {
             //minumPenawar(user);
