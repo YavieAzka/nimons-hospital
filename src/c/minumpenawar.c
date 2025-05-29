@@ -4,8 +4,9 @@
 #include "../header/user.h"
 #include "../header/stack.h"
 #include "../header/inventory.h"
+#include "../header/minum-obat.h"
 #include "../header/akubolehpulang.h"
-
+#include "../header/load.h"
 // Yang dicomment hapus aja kalau memang sudah fix (itu buat testing):)
 
 // Global variabel for testing 
@@ -57,26 +58,26 @@
 // 
 //     return urutBenar;
 // }
+void addInventoryByUser(InventoryPasien* inv, int id) {
+    inv->obat_id[inv->count] = id;
+    inv->count++;
+}
+void minumPenawar(User *user) {
+    InventoryPasien* inv = getInventoryByUser(user);
+    int idx = getUserIndex(user->username, users, userCount);
 
-void minumPenawar(User *pasien) {
-    char namaObatKeluar[MAX_NAMA_PENYAKIT] = "";
-    if(pasien->perut.top == 0) {
+    char namaObatKeluar[MAX_NAMA_PENYAKIT];
+    if(users[idx].perut.top == -1) {
         printf("Perut kosong!! Belum ada obat yang dimakan. :O\n");
     } else {
-        if (checkUrutanObat(pasien) == 0) {
-            int idObatKeluar = peek(pasien->perut);
-            pop(&(pasien->perut));
-
-            for(int i = 0; i < obatCount; i++) {
-                if(idObatKeluar == obatList[i].id) {
-                    strcpy(namaObatKeluar, obatList[i].nama);
-                    break;
-                }
-            }
-            //Keluarkan obat dari perut
-            printf("Uwekkk :O !!! %s keluar dan kembali ke inventory\n", namaObatKeluar);
-            addInventory(idObatKeluar);
-        }
+        int idObatKeluar = peek(users[idx].perut);
+        pop(&(users[idx].perut));
+        // Cari nama obat berdasarkan ID
+        strcpy(namaObatKeluar, namaObat(idObatKeluar));
+        //Keluarkan obat dari perut
+        printf("Uwekkk :O !!! %s keluar dan kembali ke inventory\n", namaObatKeluar);
+        addInventoryByUser(inv,idObatKeluar);
+        
     }
 }
 

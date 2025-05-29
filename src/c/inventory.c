@@ -1,8 +1,34 @@
 #include <stdio.h>
 #include "../header/inventory.h"
 #include "../header/obat.h"
-
+#include "../header/config.h"
 InventoryPasien inventoryPasien;
+
+void removeInventoryByUser(InventoryPasien* inv, int index) {
+    for (int i = index; i < inv->count - 1; i++) {
+        inv->obat_id[i] = inv->obat_id[i + 1];
+    }
+    inv->count--;
+}
+
+InventoryPasien* getInventoryByUser(User* user) {
+    for (int i = 0; i < jumlah_inventory; i++) {
+        if (daftar_inventory[i].pasien_id == user->id) {
+            return &daftar_inventory[i];
+        }
+    }
+    return NULL;
+}
+
+void searchJumlahInventory(int* jumlahInventory){
+    *jumlahInventory = 0;
+    for (int i = 0; i < jumlah_inventory; i++) {
+        if (daftar_inventory[i].count > 0) {
+            (*jumlahInventory)++;
+        }
+    }
+}
+// Fungsi untuk menginisialisasi inventory pasien
 
 void initInventory() {
     inventoryPasien.count = 0;

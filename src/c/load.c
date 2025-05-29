@@ -513,6 +513,7 @@ void loadConfig(const char* folder) {
 
         initStack(&(u->perut));
         for (int j = 1; j < count; j++) {
+            printf("Memasukkan obat %d ke perut pasien %s\n", nums[j], u->username);
             push(&(u->perut), nums[j]);
         }
     }

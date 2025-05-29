@@ -152,22 +152,23 @@ Ruangan* cekAntrianPasien(User* pasien, Ruangan *ruanganPasien) {
 void akubolehpulang(User *pasien) {
     int idPasienPulang;
     char namaPasienPulang[MAX_USERNAME];
+    int idx = getUserIndex(pasien->username, users, userCount);
     Ruangan* ruanganPasien = cariRuanganPasien(pasien);
-
+    InventoryPasien* inventoryPasien = getInventoryByUser(pasien);
     //Cek Lokasi pasien 
     if(ruanganPasien == NULL) {
         printf("Pasien tidak ditemukan. Silahkan melakukan registrasi terlebih dahulu :)\n");
 
     } else {
-        if(cekAntrianPasien(pasien, ruanganPasien) == NULL) {
+        if(cekAntrianPasien(&users[idx], ruanganPasien) == NULL) {
             printf("Kamu belum berada di urutan terdepan antrian mana pun. Sabar dulu ya! :(\n");
         } else {
             //Pasien belum terdiagnosis
-            if(checkDiagnosis(pasien) == false) {
-                if(strcmp(pasien->riwayat_penyakit, "") == 0) {
+            if(checkDiagnosis(&users[idx]) == false) {
+                if(strcmp(users[idx].riwayat_penyakit, "") == 0) {
                     printf("Kamu belum menerima diagnosis apapun dari dokter, jangan buru-buru pulang! T^T\n");
                 
-                } else if(strcmp(pasien->riwayat_penyakit, "Nothing") == 0) {
+                } else if(strcmp(users[idx].riwayat_penyakit, "Nothing") == 0) {
                     printf("Kamu tidak ada penyakit apapun. Silahkan pulang dan semoga sehat selalu! :3\n");
                     dequeue(&(ruanganPasien->antrianPasien), &idPasienPulang, namaPasienPulang);
                 }
@@ -175,23 +176,23 @@ void akubolehpulang(User *pasien) {
             } else {
                 printf("Dokter sedang memeriksa keadaanmu...\n");
                 //Obat belum habis
-                if(inventoryPasien.count != 0) {
+                if(inventoryPasien->count != 0) {
                     printf("Masih ada obat yang belum kamu habiskan, minum semuanya dulu yukk! :3\n");
                 
-                } else if(inventoryPasien.count == 0 && checkUrutanObat(pasien) == 0){ 
+                } else if(inventoryPasien->count == 0 && checkUrutanObat(&users[idx]) == 0){ 
                     // Urutan salah
                     printf("Maaf, tapi kamu masih belum bisa pulang!\n");
                     printf("Urutan obat yang diharapkan:\n");
-                    urutanHarapan(pasien);
+                    urutanHarapan(&users[idx]);
                 
                     printf("Urutan obat yang kamu minum:\n");
-                    int jumlahObat = getjumlahObat(pasien);
+                    int jumlahObat = getjumlahObat(&users[idx]);
 
                     for(int i = 0; i < jumlahObat; i ++) {
                         // Cari nama obat berdasarkan ID
                         char namaObat[20] = "";
                         for (int j = 0; j < obatCount; j++) {
-                            if (obatList[j].id == pasien->perut.data[i]) {
+                            if (obatList[j].id == users[idx].perut.data[i]) {
                                 strcpy(namaObat, obatList[j].nama);
                                 break;
                             }
@@ -212,13 +213,13 @@ void akubolehpulang(User *pasien) {
                     printf("Selamat! :D\n");
                     printf("Kamu sudah dinyatakan sembuh oleh dokter. Silahkan pulang dan semoga sehat selalu! :3\n");
                 
-                    // Reset data pasien dan perut 
+                    // Reset data users[idx] dan perut 
                     // (inventory tidak direset karena obat sudah habis (inventory.Count = 0))
-                    strcpy(pasien->riwayat_penyakit, "");
-                    while (pasien->perut.top != -1) {
-                        pop(&pasien->perut);
+                    strcpy(users[idx].riwayat_penyakit, "");
+                    while (!isStackEmpty(users[idx].perut)) {
+                        pop(&users[idx].perut);
                     }
-
+                    
                     // Pasien keluar dari antrian
                     dequeue(&(ruanganPasien->antrianPasien), &idPasienPulang, namaPasienPulang);
                 }        

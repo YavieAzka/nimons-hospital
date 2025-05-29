@@ -14,7 +14,7 @@ int isStackFull(Stack s) {
 
 void push(Stack* s, int value) {
     if (!isStackFull(*s)) {
-        s->data[++s->top] = value;
+        s->data[++(s->top)] = value;
     }
 }
 
