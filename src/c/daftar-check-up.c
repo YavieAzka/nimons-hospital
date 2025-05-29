@@ -103,9 +103,9 @@ void daftarCheckUp(User* userNow) {
     int opsi[100][2];
     int count = 0;
 
-    for (int i = 0; i < panjang_denah_eff; i++) {
-        for (int j = 0; j < lebar_denah_eff; j++) {
-            if (ruanganList[i][j].idDokter != -1) {
+    for (int i = 0; i < panjang_denah; i++) {
+        for (int j = 0; j < lebar_denah; j++) {
+            if (ruanganList[i][j].idDokter != 0 && ruanganList[i][j].antrianPasien.length < kapasitas_ruangan + kapasitas_antrian) {
                 printf("%d. Dr. %s - Ruangan %c%d (Antrian: %d pasien)\n",
                        count + 1,
                        ruanganList[i][j].usernameDokter,
