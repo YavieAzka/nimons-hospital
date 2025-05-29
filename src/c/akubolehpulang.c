@@ -89,12 +89,15 @@ void urutanHarapan(User *pasien) {
         int idObat = obatPenyakitList[j].obat_id;
         for(int i = 0; i < obatPenyakitCount; i++) {
             if(idObat == obatPenyakitList[i].obat_id && getIdFromPenyakit(pasien) == obatPenyakitList[i].penyakit_id && urutanNow == obatPenyakitList[i].urutan_minum) {
-                if(urutanNow != getjumlahObat(pasien)) {
-                    printf("%s -> ", obatList[idObat].nama);
-                } else {
-                    printf("%s\n", obatList[idObat].nama);
-                }
-                
+                for(int k = 0; k < penyakitCount; k++) {
+                    if(obatList[k].id == idObat) {
+                        if(urutanNow != getjumlahObat(pasien)) {
+                            printf("%s -> ", obatList[k].nama);
+                        } else {
+                            printf("%s\n", obatList[k].nama);
+                        }
+                    }
+                }                
                 urutanNow ++;
             }
         }
