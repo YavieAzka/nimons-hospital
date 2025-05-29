@@ -14,7 +14,7 @@ void antrianSaya(User* userNow) {
 
     for (int i = 0; i < panjang_denah_eff; i++) {
         for (int j = 0; j < lebar_denah_eff; j++) {
-            Queue q = ruanganList[i][j].antrian;
+            Queue q = ruanganList[i][j].antrianPasien;  
             Node* current = q.front;
             int posisi = 1;
 
@@ -23,7 +23,7 @@ void antrianSaya(User* userNow) {
                     printf("\n==== STATUS ANTRIAN KAMU ====\n");
                     printf("Ketemu! Kamu lagi nunggu di ruangan %c%d bareng Dokter %s.\n", 
                            'A' + i, j + 1,
-                           ruanganList[i][j].dokter.username);
+                           ruanganList[i][j].usernameDokter);  
                     printf("Posisimu sekarang di antrian: %d dari %d pasien.\n", posisi, q.length);
 
                     int kapasitas = kapasitas_ruangan;
