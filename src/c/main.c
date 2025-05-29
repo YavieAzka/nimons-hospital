@@ -92,6 +92,9 @@ void devmode(User* user, Status *status){
             denahRumahSakit(input);
             //return;
         }
+        else if (strcmp(input, "PINDAH_DOKTER") == 0) {
+            denahRumahSakit(input);
+        }
         else if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0) {
             denahRumahSakit(input);
             //return;
@@ -175,6 +178,9 @@ void handleManager(User* user, Status* status) {
             denahRumahSakit(input);
             //return;
         }
+        else if (strcmp(input, "PINDAH_DOKTER") == 0) {
+            denahRumahSakit(input);
+        }
         else if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0) {
             denahRumahSakit(input);
             //return;
@@ -190,8 +196,9 @@ void handleManager(User* user, Status* status) {
             return;
         } 
         else if (strcmp(input, "EXIT") == 0) {
-            //*status = EXIT;
-            //return;
+            *status = EXIT;
+            exit_program();
+            return;
         }
         else{
             printf("Perintah tidak dikenali. Mohon berikan perintah yang valid!\n");
@@ -237,6 +244,7 @@ void handleDokter(User* user, Status* status) {
         }
         else if (strcmp(input, "EXIT") == 0) {
             *status = EXIT;
+            exit_program();
             return;
         }
         else{
@@ -291,7 +299,7 @@ void handlePasien(User* user, Status* status) {
         } 
         else if(strcmp(input, "EXIT") == 0){
             *status = EXIT;
-            //exit_program();
+            exit_program();
             return;
         }
         else{
@@ -375,6 +383,11 @@ int main(int argc, char* argv[]) {
         else if(strcmp(userInput, "SAVE") == 0){
             save_data("newData");
         }
+        else if (strcmp(userInput, "EXIT") == 0){
+            status = EXIT;
+            exit_program();
+        }
+        
         else{
             printf("Perintah tidak dikenali. Mohon berikan perintah yang valid!\n");
         }

@@ -129,6 +129,8 @@ void ubahDenah(){
 
 void pindahDokter(){
     char ruang1[10], ruang2[10];
+    printf("Masukkan ruangan asal dan tujuan (misal: A1 B2): ");
+    // Input format: A1 B2
     scanf("%s %s", ruang1, ruang2);
     int baris1, kolom1, baris2, kolom2;
 
