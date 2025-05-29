@@ -84,25 +84,37 @@ int checkUrutanObat(User *pasien) {
 //Dipanggil kalau semua obat sudah habis
 void urutanHarapan(User *pasien) {
     int urutanNow = 1;
-    
-    for(int j = 0; j < obatPenyakitCount; j ++) {
-        int idObat = obatPenyakitList[j].obat_id;
-        for(int i = 0; i < obatPenyakitCount; i++) {
-            if(idObat == obatPenyakitList[i].obat_id && getIdFromPenyakit(pasien) == obatPenyakitList[i].penyakit_id && urutanNow == obatPenyakitList[i].urutan_minum) {
-                for(int k = 0; k < penyakitCount; k++) {
-                    if(obatList[k].id == idObat) {
-                        if(urutanNow != getjumlahObat(pasien)) {
-                            printf("%s -> ", obatList[k].nama);
-                        } else {
-                            printf("%s\n", obatList[k].nama);
-                        }
+    int totalUrutan = getjumlahObat(pasien);
+
+    while (urutanNow <= totalUrutan) {
+        for (int i = 0; i < obatPenyakitCount; i++) {
+            if (getIdFromPenyakit(pasien) == obatPenyakitList[i].penyakit_id &&
+                obatPenyakitList[i].urutan_minum == urutanNow) {
+                
+                int idObat = obatPenyakitList[i].obat_id;
+
+                // Cari nama obat berdasarkan id
+                const char* nama = "-";
+                for (int j = 0; j < obatCount; j++) {
+                    if (obatList[j].id == idObat) {
+                        nama = obatList[j].nama;
+                        break;
                     }
-                }                
-                urutanNow ++;
+                }
+
+                if (urutanNow < totalUrutan) {
+                    printf("%s -> ", nama);
+                } else {
+                    printf("%s\n", nama);
+                }
+
+                break; // lanjut ke urutan berikutnya
             }
         }
+        urutanNow++;
     }
 }
+
 
 Ruangan *cariRuanganPasien(User *pasien) {
     for(int i = 0; i < panjang_denah; i++) {
@@ -176,13 +188,25 @@ void akubolehpulang(User *pasien) {
                     int jumlahObat = getjumlahObat(pasien);
 
                     for(int i = 0; i < jumlahObat; i ++) {
-                        if(i != jumlahObat) {
-                            printf("%s -> ", obatList[pasien->perut.data[i]].nama);
+                        // Cari nama obat berdasarkan ID
+                        char namaObat[20] = "";
+                        for (int j = 0; j < obatCount; j++) {
+                            if (obatList[j].id == pasien->perut.data[i]) {
+                                strcpy(namaObat, obatList[j].nama);
+                                break;
+                            }
+                        }
+                        if(strcmp(namaObat, "") == 0){
+                            break;
+                        }
+                        else if(i == 0) {
+                            printf("%s", namaObat);
+                            
                         } else {
-                            printf("%s\n", obatList[pasien->perut.data[i]].nama);
+                            printf("-> %s ", namaObat);
                         }
                     }
-                    printf("Silahkan kunjungi dokter untuk meminta penawar yang sesuai !\n");
+                    printf("\nSilahkan kunjungi dokter untuk meminta penawar yang sesuai !\n");
                 
                 } else {
                     printf("Selamat! :D\n");
