@@ -12,8 +12,8 @@ void antrianSaya(User* userNow) {
 
     int found = 0;
 
-    for (int i = 0; i < panjang_denah_eff; i++) {
-        for (int j = 0; j < lebar_denah_eff; j++) {
+    for (int i = 0; i < panjang_denah; i++) {
+        for (int j = 0; j < lebar_denah; j++) {
             Queue q = ruanganList[i][j].antrianPasien;  
             Node* current = q.front;
             int posisi = 1;

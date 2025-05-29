@@ -102,8 +102,9 @@ void urutanHarapan(User *pasien) {
 }
 
 Ruangan *cariRuanganPasien(User *pasien) {
-    for(int i = 0; i < panjang_denah_eff; i++) {
-        for(int j = 0; j < lebar_denah_eff; j++) {
+    for(int i = 0; i < panjang_denah; i++) {
+        for(int j = 0; j < lebar_denah; j++) {
+
             Ruangan *ruanganPasien = &ruanganList[i][j];
             
             //Cek pasien ada di salah satu ruangan
@@ -198,57 +199,3 @@ void akubolehpulang(User *pasien) {
         }
     }
 }
-// int main() {
-//     obatList = malloc(sizeof(Obat) * 3);
-//     strcpy(obatList[0].nama, "Klorofil");
-//     obatList[0].id = 1;
-//     strcpy(obatList[1].nama, "Alkali Tanah");
-//     obatList[1].id = 2;
-//     strcpy(obatList[2].nama, "Es Kopi Susu");
-//     obatList[2].id = 3;
-// 
-//     obatPenyakitList = malloc(sizeof(ObatPenyakit) * 3);
-//     obatPenyakitList[0].obat_id = 1;
-//     obatPenyakitList[0].penyakit_id = 1;
-//     obatPenyakitList[0].urutan_minum = 2;
-//     obatPenyakitList[1].obat_id = 2;
-//     obatPenyakitList[1].penyakit_id = 1;
-//     obatPenyakitList[1].urutan_minum = 1;
-//     obatPenyakitList[2].obat_id = 3;
-//     obatPenyakitList[2].penyakit_id = 1;
-//     obatPenyakitList[2].urutan_minum = 3;
-// 
-//     penyakitList = malloc(sizeof(Penyakit) * 1);
-//     penyakitList[0].id = 1;
-//     strcpy(penyakitList[0].name_penyakit, "Heart Attack");
-//     // strcpy(penyakitList[0].name_penyakit, "Nothing");
-//     // strcpy(penyakitList[0].name_penyakit, "");
-// 
-//     User pasien;
-//     pasien.id = 1; 
-//     strcpy(pasien.username, "Monsieur Neuvillette");
-//     strcpy(pasien.riwayat_penyakit, "Heart Attack");
-//     // strcpy(pasien.riwayat_penyakit, "Nothing");
-//     // strcpy(pasien.riwayat_penyakit, "");
-// 
-//     //Minum obat
-//     push(&pasien.perut, 2);
-//     push(&pasien.perut, 1);
-//     push(&pasien.perut, 3);
-// 
-//     inventoryPasien.count = 0;
-//     // inventory.pasien_id = 1;
-//     // inventory.obat_id[0] = 1;
-//     // inventory.obat_id[1] = 2;
-//     // inventory.obat_id[2] = 3;
-// 
-//     ruanganList[0][0].totalPasien = 1;
-//     ruanganList[0][0].idPasien[0] = 1;
-//     
-//     enqueue(&ruanganList[0][0].antrianPasien, pasien.id, "Monsieur Neuvillette");
-// 
-//     akubolehpulang(&pasien);
-// }
-// 
-// // gcc akubolehpulang.c stack.c queue.c inventory.c load.c utils.c -I../header -o akubolehpulang
-

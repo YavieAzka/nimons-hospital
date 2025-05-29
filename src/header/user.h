@@ -31,6 +31,10 @@ typedef struct {
     int kadar_kolesterol;
     int trombosit;
     Stack perut;
+
+    //nyawa
+    int nyawa;
+    int jumlah_kesalahan;
 } User;
 
 extern User users[MAX_USERS];
