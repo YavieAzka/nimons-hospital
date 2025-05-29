@@ -1,7 +1,9 @@
 #ifndef NGOBATIN_H
 #define NGOBATIN_H
 
-// Fungsi utama ngobatin: hanya dokter yang bisa menjalankan
-void ngobatin();
+#include "user.h"
+
+// Fungsi utama ngobatin: hanya dokter bisa menjalankan dan hanya pasien di antriannya yang bisa diobati
+void ngobatin(User currentUser);
 
 #endif
