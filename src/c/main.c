@@ -29,7 +29,7 @@
 #include "../header/ngobatin.h"
 
 void printCommandMessage(){
-    printf("--------------------------------------------------------------\n");
+    printf("\033[1;35m--------------------------------------------------------------\033[0m\n");
     printf("Masukkan perintah (Ketik [HELP] untuk melihat daftar perintah): \n");
 }
 
@@ -309,8 +309,8 @@ void printWelcomeMessage(){
 
 void printOpeningMessage(){
     printf("+===================================================+\n");
-    printf("|    SILAKAN LOGIN DENGAN MENGETIK [LOGIN] ATAU     |\n");
-    printf("|    MELAKUKAN REGISTER DENGAN MENGETIK [REGISTER]  |\n");
+    printf("|    SILAKAN LOGIN DENGAN MENGETIK \033[92m[LOGIN]\033[0m ATAU     |\n");
+    printf("|    MELAKUKAN REGISTER DENGAN MENGETIK \033[92m[REGISTER]\033[0m  |\n");
     printf("+===================================================+\n");
 }
 
