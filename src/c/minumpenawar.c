@@ -10,11 +10,12 @@
 
 void minumPenawar(User *pasien) {
     char namaObatKeluar[MAX_NAMA_PENYAKIT] = "";
-    if(pasien->perut.top == -1) {
+    if(pasien->perut.top == 0) {
         printf("Perut kosong!! Belum ada obat yang dimakan. :O\n");
     } else {
         if (checkUrutanObat(pasien) == 0) {
-            int idObatKeluar = pop(pasien->perut);
+            int idObatKeluar = peek(pasien->perut);
+            pop(&(pasien->perut));
             for(int i = 0; i < obatCount; i++) {
                 if(idObatKeluar == obatList[i].id) {
                     strcpy(namaObatKeluar, obatList[i].nama);
@@ -22,7 +23,6 @@ void minumPenawar(User *pasien) {
                 }
             }
             //Keluarkan obat dari perut
-            pop(pasien->perut);
             printf("Uwekkk :O !!! %s keluar dan kembali ke inventory\n", namaObatKeluar);
             addInventory(idObatKeluar);
         }
