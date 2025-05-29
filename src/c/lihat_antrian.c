@@ -7,9 +7,10 @@
 #include "../header/user.h"
 #include "../header/queue.h"
 #include "../header/config.h"
+#include "../header/ruangan.h"
 
 void lihatSemuaAntrian() {
-    gambarDenah();
+    gambarDenah(); // Menampilkan grid denah ruangan
 
     for (int i = 0; i < panjang_denah; i++) {
         for (int j = 0; j < lebar_denah; j++) {
@@ -24,29 +25,36 @@ void lihatSemuaAntrian() {
                 printf("Dokter     : Dr. %s\n", r.usernameDokter);
 
                 printf("Pasien di dalam ruangan:\n");
-                if (r.totalPasien == 0 || strcmp(r.usernamePasien[i], "-") == 0) {
+
+                Node* cur = r.antrianPasien.front;
+                int index = 0;
+                bool adaPasienDalam = false;
+
+                // Pasien dalam ruangan: index < kapasitas_ruangan
+                while (cur != NULL && index < kapasitas_ruangan) {
+                    printf("  %d. %s\n", index + 1, cur->usernamePasien);
+                    adaPasienDalam = true;
+                    cur = cur->next;
+                    index++;
+                }
+
+                if (!adaPasienDalam) {
                     printf("  Tidak ada pasien di dalam ruangan saat ini.\n");
-                } else {
-                    for (int k = 0; k < r.totalPasien; k++) {
-                        printf("  %d. %s\n", k + 1, r.usernamePasien[k]);
-                    }
                 }
 
                 printf("Pasien di antrian:\n");
-                Node* cur = r.antrianPasien.front;
-                int skip = 0;
-                while (skip < r.totalPasien && cur != NULL) {
+                bool adaPasienAntrian = false;
+                int antriIndex = 1;
+
+                // Sisanya dianggap sebagai pasien di antrian
+                while (cur != NULL) {
+                    printf("  %d. %s\n", antriIndex++, cur->usernamePasien);
+                    adaPasienAntrian = true;
                     cur = cur->next;
-                    skip++;
                 }
-                if (cur == NULL) {
+
+                if (!adaPasienAntrian) {
                     printf("  Tidak ada pasien di antrian saat ini.\n");
-                } else {
-                    int antriIndex = 1;
-                    while (cur != NULL) {
-                        printf("  %d. %s\n", antriIndex++, cur->usernamePasien);
-                        cur = cur->next;
-                    }
                 }
             }
         }
