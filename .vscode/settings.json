@@ -20,7 +20,8 @@
     "stack.h": "c",
     "ngobatin.h": "c",
     "tambah_dokter.h": "c",
-    "queue.h": "c"
+    "queue.h": "c",
+    "save.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

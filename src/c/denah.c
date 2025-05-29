@@ -114,10 +114,6 @@ void ubahDenah(){
     int newPanjang, newLebar;
     printf("Masukkan ukuran denah yang baru: ");
     scanf("%d %d", &newPanjang, &newLebar);
-    while (newLebar > MAX_RUANGAN || newPanjang > MAX_RUANGAN){
-        printf("Masukkan Nilai Panjang dan Lebar yang tidak melebihi capacity Ruangan (5 5): \n");
-        scanf("%d %d", &newPanjang, &newLebar);
-    }
     
     if (newLebar < lebar_denah_eff || newPanjang < panjang_denah_eff) {
         int baris = -1, kolom = -1;
@@ -133,6 +129,8 @@ void ubahDenah(){
 
 void pindahDokter(){
     char ruang1[10], ruang2[10];
+    printf("Masukkan ruangan asal dan tujuan (misal: A1 B2): ");
+    // Input format: A1 B2
     scanf("%s %s", ruang1, ruang2);
     int baris1, kolom1, baris2, kolom2;
 

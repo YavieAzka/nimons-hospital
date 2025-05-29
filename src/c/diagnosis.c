@@ -65,7 +65,7 @@ boolean cekTrombosit(User user, Penyakit penyakit){
 }
 
 void cekPenyakit(User* pasien){
-    // strcpy(pasien->riwayat_penyakit, "Sehat");
+    strcpy(pasien->riwayat_penyakit, "Sehat");
     // printf("=== DEBUG DATA PASIEN ===\n");
     // printf("Username: %s\n", pasien->username);
     // printf("Suhu: %.2f\n", pasien->suhu_tubuh);
@@ -98,21 +98,20 @@ void cekPenyakit(User* pasien){
             strcpy(pasien->riwayat_penyakit, penyakitList[i].name_penyakit);
             break;
         }
-        // printf("%d debug ceksuhu\n", cekSuhu(*pasien, penyakitList[i]));
-        // printf("%d debug cekTekananSistolik\n", cekTekananSistolik(*pasien, penyakitList[i]));
-        // printf("%d debug cekTekananDiastolik\n", cekTekananDiastolik(*pasien, penyakitList[i]));
-        // printf("%d debug cekDetakJantung\n", cekDetakJantung(*pasien, penyakitList[i]));
-        // printf("%d debug cekSaturasiOksigen\n", cekSaturasiOksigen(*pasien, penyakitList[i]));
-        // printf("%d debug cekKadarGulaDarah\n", cekKadarGulaDarah(*pasien, penyakitList[i]));
-        // printf("%d debug cekBeratBadan\n", cekBeratBadan(*pasien, penyakitList[i]));
-        // printf("%d debug cekTinggiBadan\n", cekTinggiBadan(*pasien, penyakitList[i]));
-        // printf("%d debug cekKadarKolesterol\n", cekKadarKolesterol(*pasien, penyakitList[i]));
-        // printf("%d debug cekTrombosit\n", cekTrombosit(*pasien, penyakitList[i]));
-        // printf("%d debug i\n", i);
-        // printf("%s\n",penyakitList[i].name_penyakit);
-        // printf("%d debug id\n", penyakitList[i].id);
-    }
-    
+    //     printf("%d debug ceksuhu\n", cekSuhu(*pasien, penyakitList[i]));
+    //     printf("%d debug cekTekananSistolik\n", cekTekananSistolik(*pasien, penyakitList[i]));
+    //     printf("%d debug cekTekananDiastolik\n", cekTekananDiastolik(*pasien, penyakitList[i]));
+    //     printf("%d debug cekDetakJantung\n", cekDetakJantung(*pasien, penyakitList[i]));
+    //     printf("%d debug cekSaturasiOksigen\n", cekSaturasiOksigen(*pasien, penyakitList[i]));
+    //     printf("%d debug cekKadarGulaDarah\n", cekKadarGulaDarah(*pasien, penyakitList[i]));
+    //     printf("%d debug cekBeratBadan\n", cekBeratBadan(*pasien, penyakitList[i]));
+    //     printf("%d debug cekTinggiBadan\n", cekTinggiBadan(*pasien, penyakitList[i]));
+    //     printf("%d debug cekKadarKolesterol\n", cekKadarKolesterol(*pasien, penyakitList[i]));
+    //     printf("%d debug cekTrombosit\n", cekTrombosit(*pasien, penyakitList[i]));
+    //     printf("%d debug i\n", i);
+    //     printf("%s\n",penyakitList[i].name_penyakit);
+    //     printf("%d debug id\n", penyakitList[i].id);
+     }
 }
 
 void diagnosis(User user){
@@ -135,7 +134,7 @@ void diagnosis(User user){
         if (strcmp(pasien->riwayat_penyakit, "") == 0)
         {
             cekPenyakit(pasien);
-            printf("%s check riwayat\n", pasien->riwayat_penyakit);
+            // printf("Riwayat penyakit %s\n", pasien->riwayat_penyakit);
             if (strcmp(pasien->riwayat_penyakit, "Sehat") == 0)
             {
                 printf("%s tidak terdiagnosis penyakit apapun!\n", pasien->username);

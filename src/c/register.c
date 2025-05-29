@@ -85,18 +85,18 @@ void registerUser(){
     }
     
     // input username
-    printf("Username: ");
+    printf("\033[34mUsername: \033[0m");
     scanf("%s", newUsername);
     while (!onlyAlfabet(newUsername))
     {
-        printf("Masukkan new username hanya dengan Huruf A-Z, a-z!!\n");
+        printf("Masukkan username hanya dengan Huruf A-Z, a-z!!\n");
         printf("Username: ");
         scanf("%s", newUsername);
     }
     
     
     // input password
-    printf("Password: ");
+    printf("\033[34mPassword: \033[0m");
     scanf("%s", newPassword);
 
     char lowerNewUsername[512];

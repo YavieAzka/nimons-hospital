@@ -31,7 +31,7 @@ void daftarCheckUp(User* userNow) {
     int gula;
     float berat;
     int tinggi;
-    int kolesterol, ldl, trombosit;
+    int kolesterol, trombosit;
 
     do {
         printf("Suhu Tubuh (°C): ");
@@ -82,17 +82,12 @@ void daftarCheckUp(User* userNow) {
     } while (kolesterol <= 0);
 
     do {
-        printf("Kolesterol LDL (mg/dL): ");
-        scanf("%d", &ldl);
-        if (ldl <= 0) printf("LDL-nya juga jangan kosongin dong.\n");
-    } while (ldl <= 0);
-
-    do {
         printf("Trombosit (ribu/µL): ");
         scanf("%d", &trombosit);
         if (trombosit <= 0) printf("Trombositnya harus diisi yang bener yaa.\n");
     } while (trombosit <= 0);
 
+    // Simpan data ke user
     userNow->suhu_tubuh = suhu;
     userNow->tekanan_darah_sistolik = sistol;
     userNow->tekanan_darah_diastolik = diastol;
@@ -102,21 +97,20 @@ void daftarCheckUp(User* userNow) {
     userNow->berat_badan = berat;
     userNow->tinggi_badan = tinggi;
     userNow->kadar_kolesterol = kolesterol;
-    userNow->kadar_kolesterol_ldl = ldl;
     userNow->trombosit = trombosit;
 
     printf("\n--- DOKTER YANG SIAP NANGGEPIN KAMU ---\n");
     int opsi[100][2];
     int count = 0;
 
-    for (int i = 0; i < panjang_denah_eff; i++) {
-        for (int j = 0; j < lebar_denah_eff; j++) {
-            if (ruanganList[i][j].idDokter != -1) {
+    for (int i = 0; i < panjang_denah; i++) {
+        for (int j = 0; j < lebar_denah; j++) {
+            if (ruanganList[i][j].idDokter != 0 && ruanganList[i][j].antrianPasien.length < kapasitas_ruangan + kapasitas_antrian) {
                 printf("%d. Dr. %s - Ruangan %c%d (Antrian: %d pasien)\n",
-                    count + 1,
-                    ruanganList[i][j].usernameDokter,
-                    'A' + i, j + 1,
-                    ruanganList[i][j].antrianPasien.length);
+                       count + 1,
+                       ruanganList[i][j].usernameDokter,
+                       'A' + i, j + 1,
+                       ruanganList[i][j].antrianPasien.length);
                 opsi[count][0] = i;
                 opsi[count][1] = j;
                 count++;
@@ -141,7 +135,7 @@ void daftarCheckUp(User* userNow) {
     int i = opsi[pilihan - 1][0];
     int j = opsi[pilihan - 1][1];
     enqueue(&ruanganList[i][j].antrianPasien, userNow->id, userNow->username);
-    
+
     printf("\nMantap! Check-up kamu udah masuk daftar.\n");
     printf("Antrian kamu sekarang di Dr. %s - Ruangan %c%d\n",
            ruanganList[i][j].usernameDokter,

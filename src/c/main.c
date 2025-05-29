@@ -1,6 +1,8 @@
 
 // Include any necessary headers
 #include <stdio.h>
+#include <unistd.h> 
+#include <stdlib.h>
 #include "../header/user.h"
 #include "../header/login.h"
 #include "../header/help.h"
@@ -24,9 +26,14 @@
 #include "../header/tambah_dokter.h"
 #include "../header/stack.h"
 #include "../header/antrian-saya.h"
+#include "../header/ngobatin.h"
+#include "../header/daftar-check-up.h"
+// #include "../header/akubolehpulang.h"
+#include "../header/minum-obat.h"
+// #include "../header/minumpenawar.h"
 
 void printCommandMessage(){
-    printf("--------------------------------------------------------------\n");
+    printf("\033[1;35m--------------------------------------------------------------\033[0m\n");
     printf("Masukkan perintah (Ketik [HELP] untuk melihat daftar perintah): \n");
 }
 
@@ -84,6 +91,9 @@ void devmode(User* user, Status *status){
         else if (strcmp(input, "UBAH_DENAH") == 0) {
             denahRumahSakit(input);
             //return;
+        }
+        else if (strcmp(input, "PINDAH_DOKTER") == 0) {
+            denahRumahSakit(input);
         }
         else if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0) {
             denahRumahSakit(input);
@@ -168,6 +178,9 @@ void handleManager(User* user, Status* status) {
             denahRumahSakit(input);
             //return;
         }
+        else if (strcmp(input, "PINDAH_DOKTER") == 0) {
+            denahRumahSakit(input);
+        }
         else if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0) {
             denahRumahSakit(input);
             //return;
@@ -183,8 +196,9 @@ void handleManager(User* user, Status* status) {
             return;
         } 
         else if (strcmp(input, "EXIT") == 0) {
-            //*status = EXIT;
-            //return;
+            *status = EXIT;
+            exit_program();
+            return;
         }
         else{
             printf("Perintah tidak dikenali. Mohon berikan perintah yang valid!\n");
@@ -209,7 +223,7 @@ void handleDokter(User* user, Status* status) {
             diagnosis(*user);
         }
         else if (strcmp(input, "NGOBATIN") == 0) {
-            // implementasi modul ngobatin(); // placeholder
+            ngobatin(*user);
         }
         else if (strcmp(input, "LOGOUT") == 0) {
             logout(user, status);
@@ -230,6 +244,7 @@ void handleDokter(User* user, Status* status) {
         }
         else if (strcmp(input, "EXIT") == 0) {
             *status = EXIT;
+            exit_program();
             return;
         }
         else{
@@ -249,19 +264,19 @@ void handlePasien(User* user, Status* status) {
             help(*user);
         }
         else if (strcmp(input, "DAFTAR_CHECKUP") == 0) {
-            // implementasi modul daftar_checkup(); // placeholder
+            daftarCheckUp(user);
         } 
         else if (strcmp(input, "ANTRIAN_SAYA") == 0) {
-            antrianSaya(user);
+            //antrianSaya(user);
         } 
         else if (strcmp(input, "MINUM_OBAT") == 0) {
-            // implementasi modul minum_obat(); // placeholder
+            minumObat(user);
         } 
         else if (strcmp(input, "MINUM_PENAWAR") == 0) {
-            // implementasi modul minum_penawar(); // placeholder
+            //minumPenawar(user);
         } 
         else if (strcmp(input, "DOK_AKU_MAU_PULANG") == 0) {
-            // implementasi modul pulang(); // placeholder
+            //akubolehpulang(user);
         } 
         else if (strcmp(input, "LOGOUT") == 0) {
             logout(user, status);
@@ -284,7 +299,7 @@ void handlePasien(User* user, Status* status) {
         } 
         else if(strcmp(input, "EXIT") == 0){
             *status = EXIT;
-            //exit_program();
+            exit_program();
             return;
         }
         else{
@@ -294,18 +309,20 @@ void handlePasien(User* user, Status* status) {
 }
 
 void printWelcomeMessage(){
+    printf("\033[33m");
     printf(" __      __       .__                                  __                  .__                               .__                         .__  __         .__   \n");
     printf("/  \\    /  \\ ____ |  |   ____  ____   _____   ____   _/  |_  ____     ____ |__| _____   ____   ____   ______ |  |__   ____  ____________ |__|/  |______  |  |  \n");
     printf("\\   \\/\\/   // __ \\|  | _/ ___\\/  _ \\ /     \\_/ __ \\  \\   __\\/  _ \\   /    \\|  |/     \\ /  _ \\ /    \\ /  ___/ |  |  \\ /  _ \\/  ___\\/\\____\\|  \\   __\\__  \\ |  |  \n");
     printf(" \\        /\\  ___/|  |_\\  \\__(  <_> )  Y Y  \\  ___/   |  | (  <_> ) |   |  \\  |  Y Y  (  <_> )   |  \\\\___ \\  |   Y  (  <_> )___ \\ |  |_> >  ||  |  / __ \\|  |__\n");
     printf("  \\__/\\  /  \\___  >____/\\___  >____/|__|_|  /\\___  >  |__|  \\____/  |___|  /__|__|_|  /\\____/|___|  /____  > |___|  /\\____/____  >|   __/|__||__| (____  /____/\n");
     printf("       \\/       \\/          \\/            \\/     \\/                      \\/         \\/            \\/     \\/       \\/           \\/ |__|                 \\/      \n");
+    printf("\033[0m");
 }
 
 void printOpeningMessage(){
     printf("+===================================================+\n");
-    printf("|    SILAKAN LOGIN DENGAN MENGETIK [LOGIN] ATAU     |\n");
-    printf("|    MELAKUKAN REGISTER DENGAN MENGETIK [REGISTER]  |\n");
+    printf("|    SILAKAN LOGIN DENGAN MENGETIK \033[92m[LOGIN]\033[0m ATAU     |\n");
+    printf("|    MELAKUKAN REGISTER DENGAN MENGETIK \033[92m[REGISTER]\033[0m  |\n");
     printf("+===================================================+\n");
 }
 
@@ -366,6 +383,11 @@ int main(int argc, char* argv[]) {
         else if(strcmp(userInput, "SAVE") == 0){
             save_data("newData");
         }
+        else if (strcmp(userInput, "EXIT") == 0){
+            status = EXIT;
+            exit_program();
+        }
+        
         else{
             printf("Perintah tidak dikenali. Mohon berikan perintah yang valid!\n");
         }
@@ -395,7 +417,8 @@ int main(int argc, char* argv[]) {
 }
 
 // gcc src/c/main.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/denah.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lihat_antrian.c src/c/queue.c src/c/lupa_password.c -o main
-// gcc src/c/main.c src/c/exit.c src/c/save.c src/c/antrian-saya.c src/c/stack.c src/c/diagnosis.c src/c/tambah_dokter.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/denah.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lihat_antrian.c src/c/queue.c src/c/lupa_password.c -o main
+// gcc src/c/main.c src/c/antrian-saya.c src/c/akubolehpulang.c src/c/minum-obat.c src/c/minumpenawar.c src/c/exit.c src/c/ngobatin.c src/c/save.c src/c/stack.c src/c/diagnosis.c src/c/tambah_dokter.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/denah.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lihat_antrian.c src/c/queue.c src/c/lupa_password.c -o main
+// gcc src/c/main.c src/c/daftar-check-up.c src/c/exit.c src/c/ngobatin.c src/c/save.c src/c/stack.c src/c/diagnosis.c src/c/tambah_dokter.c src/c/login.c src/c/load.c src/c/help.c src/c/register.c src/c/cariuser.c src/c/denah.c src/c/logout.c src/c/utils.c src/c/set.c src/c/lihatUser.c src/c/lihat_antrian.c src/c/queue.c src/c/lupa_password.c -o main
 /*
 
 Applied module:
