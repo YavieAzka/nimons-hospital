@@ -85,9 +85,12 @@ void save_config(const char* folder_name) {
         Ruangan* r = &ruanganList[row][col];
 
         fprintf(f, "%d", r->idDokter);
-        for (int j = 0; j < r->totalPasien; j++) {
-            fprintf(f, " %d", r->idPasien[j]);
-        }
+        while (r->antrianPasien.front != NULL)
+        {
+            fprintf(f, " %d", r->antrianPasien.front->idPasien);
+            r->antrianPasien.front = r->antrianPasien.front->next;
+        }            
+        
         fprintf(f, "\n");
     }
 
@@ -105,17 +108,17 @@ void save_config(const char* folder_name) {
     // Stack perut
     int jumlah_stack = 0;
     for (int i = 0; i < userCount; i++) {
-        if (users[i].perut.top >= 0) {
+        if (users[i].perut.top > 0) {
             jumlah_stack++;
         }
     }
     fprintf(f, "%d\n", jumlah_stack);
     for (int i = 0; i < userCount; i++) {
-        if (users[i].perut.top >= 0) {
+        if (users[i].perut.data[0] > 0) {
             fprintf(f, "%d", users[i].id);
-            for (int j = users[i].perut.top; j >= 0; j--) {
+            for (int j = 0; j <=  users[i].perut.top; j++) {
                 fprintf(f, " %d", users[i].perut.data[j]);
-            }
+            }   
             fprintf(f, "\n");
         }
     }
