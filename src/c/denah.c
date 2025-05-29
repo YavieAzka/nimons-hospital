@@ -114,10 +114,6 @@ void ubahDenah(){
     int newPanjang, newLebar;
     printf("Masukkan ukuran denah yang baru: ");
     scanf("%d %d", &newPanjang, &newLebar);
-    while (newLebar > MAX_RUANGAN || newPanjang > MAX_RUANGAN){
-        printf("Masukkan Nilai Panjang dan Lebar yang tidak melebihi capacity Ruangan (5 5): \n");
-        scanf("%d %d", &newPanjang, &newLebar);
-    }
     
     if (newLebar < lebar_denah_eff || newPanjang < panjang_denah_eff) {
         int baris = -1, kolom = -1;

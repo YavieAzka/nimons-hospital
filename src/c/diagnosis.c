@@ -135,7 +135,7 @@ void diagnosis(User user){
         if (strcmp(pasien->riwayat_penyakit, "") == 0)
         {
             cekPenyakit(pasien);
-            printf("%s check riwayat\n", pasien->riwayat_penyakit);
+            // printf("Riwayat penyakit %s\n", pasien->riwayat_penyakit);
             if (strcmp(pasien->riwayat_penyakit, "Sehat") == 0)
             {
                 printf("%s tidak terdiagnosis penyakit apapun!\n", pasien->username);
