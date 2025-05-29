@@ -21,11 +21,12 @@ void antrianSaya(User* userNow) {
             while (current != NULL) {
                 if (strcmp(current->usernamePasien, userNow->username) == 0) {
                     printf("\n==== STATUS ANTRIAN KAMU ====\n");
-                    printf("Ketemu! Kamu lagi nunggu di ruangan %s bareng Dokter %s.\n", 
-                           ruanganList[i][j].nama, ruanganList[i][j].dokter.username);
+                    printf("Ketemu! Kamu lagi nunggu di ruangan %c%d bareng Dokter %s.\n", 
+                           'A' + i, j + 1,
+                           ruanganList[i][j].dokter.username);
                     printf("Posisimu sekarang di antrian: %d dari %d pasien.\n", posisi, q.length);
 
-                    int kapasitas = ruanganList[i][j].kapasitas;
+                    int kapasitas = kapasitas_ruangan;
                     if (posisi <= kapasitas) {
                         printf("Kamu udah DI DALAM ruangan. Siap-siap ya, giliranmu bentar lagi!\n\n");
                     } else {
