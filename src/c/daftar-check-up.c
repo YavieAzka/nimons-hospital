@@ -17,6 +17,7 @@ bool sudahTerdaftar(int pasienID) {
 }
 
 void daftarCheckUp(User* userNow) {
+    
     if (sudahTerdaftar(userNow->id)) {
         printf("\nEh, kamu udah daftar buat check-up nih!\n");
         printf("Yuk, tunggu giliran dulu. Nanti aja daftarnya lagi.\n");

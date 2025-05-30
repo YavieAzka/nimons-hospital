@@ -18,14 +18,21 @@ char* namaObat(int id){
 }
 
 void minumObat(User* user) {
+    
     InventoryPasien* inv = getInventoryByUser(user);
     int idx = getUserIndex(user->username, users, userCount);
 
+    if (strcmp(users[idx].riwayat_penyakit, "Sehat") == 0) {
+        printf("Kamu Boleh Pulang, Segera ke pulang DOK!!\n");
+        return;
+    }
+    
     if (inv == NULL || inv->count == 0) {
         printf("Eh, obatmu kosong loh! Gak ada yang bisa diminum sekarang :)\n");
         return;
     }
 
+    
     printf("============ DAFTAR OBAT ============\n");
     for (int i = 0; i < inv->count; i++) {
         int id = inv->obat_id[i];

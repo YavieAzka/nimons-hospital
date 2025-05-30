@@ -31,6 +31,7 @@
 #include "../header/akubolehpulang.h"
 #include "../header/minum-obat.h"
 #include "../header/minumpenawar.h"
+#include "../header/lihat_antrian.h"
 
 void printCommandMessage(){
     printf("\033[1;35m--------------------------------------------------------------\033[0m\n");
@@ -73,7 +74,7 @@ void handleManager(User* user, Status* status) {
             lihatDokter(input);
         }  
         else if (strcmp(input, "LIHAT_DENAH") == 0 || strcmp(input, "10") == 0) {
-            denahRumahSakit(input);
+            gambarDenah();
             //return;
         }
         else if (strcmp(input, "LIHAT_RUANGAN") == 0 || strcmp(input, "11") == 0) {
@@ -84,14 +85,14 @@ void handleManager(User* user, Status* status) {
             //return;
         }
         else if (strcmp(input, "UBAH_DENAH") == 0 || strcmp(input, "13") == 0) {
-            denahRumahSakit(input);
+            ubahDenah();
             //return;
         }
         else if (strcmp(input, "PINDAH_DOKTER") == 0 || strcmp(input, "14") == 0) {
-            denahRumahSakit(input);
+            pindahDokter();
         }
         else if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0 || strcmp(input, "12") == 0 ) {
-            denahRumahSakit(input);
+            lihatSemuaAntrian();
             //return;
         }
         else if (strcmp(input, "LOGOUT") == 0 || strcmp(input, "1") == 0) {
@@ -133,16 +134,18 @@ void handleDokter(User* user, Status* status) {
             return;
         }
         else if (strcmp(input, "LIHAT_DENAH") == 0 || strcmp(input, "5") == 0) {
-            denahRumahSakit(input);
+            gambarDenah();
             //return;
         }
         else if (strcmp(input, "LIHAT_RUANGAN") == 0 || strcmp(input, "6") == 0) {
             char ruanganInput[10];
-            denahRumahSakit(ruanganInput);
+            printf("Masukkan ruangan yang ingin dilihat: ");
+            scanf("%s", ruanganInput);
+            lihatRuang(ruanganInput);
             //return;
         }
         else if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0 || strcmp(input, "7") == 0) {
-            denahRumahSakit(input);
+            lihatSemuaAntrian();
             //return;
         }
         else if (strcmp(input, "EXIT") == 0 || strcmp(input, "8") == 0) {
@@ -186,7 +189,7 @@ void handlePasien(User* user, Status* status) {
             return;
         }
         else if (strcmp(input, "LIHAT_DENAH") == 0 || strcmp(input, "7") == 0) {
-            denahRumahSakit(input);
+            gambarDenah();
 
         }
         else if (strcmp(input, "LIHAT_RUANGAN") == 0 || strcmp(input, "8") == 0) {
@@ -197,7 +200,7 @@ void handlePasien(User* user, Status* status) {
 
         }
         else if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0 || strcmp(input, "9") == 0) {
-            denahRumahSakit(input);
+            lihatSemuaAntrian();
             
         } 
         else if(strcmp(input, "EXIT") == 0){
