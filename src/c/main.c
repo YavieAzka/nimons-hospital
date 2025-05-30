@@ -47,7 +47,7 @@ void handleManager(User* user, Status* status) {
         if (strcmp(input, "HELP") == 0) {
             help(*user);     // dapat string hasil input setelah HELP
         }
-        else if(strcmp(input, "TAMBAH_DOKTER") || strcmp(input, "2") == 0){
+        else if(strcmp(input, "TAMBAH_DOKTER") == 0|| strcmp(input, "2") == 0){
             tambahDokter();
         }
         else if(strcmp(input, "ASSIGN_DOKTER") == 0 || strcmp(input, "3") == 0){
