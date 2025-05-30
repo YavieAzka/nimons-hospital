@@ -101,7 +101,7 @@ void urutanHarapan(User *pasien) {
                 if (urutanNow < totalUrutan) {
                     printf("%s -> ", nama);
                 } else {
-                    printf("%s\n", nama);
+                    printf("%s\n\n", nama);
                 }
 
                 break; // lanjut ke urutan berikutnya
@@ -164,7 +164,7 @@ void akubolehpulang(User *pasien) {
                 if(strcmp(users[idx].riwayat_penyakit, "") == 0) {
                     printf("Kamu belum menerima diagnosis apapun dari dokter, jangan buru-buru pulang! T^T\n");
                 
-                } else if(strcmp(users[idx].riwayat_penyakit, "Nothing") == 0) {
+                } else if(strcmp(users[idx].riwayat_penyakit, "Sehat") == 0) {
                     printf("Kamu tidak ada penyakit apapun. Silahkan pulang dan semoga sehat selalu! :3\n");
                     dequeue(&(ruanganPasien->antrianPasien), &idPasienPulang, namaPasienPulang);
                 }
@@ -177,11 +177,11 @@ void akubolehpulang(User *pasien) {
                 
                 } else if(inventoryPasien->count == 0 && checkUrutanObat(&users[idx]) == 0){ 
                     // Urutan salah
-                    printf("Maaf, tapi kamu masih belum bisa pulang!\n");
-                    printf("Urutan obat yang diharapkan:\n");
+                    printf("Maaf, tapi kamu masih belum bisa pulang T^T !\n\n");
+                    printf("Urutan MINUM_OBAT yang diharapkan:\n");
                     urutanHarapan(&users[idx]);
                 
-                    printf("Urutan obat yang kamu minum:\n");
+                    printf("Urutan MINUM_OBAT yang kamu minum:\n");
                     int jumlahObat = getjumlahObat(&users[idx]);
 
                     for(int i = 0; i < jumlahObat; i ++) {
@@ -203,10 +203,10 @@ void akubolehpulang(User *pasien) {
                             printf("-> %s ", namaObat);
                         }
                     }
-                    printf("\nSilahkan kunjungi dokter untuk meminta penawar yang sesuai !\n");
+                    printf("\n\nSilahkan kunjungi dokter untuk meminta penawar (MINUM_PENAWAR) yang sesuai!\n");
                 
                 } else {
-                    printf("Selamat! :D\n");
+                    printf("SELAMAT!! :D\n");
                     printf("Kamu sudah dinyatakan sembuh oleh dokter. Silahkan pulang dan semoga sehat selalu! :3\n");
                 
                     // Reset data users[idx] dan perut 
