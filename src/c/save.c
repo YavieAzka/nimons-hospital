@@ -114,7 +114,7 @@ void save_data(const char* folder_name) {
     int exists = folder_exists(folder_name);
 
     if (!exists) {
-        mkdir(folder_name, 0777); // Membuat folder dengan permission 0777
+        mkdir(folder_name); // Membuat folder dengan permission 0777
         printf("Folder \"%s\" belum ada. Membuat folder baru...\n", folder_name);
     } else if (is_folder_empty(folder_name)) {
         printf("Folder \"%s\" ditemukan dan kosong.\n", folder_name);
