@@ -4,27 +4,22 @@
 #include "../header/user.h"
 #include "../header/obat.h"
 #include "../header/config.h"
+#include "../header/load.h"
 
-InventoryPasien* getInventoryByUser(User* user) {
-    for (int i = 0; i < jumlah_inventory; i++) {
-        if (daftar_inventory[i].pasien_id == user->id) {
-            return &daftar_inventory[i];
+char* namaObat(int id){
+    for (int i = 0; i < obatCount; i++)
+    {
+        if (obatList[i].id == id)
+        {
+            return obatList[i].nama;
         }
     }
-    return NULL;
-}
-
-void removeInventoryByUser(InventoryPasien* inv, int index) {
-    for (int i = index; i < inv->count - 1; i++) {
-        inv->obat_id[i] = inv->obat_id[i + 1];
-    }
-    inv->count--;
+    return "";
 }
 
 void minumObat(User* user) {
     InventoryPasien* inv = getInventoryByUser(user);
-
-    printf(">>> MINUM_OBAT\n");
+    int idx = getUserIndex(user->username, users, userCount);
 
     if (inv == NULL || inv->count == 0) {
         printf("Eh, obatmu kosong loh! Gak ada yang bisa diminum sekarang :)\n");
@@ -34,8 +29,8 @@ void minumObat(User* user) {
     printf("============ DAFTAR OBAT ============\n");
     for (int i = 0; i < inv->count; i++) {
         int id = inv->obat_id[i];
-        if (id >= 0 && id < obatCount) {
-            printf("%d. %s\n", i + 1, obatList[id].nama);
+        if (strcmp(namaObat(id), "") != 0) {
+            printf("%d. %s\n", i + 1, namaObat(id));
         } else {
             printf("%d. [Obat tidak dikenal - ID %d]\n", i + 1, id);
         }
@@ -56,9 +51,9 @@ void minumObat(User* user) {
     }
 
     int id_obat = inv->obat_id[pilihan - 1];
-    push(&user->perut, id_obat);  // akses langsung ke stack dalam user
-    printf("*GLEKGLEKGLEK*... %s berhasil diminum! Rasanya... unik ya^^\n", obatList[id_obat].nama);
-
+    push(&users[idx].perut, id_obat);  // akses langsung ke stack dalam user
+    printf("*GLEKGLEKGLEK*... %s berhasil diminum! Rasanya... unik ya^^\n", namaObat(id_obat));
+    
     removeInventoryByUser(inv, pilihan - 1);
-    printf("Inventory diperbarui. Obat %s udah keluar dari kantong ajaib kamu!\n", obatList[id_obat].nama);
+    printf("Inventory diperbarui. Obat %s udah keluar dari kantong ajaib kamu!\n", namaObat(id_obat));
 }

@@ -21,7 +21,9 @@
     "ngobatin.h": "c",
     "tambah_dokter.h": "c",
     "queue.h": "c",
-    "save.h": "c"
+    "save.h": "c",
+    "minum-obat.h": "c",
+    "diagnosis.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

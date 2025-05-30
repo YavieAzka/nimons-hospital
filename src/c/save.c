@@ -17,28 +17,6 @@
 #include "../header/stack.h"
 #include "../header/inventory.h"
 
-extern User users[MAX_USERS];
-extern int userCount;
-
-extern Obat* obatList;
-extern int obatCount;
-
-extern Penyakit* penyakitList;
-extern int penyakitCount;
-
-extern ObatPenyakit* obatPenyakitList;
-extern int obatPenyakitCount;
-
-extern int panjang_denah;
-extern int lebar_denah;
-extern int kapasitas_ruangan;
-extern int kapasitas_antrian;
-extern int jumlah_ruangan;
-
-extern Ruangan ruanganList[MAX_RUANGAN][MAX_RUANGAN];
-extern InventoryPasien daftar_inventory[MAX_INVENTORY];
-extern int jumlah_inventory;
-
 int folder_exists(const char* folder_name) {
     DIR* dir = opendir(folder_name);
     if (dir) {
@@ -95,9 +73,13 @@ void save_config(const char* folder_name) {
     }
 
     // Inventory
-    fprintf(f, "%d\n", jumlah_inventory);
+    int jumlahInventory;
+    searchJumlahInventory(&jumlahInventory);
+    fprintf(f, "%d\n", jumlahInventory);
     for (int i = 0; i < jumlah_inventory; i++) {
         InventoryPasien* inv = &daftar_inventory[i];
+        if (inv->count == 0) continue; // Hanya simpan inventory yang tidak kosong
+        
         fprintf(f, "%d", inv->pasien_id);
         for (int j = 0; j < inv->count; j++) {
             fprintf(f, " %d", inv->obat_id[j]);
@@ -114,7 +96,8 @@ void save_config(const char* folder_name) {
     }
     fprintf(f, "%d\n", jumlah_stack);
     for (int i = 0; i < userCount; i++) {
-        if (users[i].perut.data[0] > 0) {
+        if (users[i].perut.data[0] > 0 && users[i].perut.top > -1) {
+            // Hanya simpan stack perut yang tidak kosong
             fprintf(f, "%d", users[i].id);
             for (int j = 0; j <=  users[i].perut.top; j++) {
                 fprintf(f, " %d", users[i].perut.data[j]);
@@ -131,7 +114,7 @@ void save_data(const char* folder_name) {
     int exists = folder_exists(folder_name);
 
     if (!exists) {
-        mkdir(folder_name, 0777);
+        mkdir(folder_name, 0777); // Membuat folder dengan permission 0777
         printf("Folder \"%s\" belum ada. Membuat folder baru...\n", folder_name);
     } else if (is_folder_empty(folder_name)) {
         printf("Folder \"%s\" ditemukan dan kosong.\n", folder_name);
