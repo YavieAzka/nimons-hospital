@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 #include "../header/login.h"
 #include "../header/cariuser.h"
 
@@ -7,7 +8,8 @@
 #define MAX_ROLE_LENGTH 15
 #define MAX_PENYAKIT_LENGTH 20
 
-
+extern User users[MAX_USERS];
+extern int userCount;
 void printHorizontalLine() {
     printf("+-----+---------------+---------------+--------------------+\n");
 }
@@ -153,19 +155,16 @@ void cariPasien(){
         int idx;
         printf("Cari ID: ");
         scanf("%d", &idx);
-
-        if(idx >= userCount || idx < 0){
-            printf("User dengan username '%d' tidak ditemukan.\n", idx);
-        }
-        else{
-            printf("Pengguna dengan ID %d:\n", idx);
-            for(int i = 0; i < userCount; i++){
-                if(users[i].id == idx){
-                    printUser_general(users[i]);
-                    break;
-                }
+        bool found = false;
+        printf("Pengguna dengan ID %d:\n", idx);
+        for(int i = 0; i < userCount; i++){
+            if(users[i].id == idx){
+                printUser_general(users[i]);
+                found = true;
+                break;
             }
         }
+        if(!found) printf("Pasien dengan ID '%d' tidak ditemukan.\n", idx);   
 
     }
     
@@ -211,7 +210,7 @@ void cariPasien(){
             }
         }
         if(countPenyakit == 0){
-            printf("Pasien dengan penyakit %s tidak ditemukan.", penyakit);
+            printf("Pasien dengan penyakit %s tidak ditemukan\n", penyakit);
         }
     }
     else{
@@ -240,22 +239,16 @@ void cariDokter(){
         int idx;
         printf("Cari ID: ");
         scanf("%d", &idx);
-
-        if(idx <= 0 || idx >= userCount){
-            printf("ID tidak valid.\n");
-        }
-        else if(strcmp(users[idx].role,"dokter") != 0){
-            printf("Dokter dengan ID '%d' tidak ditemukan.\n", idx);
-        }
-        else if(strcmp(users[idx].role,"dokter") == 0){
-            printf("Dokter dengan ID %d:\n", idx);
-            for(int i = 0; i < userCount; i++){
-                if(users[i].id == idx){
-                    printUser_general(users[i]);
-                    break;
-                }
+        bool found = false;
+        for(int i = 0; i < userCount; i++){
+            if(users[i].id == idx && strcmp(users[i].role, "dokter") == 0){
+                printf("Dokter dengan ID %d:\n", idx);
+                printUser_general(users[i]);
+                found = true;
+                return;
             }
         }
+        if(!found) printf("Dokter dengan ID '%d' tidak ditemukan.\n", idx);   
 
     }
 
@@ -292,6 +285,7 @@ void cariUser(){
     printPilihan();
     scanf("%d", &userChoice);
 
+    
     User *usersTemp = (User *)malloc(userCount * sizeof(User));
     for(int i = 0; i < userCount; i++){
         usersTemp[i] = users[i];
@@ -301,18 +295,19 @@ void cariUser(){
         int idx;
         printf("Cari ID: ");
         scanf("%d", &idx);
-
-        if(idx >= userCount || idx < 0){
-            printf("ID user tidak ditemukan!\n");
-        }
-        else{
-            printf("Pengguna dengan ID %d:\n", idx);
-            for(int i = 0; i < userCount; i++){
-                if(users[i].id == idx){
-                    printUser_general(users[i]);
-                    break;
-                }
+        bool found = false;
+        printf("##%d\n", userCount);
+              
+        for(int i = 0; i < userCount; i++){
+            if(users[i].id == idx){
+                printf("Pengguna dengan ID %d:\n", idx);
+                printUser_general(users[i]);
+                found = true;
+                break;
             }
+        }
+        if(!found){
+            printf("ID user tidak ditemukan!\n");
         }
 
     }

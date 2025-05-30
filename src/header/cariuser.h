@@ -1,3 +1,6 @@
+#ifndef CARIUSER_H
+#define CARIUSER_H
+
 #include <stdio.h>
 #include <string.h>
 #include "login.h"
@@ -15,3 +18,5 @@ void printDokter(User U);
 void cariPasien();
 void cariDokter();
 void cariUser();
+
+#endif
