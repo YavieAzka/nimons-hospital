@@ -18,7 +18,7 @@ void lihatSemuaAntrian() {
 
             if (r.idDokter != 0) {
                 char namaRuang[4];
-                sprintf(namaRuang, "%c%d", 'A' + i, j + 1);
+                printf(namaRuang, "%c%d", 'A' + i, j + 1);
 
                 printf("\n============ %s ============\n", namaRuang);
                 printf("Kapasitas  : %d\n", kapasitas_ruangan);
