@@ -4,8 +4,8 @@
 #include <stdlib.h>
 
 bool sudahTerdaftar(int pasienID) {
-    for (int i = 0; i < panjang_denah_eff; i++) {
-        for (int j = 0; j < lebar_denah_eff; j++) {
+    for (int i = 0; i < panjang_denah; i++) {
+        for (int j = 0; j < lebar_denah; j++) {
             Node* current = ruanganList[i][j].antrianPasien.front;
             while (current != NULL) {
                 if (current->idPasien == pasienID) return true;
