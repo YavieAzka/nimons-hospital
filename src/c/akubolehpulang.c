@@ -149,8 +149,8 @@ void akubolehpulang(User *pasien) {
     int idPasienPulang;
     char namaPasienPulang[MAX_USERNAME];
     int idx = getUserIndex(pasien->username, users, userCount);
-    Ruangan* ruanganPasien = cariRuanganPasien(pasien);
-    InventoryPasien* inventoryPasien = getInventoryByUser(pasien);
+    Ruangan* ruanganPasien = cariRuanganPasien(&users[idx]);
+    InventoryPasien* inventoryPasien = getInventoryByUser(&users[idx]);
     //Cek Lokasi pasien 
     if(ruanganPasien == NULL) {
         printf("Pasien tidak ditemukan. Silahkan melakukan registrasi terlebih dahulu :)\n");
