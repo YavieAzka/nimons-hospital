@@ -96,7 +96,7 @@ void save_config(const char* folder_name) {
     // Stack perut
     int jumlah_stack = 0;
     for (int i = 0; i < userCount; i++) {
-        if (users[i].perut.top > 0) {
+        if (users[i].perut.top > -1) {
             jumlah_stack++;
         }
     }

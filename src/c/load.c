@@ -370,7 +370,7 @@ void getUserData(const char* filename) {
         current_user.tinggi_badan = getTinggiBadan(line);
         current_user.kadar_kolesterol = getKadarKolesterol(line);
         current_user.trombosit = getTrombosit(line);
-
+        initStack(&current_user.perut);
         users[userCount++] = current_user;
         if (userCount >= MAX_USERS) break;
     }
