@@ -64,6 +64,11 @@ void ngobatin(User currentUser) {
         return;
     }
 
+    if (strcmp(target->riwayat_penyakit, "Sehat") == 0) {
+        printf("Kamu Boleh Pulang, Segera ke pulang DOK!!\n");
+        return;
+    }
+    
     int id_penyakit = -1;
     for (int i = 0; i < penyakitCount; i++) {
         if (strcmp(penyakitList[i].name_penyakit, target->riwayat_penyakit) == 0) {

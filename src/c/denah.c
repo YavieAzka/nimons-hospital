@@ -80,25 +80,25 @@ void gambarDenah(){
     printf("+\n");
 }
 
-void denahRumahSakit(char* str){
-    if (strcmp(str ,"LIHAT_DENAH") == 0)
-    {
-        gambarDenah();
-    }
-    else if(strcmp(str, "LIHAT_SEMUA_ANTRIAN") == 0){
-        lihatSemuaAntrian();
-    } 
-    else if (strcmp(str, "UBAH_DENAH") == 0)
-    {
-        ubahDenah();
-    } 
-    else if (strcmp(str, "PINDAH_DOKTER") == 0)
-    {
-        pindahDokter();
-    }
+// void denahRumahSakit(char* str){
+//     if (strcmp(str, "LIHAT_DENAH") == 0 || strcmp(str, "10") == 0 || strcmp(str, "5") == 0 || strcmp(str, "7") == 0)
+//     {
+//         gambarDenah();
+//     }
+//     else if(strcmp(str, "LIHAT_SEMUA_ANTRIAN") == 0 || strcmp(str, "12") == 0 || strcmp(str, "7") == 0){
+//         lihatSemuaAntrian();
+//     } 
+//     else if (strcmp(str, "UBAH_DENAH") == 0 || strcmp(str, "13") == 0)
+//     {
+//         ubahDenah();
+//     } 
+//     else if (strcmp(str, "PINDAH_DOKTER") == 0 || strcmp(str, "14") == 0)
+//     {
+//         pindahDokter();
+//     }
     
     
-}
+// }
 
 void ubahDenah(){
     //search eff ukuran denah
@@ -142,10 +142,18 @@ void pindahDokter(){
     r1 = ruanganList[baris1][kolom1];
     r2 = ruanganList[baris2][kolom2];
 
-    if (r1.idDokter == 0)
+    if (baris1 < 0 || baris1 > panjang_denah - 1 || kolom1 < 0 || kolom1 > lebar_denah - 1)
+    {
+        printf("Pemindahan gagal. Ruangan %c%d Tidak Ada.\n", 'A' + baris1, kolom1 + 1);
+    }else if (baris2 < 0 || baris2 > panjang_denah - 1|| kolom2 < 0 || kolom2 > lebar_denah - 1)
+    {
+        printf("Pemindahan gagal. Ruangan %c%d Tidak Ada.\n", 'A' + baris2, kolom2 + 1);
+    }else if (r1.idDokter == 0)
     {
         printf("Pemindahan gagal. Ruangan %c%d Kosong.\n", 'A' + baris1, kolom1 + 1);
-    } else{
+    }  
+    else
+    {
         if (r2.idDokter == 0)
         {
             ruanganList[baris2][kolom2] = r1;

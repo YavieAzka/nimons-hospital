@@ -56,6 +56,7 @@ void save_config(const char* folder_name) {
     // Baris 2: kapasitas ruangan dan antrian
     fprintf(f, "%d %d\n", kapasitas_ruangan, kapasitas_antrian);
 
+    jumlah_ruangan = panjang_denah * lebar_denah;
     // Baris 3-n: ruangan
     for (int i = 0; i < jumlah_ruangan; i++) {
         int row = i / lebar_denah;
