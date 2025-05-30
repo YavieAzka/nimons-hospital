@@ -35,100 +35,8 @@
 void printCommandMessage(){
     printf("\033[1;35m--------------------------------------------------------------\033[0m\n");
     printf("Masukkan perintah (Ketik [HELP] untuk melihat daftar perintah): \n");
-}
+}      
 
-void devmode(User* user, Status *status){
-    char input[50];
-    while(*status == MANAGER_LOGGED_IN){
-        printCommandMessage();
-        printf(">>> ");
-        scanf("%s", input);
-        if (strcmp(input, "HELP") == 0) {
-            help(*user);     // dapat string hasil input setelah HELP
-        }
-        else if(strcmp(input, "TAMBAH_DOKTER") == 0){
-            tambahDokter();
-        }
-        else if(strcmp(input, "ASSIGN_DOKTER") == 0){
-            assignDokter();
-        }
-        else if (strcmp(input, "REGISTER") == 0) {
-            //register_user();
-        }
-        else if (strcmp(input, "CARI_USER") == 0) {
-            cariUser();
-        }
-        else if (strcmp(input, "CARI_DOKTER") == 0) {
-            cariDokter();
-        }
-        else if (strcmp(input, "CARI_PASIEN") == 0) {
-            cariPasien();
-        } 
-        else if (strcmp(input, "LIHAT_USER") == 0) {
-            lihatUser(input);
-        }
-        else if (strcmp(input, "LIHAT_PASIEN") == 0) {
-            lihatPasien(input);
-        }
-        else if (strcmp(input, "LIHAT_DOKTER") == 0) {
-            lihatDokter(input);
-        }
-        else if (strcmp(input, "SET_ROLE") == 0) {
-            //set_role();
-            
-        } 
-        else if (strcmp(input, "LIHAT_DENAH") == 0) {
-            denahRumahSakit(input);
-            //return;
-        }
-        else if (strcmp(input, "LIHAT_RUANGAN") == 0) {
-            char ruanganInput[10];
-            printf("Masukkan ruangan yang ingin dilihat: ");
-            scanf("%s", ruanganInput);
-            lihatRuang(ruanganInput);
-            //return;
-        }
-        else if (strcmp(input, "UBAH_DENAH") == 0) {
-            denahRumahSakit(input);
-            //return;
-        }
-        else if (strcmp(input, "PINDAH_DOKTER") == 0) {
-            denahRumahSakit(input);
-        }
-        else if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0) {
-            denahRumahSakit(input);
-            //return;
-        }
-        else if (strcmp(input, "LOGOUT") == 0) {
-            logout(user, status);
-            return;
-        } 
-        else if (strcmp(input, "DIAGNOSIS") == 0) {
-            //diagnosis(*user);
-        }
-        else if (strcmp(input, "NGOBATIN") == 0) {
-            // implementasi modul ngobatin(); // placeholder
-        }
-        else if (strcmp(input, "LOGOUT") == 0) {
-            logout(user, status);
-            return;
-        
-        }
-        else if (strcmp(input, "UBAH_DENAH") == 0) {
-            denahRumahSakit(input);
-            //return;
-        }
-        else if(strcmp(input, "EXIT") == 0){
-            exit_program();
-            *status = EXIT;
-            return;
-        }
-        else{
-            printf("Perintah tidak dikenali. Mohon berikan perintah yang valid!\n");
-        } 
-    }
-        
-}
 
 void handleManager(User* user, Status* status) {
     char input[50];
@@ -139,63 +47,57 @@ void handleManager(User* user, Status* status) {
         if (strcmp(input, "HELP") == 0) {
             help(*user);     // dapat string hasil input setelah HELP
         }
-        else if (strcmp(input, "REGISTER") == 0) {
-            //register_user();
+        else if(strcmp(input, "TAMBAH_DOKTER") || strcmp(input, "2") == 0){
+            tambahDokter();
         }
-        else if (strcmp(input, "CARI_USER") == 0) {
+        else if(strcmp(input, "ASSIGN_DOKTER") == 0 || strcmp(input, "3") == 0){
+            assignDokter();
+        }
+        else if (strcmp(input, "CARI_USER") == 0 || strcmp(input, "7") == 0) {
             cariUser();
         }
-        else if (strcmp(input, "CARI_DOKTER") == 0) {
+        else if (strcmp(input, "CARI_DOKTER") == 0 || strcmp(input, "9") == 0) {
             cariDokter();
         }
-        else if (strcmp(input, "CARI_PASIEN") == 0) {
+        else if (strcmp(input, "CARI_PASIEN") == 0 || strcmp(input, "8") == 0) {
             cariPasien();
         } 
-        else if (strcmp(input, "LIHAT_USER") == 0) {
+        else if (strcmp(input, "LIHAT_USER") == 0 || strcmp(input, "4") == 0) {
             lihatUser(input);
         }
-        else if (strcmp(input, "LIHAT_PASIEN") == 0) {
+        else if (strcmp(input, "LIHAT_PASIEN") == 0 || strcmp(input, "5") == 0) {
             lihatPasien(input);
         }
-        else if (strcmp(input, "LIHAT_DOKTER") == 0) {
+        else if (strcmp(input, "LIHAT_DOKTER") == 0 || strcmp(input, "6") == 0) {
             lihatDokter(input);
-        }
-        else if (strcmp(input, "SET_ROLE") == 0) {
-            //set_role();
-        } 
-        else if (strcmp(input, "LIHAT_DENAH") == 0) {
+        }  
+        else if (strcmp(input, "LIHAT_DENAH") == 0 || strcmp(input, "10") == 0) {
             denahRumahSakit(input);
             //return;
         }
-        else if (strcmp(input, "LIHAT_RUANGAN") == 0) {
+        else if (strcmp(input, "LIHAT_RUANGAN") == 0 || strcmp(input, "11") == 0) {
             char ruanganInput[10];
             printf("Masukkan ruangan yang ingin dilihat: ");
             scanf("%s", ruanganInput);
             lihatRuang(ruanganInput);
             //return;
         }
-        else if (strcmp(input, "UBAH_DENAH") == 0) {
+        else if (strcmp(input, "UBAH_DENAH") == 0 || strcmp(input, "13") == 0) {
             denahRumahSakit(input);
             //return;
         }
-        else if (strcmp(input, "PINDAH_DOKTER") == 0) {
+        else if (strcmp(input, "PINDAH_DOKTER") == 0 || strcmp(input, "14") == 0) {
             denahRumahSakit(input);
         }
-        else if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0) {
+        else if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0 || strcmp(input, "12") == 0 ) {
             denahRumahSakit(input);
             //return;
         }
-        else if(strcmp(input, "TAMBAH_DOKTER") == 0){
-            tambahDokter();
-        }
-        else if(strcmp(input, "ASSIGN_DOKTER") == 0){
-            assignDokter();
-        }
-        else if (strcmp(input, "LOGOUT") == 0) {
+        else if (strcmp(input, "LOGOUT") == 0 || strcmp(input, "1") == 0) {
             logout(user, status);
             return;
         } 
-        else if (strcmp(input, "EXIT") == 0) {
+        else if (strcmp(input, "EXIT") == 0 || strcmp(input, "15") == 0) {
             *status = EXIT;
             exit_program();
             return;
@@ -213,36 +115,36 @@ void handleDokter(User* user, Status* status) {
         printf(">>> ");
         scanf("%s", input);
 
-        if (strcmp(input, "HELP") == 0) {
+        if (strcmp(input, "HELP") == 0 ) {
             help(*user);
         }
-        else if (strcmp(input, "LIHAT_ANTRIAN") == 0) {
+        else if (strcmp(input, "LIHAT_ANTRIAN") == 0 || strcmp(input, "2") == 0) {
             // implementasi modul lihat_antrian(); // placeholder
         }
-        else if (strcmp(input, "DIAGNOSIS") == 0) {
+        else if (strcmp(input, "DIAGNOSIS") == 0 || strcmp(input, "3") == 0) {
             diagnosis(*user);
         }
-        else if (strcmp(input, "NGOBATIN") == 0) {
+        else if (strcmp(input, "NGOBATIN") == 0 || strcmp(input, "4") == 0) {
             ngobatin(*user);
         }
-        else if (strcmp(input, "LOGOUT") == 0) {
+        else if (strcmp(input, "LOGOUT") == 0 || strcmp(input, "1") == 0) {
             logout(user, status);
             return;
         }
-        else if (strcmp(input, "LIHAT_DENAH") == 0) {
+        else if (strcmp(input, "LIHAT_DENAH") == 0 || strcmp(input, "5") == 0) {
             denahRumahSakit(input);
             //return;
         }
-        else if (strcmp(input, "LIHAT_RUANGAN") == 0) {
+        else if (strcmp(input, "LIHAT_RUANGAN") == 0 || strcmp(input, "6") == 0) {
             char ruanganInput[10];
             denahRumahSakit(ruanganInput);
             //return;
         }
-        else if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0) {
+        else if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0 || strcmp(input, "7") == 0) {
             denahRumahSakit(input);
             //return;
         }
-        else if (strcmp(input, "EXIT") == 0) {
+        else if (strcmp(input, "EXIT") == 0 || strcmp(input, "8") == 0) {
             *status = EXIT;
             exit_program();
             return;
@@ -263,37 +165,37 @@ void handlePasien(User* user, Status* status) {
         if (strcmp(input, "HELP") == 0) {
             help(*user);
         }
-        else if (strcmp(input, "DAFTAR_CHECKUP") == 0) {
+        else if (strcmp(input, "DAFTAR_CHECKUP") == 0 || strcmp(input, "2") == 0) {
             daftarCheckUp(user);
         } 
-        else if (strcmp(input, "ANTRIAN_SAYA") == 0) {
+        else if (strcmp(input, "ANTRIAN_SAYA") == 0 || strcmp(input, "3") == 0) {
             antrianSaya(user);
         } 
-        else if (strcmp(input, "MINUM_OBAT") == 0) {
+        else if (strcmp(input, "MINUM_OBAT") == 0 || strcmp(input, "4") == 0) {
             minumObat(user);
         } 
-        else if (strcmp(input, "MINUM_PENAWAR") == 0) {
+        else if (strcmp(input, "MINUM_PENAWAR") == 0 || strcmp(input, "5") == 0) {
             minumPenawar(user);
         } 
-        else if (strcmp(input, "DOK_AKU_MAU_PULANG") == 0) {
+        else if (strcmp(input, "DOK_AKU_MAU_PULANG") == 0 || strcmp(input, "6") == 0) {
             akubolehpulang(user);
         } 
-        else if (strcmp(input, "LOGOUT") == 0) {
+        else if (strcmp(input, "LOGOUT") == 0 || strcmp(input, "1") == 0) {
             logout(user, status);
             return;
         }
-        else if (strcmp(input, "LIHAT_DENAH") == 0) {
+        else if (strcmp(input, "LIHAT_DENAH") == 0 || strcmp(input, "7") == 0) {
             denahRumahSakit(input);
 
         }
-        else if (strcmp(input, "LIHAT_RUANGAN") == 0) {
+        else if (strcmp(input, "LIHAT_RUANGAN") == 0 || strcmp(input, "8") == 0) {
             char ruanganInput[10];
             printf("Masukkan ruangan yang ingin dilihat: ");
             scanf("%s", ruanganInput);
             lihatRuang(ruanganInput);
 
         }
-        else if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0) {
+        else if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0 || strcmp(input, "9") == 0) {
             denahRumahSakit(input);
             
         } 
@@ -352,15 +254,6 @@ int main(int argc, char* argv[]) {
         printOpeningMessage();
         printf(">>> ");
         scanf("%s", userInput);
-        // ================ DEVMODE ================//
-
-        if(strcmp(userInput, "devmode") == 0){
-            status = MANAGER_LOGGED_IN;
-            strcpy(current_user.username, "sankai");
-            strcpy(current_user.role, "manager");
-            printf("[Konnichiwa, Developer-san! Semangat ngodingnya!! Langsung ketik [HELP] saja kalau lupa commandnya >V<] \n");
-            devmode(&current_user, &status);
-        }
 
         //================ LOGIN ================//
         if(strcmp(userInput, "LOGIN") == 0){        
@@ -389,7 +282,7 @@ int main(int argc, char* argv[]) {
         }
         
         else{
-            printf("Perintah tidak dikenali. Mohon berikan perintah yang valid!\n");
+            printf("\033[91mPerintah tidak dikenali.\033[0m Mohon berikan perintah yang valid!\n");
         }
         //================ LOGIN END ================//
 
