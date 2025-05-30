@@ -529,20 +529,55 @@ void loadConfig(const char* folder) {
 void load_all_data(const char* folder) {
     char path[256];
 
+    // USER
     sprintf(path, "%s/user.csv", folder);
+    FILE* test = fopen(path, "r");
+    if (!test) {
+        fprintf(stderr, "Fatal error: Gagal membuka file %s\n", path);
+        exit(EXIT_FAILURE);
+    }
+    fclose(test);
     getUserData(path);
 
+    // OBAT
     sprintf(path, "%s/obat.csv", folder);
+    test = fopen(path, "r");
+    if (!test) {
+        fprintf(stderr, "Fatal error: Gagal membuka file %s\n", path);
+        exit(EXIT_FAILURE);
+    }
+    fclose(test);
     obatList = getObatData(path, &obatCount);
 
+    // PENYAKIT
     sprintf(path, "%s/penyakit.csv", folder);
+    test = fopen(path, "r");
+    if (!test) {
+        fprintf(stderr, "Fatal error: Gagal membuka file %s\n", path);
+        exit(EXIT_FAILURE);
+    }
+    fclose(test);
     penyakitList = getPenyakitData(path, &penyakitCount);
 
+    // OBAT_PENYAKIT
     sprintf(path, "%s/obat_penyakit.csv", folder);
+    test = fopen(path, "r");
+    if (!test) {
+        fprintf(stderr, "Fatal error: Gagal membuka file %s\n", path);
+        exit(EXIT_FAILURE);
+    }
+    fclose(test);
     obatPenyakitList = getObatPenyakitData(path, &obatPenyakitCount);
 
+    // CONFIG
+    sprintf(path, "%s/config.txt", folder);
+    test = fopen(path, "r");
+    if (!test) {
+        fprintf(stderr, "Fatal error: Gagal membuka file %s\n", path);
+        exit(EXIT_FAILURE);
+    }
+    fclose(test);
     loadConfig(folder);
-    
-    printf("Data berhasil diload dari folder: %s\n", folder);
 
+    printf("✅ Data berhasil diload dari folder: %s\n", folder);
 }

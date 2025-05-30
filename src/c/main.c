@@ -45,9 +45,9 @@ void handleManager(User* user, Status* status) {
         printf(">>> ");
         scanf("%s", input);
         if (strcmp(input, "HELP") == 0) {
-            help(*user);     // dapat string hasil input setelah HELP
+            help(*user);     
         }
-        else if(strcmp(input, "TAMBAH_DOKTER") || strcmp(input, "2") == 0){
+        else if(strcmp(input, "TAMBAH_DOKTER") == 0 || strcmp(input, "2") == 0){
             tambahDokter();
         }
         else if(strcmp(input, "ASSIGN_DOKTER") == 0 || strcmp(input, "3") == 0){
@@ -280,16 +280,16 @@ int main(int argc, char* argv[]) {
             status = EXIT;
             exit_program();
         }
-        
+        else if(strcmp(userInput, "LUPA_PASSWORD") == 0){
+            lupaPassword();
+        }
         else{
             printf("\033[91mPerintah tidak dikenali.\033[0m Mohon berikan perintah yang valid!\n");
         }
         //================ LOGIN END ================//
 
         //================ LUPA PASSWORD ================
-        if(strcmp(userInput, "LUPA_PASSWORD") == 0){
-            lupaPassword();
-        }
+        
         switch (status) {
             case MANAGER_LOGGED_IN:
                 handleManager(&current_user, &status);
