@@ -3,8 +3,8 @@
 #include "user.h"
 #include "queue.h"
 
-#define MAX_PASIEN 5
-#define MAX_RUANGAN 5
+#define MAX_PASIEN 10
+#define MAX_RUANGAN 100
 
 typedef struct 
 {
