@@ -22,7 +22,7 @@ InventoryPasien* getInventoryByUser(User* user) {
 
 void searchJumlahInventory(int* jumlahInventory){
     *jumlahInventory = 0;
-    for (int i = 0; i < jumlah_inventory; i++) {
+    for (int i = 0; i < userCount; i++) {
         if (daftar_inventory[i].count > 0) {
             (*jumlahInventory)++;
         }
