@@ -9,15 +9,11 @@
 #include "../header/queue.h"
 #include "../header/config.h"
 
-// // For testing 
-// int panjang_denah_eff = 1;
-// int lsebar_denah_eff = 1;
-
 //Check sudah diagnosis atau belum
 boolean checkDiagnosis(User *pasien) {
     if(strcmp(pasien->riwayat_penyakit, "") == 0) {
         return false; //belum terdiagnosis
-    } else if(strcmp(pasien->riwayat_penyakit, "Nothing") == 0) {
+    } else if(strcmp(pasien->riwayat_penyakit, "Sehat") == 0) {
         return false; //tidak sakit
     } else {
         return true; //sakit
