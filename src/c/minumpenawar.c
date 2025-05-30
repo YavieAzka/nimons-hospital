@@ -16,6 +16,11 @@ void minumPenawar(User *user) {
     InventoryPasien* inv = getInventoryByUser(user);
     int idx = getUserIndex(user->username, users, userCount);
 
+    if (strcmp(users[idx].riwayat_penyakit, "Sehat") == 0) {
+        printf("Kamu Boleh Pulang, Segera ke pulang DOK!!\n");
+        return;
+    }
+    
     char namaObatKeluar[MAX_NAMA_PENYAKIT];
     if(users[idx].perut.top == -1) {
         printf("Perut kosong!! Belum ada obat yang dimakan. >:)\n");
