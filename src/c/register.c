@@ -90,7 +90,7 @@ void registerUser(){
     while (!onlyAlfabet(newUsername))
     {
         printf("Masukkan username hanya dengan Huruf A-Z, a-z!!\n");
-        printf("Username: ");
+        printf("\033[34mUsername: \033[0m");
         scanf("%s", newUsername);
     }
     
