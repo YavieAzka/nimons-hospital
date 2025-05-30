@@ -287,8 +287,7 @@ int main(int argc, char* argv[]) {
         else if (strcmp(userInput, "LOGOUT") == 0)
         {
             logout(&current_user, &status);
-        }
-        {
+        }else{
             printf("\033[91mPerintah tidak dikenali.\033[0m Mohon berikan perintah yang valid!\n");
         }
         //================ LOGIN END ================//
