@@ -144,7 +144,7 @@ void pindahDokter(){
 
     if (r1.idDokter == 0)
     {
-        printf("Pemindahan gagal. Ruangan %c%d Kosong.\n", 'A' + baris1 + 1, kolom1 + 1);
+        printf("Pemindahan gagal. Ruangan %c%d Kosong.\n", 'A' + baris1, kolom1 + 1);
     } else{
         if (r2.idDokter == 0)
         {
