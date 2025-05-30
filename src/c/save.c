@@ -63,12 +63,17 @@ void save_config(const char* folder_name) {
         Ruangan* r = &ruanganList[row][col];
 
         fprintf(f, "%d", r->idDokter);
-        while (r->antrianPasien.front != NULL)
+        if (r->antrianPasien.front == NULL && r->idDokter != 0)
         {
-            fprintf(f, " %d", r->antrianPasien.front->idPasien);
-            r->antrianPasien.front = r->antrianPasien.front->next;
-        }            
-        
+            fprintf(f, " 0");
+        }
+        else{
+            while (r->antrianPasien.front != NULL)
+            {
+                fprintf(f, " %d", r->antrianPasien.front->idPasien);
+                r->antrianPasien.front = r->antrianPasien.front->next;
+            }            
+        }   
         fprintf(f, "\n");
     }
 

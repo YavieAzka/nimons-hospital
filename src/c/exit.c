@@ -6,8 +6,12 @@
 
 void exit_program() {
     char pilihan[10];
-    printf("Apakah Anda ingin menyimpan data sebelum keluar? (ya/tidak): ");
-    scanf("%9s", pilihan);  // Gunakan %9s agar tidak melebihi buffer
+    do
+    {
+        printf("Apakah Anda ingin menyimpan data sebelum keluar? (ya/tidak): ");
+        scanf("%9s", pilihan);
+    } while (strcmp(pilihan, "ya") != 0 && strcmp(pilihan, "tidak") != 0);
+     // Gunakan %9s agar tidak melebihi buffer
 
     if (strcmp(pilihan, "ya") == 0) {
         char folder_name[100];

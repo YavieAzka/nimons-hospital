@@ -1,4 +1,5 @@
 #include "../header/daftar-check-up.h"
+#include "../header/load.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -21,7 +22,7 @@ void daftarCheckUp(User* userNow) {
         printf("Yuk, tunggu giliran dulu. Nanti aja daftarnya lagi.\n");
         return;
     }
-
+    int idx = getUserIndex(userNow->username, users, userCount);
     printf("\n--- FORMULIR CHECK-UP PASIEN ---\n");
     printf("Masukin data kesehatan kamu dulu ya. Jangan asal, ini penting!\n");
 
@@ -88,16 +89,16 @@ void daftarCheckUp(User* userNow) {
     } while (trombosit <= 0);
 
     // Simpan data ke user
-    userNow->suhu_tubuh = suhu;
-    userNow->tekanan_darah_sistolik = sistol;
-    userNow->tekanan_darah_diastolik = diastol;
-    userNow->detak_jantung = detak;
-    userNow->saturasi_oksigen = saturasi;
-    userNow->kadar_gula_darah = gula;
-    userNow->berat_badan = berat;
-    userNow->tinggi_badan = tinggi;
-    userNow->kadar_kolesterol = kolesterol;
-    userNow->trombosit = trombosit;
+    users[idx].suhu_tubuh = suhu;
+    users[idx].tekanan_darah_sistolik = sistol;
+    users[idx].tekanan_darah_diastolik = diastol;
+    users[idx].detak_jantung = detak;
+    users[idx].saturasi_oksigen = saturasi;
+    users[idx].kadar_gula_darah = gula;
+    users[idx].berat_badan = berat;
+    users[idx].tinggi_badan = tinggi;
+    users[idx].kadar_kolesterol = kolesterol;
+    users[idx].trombosit = trombosit;
 
     printf("\n--- DOKTER YANG SIAP NANGGEPIN KAMU ---\n");
     int opsi[100][2];

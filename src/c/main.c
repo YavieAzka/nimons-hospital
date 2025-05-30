@@ -275,7 +275,10 @@ int main(int argc, char* argv[]) {
             registerUser();
         }
         else if(strcmp(userInput, "SAVE") == 0){
-            save_data("newData");
+            char newData[50];
+            printf("Masukkan nama folder: ");
+            scanf("%s", newData);
+            save_data(newData);
         }
         else if (strcmp(userInput, "EXIT") == 0){
             status = EXIT;
