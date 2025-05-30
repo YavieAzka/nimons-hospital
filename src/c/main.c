@@ -284,7 +284,11 @@ int main(int argc, char* argv[]) {
         else if(strcmp(userInput, "LUPA_PASSWORD") == 0){
             lupaPassword();
         }
-        else{
+        else if (strcmp(userInput, "LOGOUT") == 0)
+        {
+            logout(&current_user, &status);
+        }
+        {
             printf("\033[91mPerintah tidak dikenali.\033[0m Mohon berikan perintah yang valid!\n");
         }
         //================ LOGIN END ================//
