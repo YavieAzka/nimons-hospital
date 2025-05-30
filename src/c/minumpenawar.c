@@ -17,16 +17,21 @@ void minumPenawar(User *user) {
     int idx = getUserIndex(user->username, users, userCount);
 
     char namaObatKeluar[MAX_NAMA_PENYAKIT];
-    if(users[idx].perut.top == -1) {
-        printf("Perut kosong!! Belum ada obat yang dimakan. >:)\n");
+
+    if(inv == NULL) {
+        printf("Kamu belum menerima obat dari dokter. Tidak boleh meminta obat penawar!! >:)\n");
     } else {
-        int idObatKeluar = peek(users[idx].perut);
-        pop(&(users[idx].perut));
-        // Cari nama obat berdasarkan ID
-        strcpy(namaObatKeluar, namaObat(idObatKeluar));
-        //Keluarkan obat dari perut
-        printf("Uwekkk :O !!!\nInventory diperbarui. Obat %s keluar dan kembali ke kantong ajaib kamu!\n", namaObatKeluar);
-        addInventoryByUser(inv,idObatKeluar);
+        if(users[idx].perut.top == -1) {
+            printf("Perut kosong!! Belum ada obat yang dimakan. >:)\n");
+        } else {
+            int idObatKeluar = peek(users[idx].perut);
+            pop(&(users[idx].perut));
+            // Cari nama obat berdasarkan ID
+            strcpy(namaObatKeluar, namaObat(idObatKeluar));
+            //Keluarkan obat dari perut
+            printf("Uwekkk :O !!!\nInventory diperbarui. Obat %s keluar dan kembali ke kantong ajaib kamu!\n", namaObatKeluar);
+            addInventoryByUser(inv,idObatKeluar);
         
+        }
     }
 }
