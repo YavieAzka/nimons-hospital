@@ -17,8 +17,8 @@ void lihatSemuaAntrian() {
             Ruangan r = ruanganList[i][j];
 
             if (r.idDokter != 0) {
-                char namaRuang[4];
-                printf(namaRuang, "%c%d", 'A' + i, j + 1);
+                char namaRuang[100];
+                sprintf(namaRuang, "%c%d", 'A' + i, j + 1);
 
                 printf("\n============ %s ============\n", namaRuang);
                 printf("Kapasitas  : %d\n", kapasitas_ruangan);
