@@ -43,7 +43,7 @@ void handleManager(User* user, Status* status) {
     char input[50];
     while (*status == MANAGER_LOGGED_IN) {
         printCommandMessage();
-        printf(">>> ");
+        printf("\033[93m>>> \033[0m");
         scanf("%s", input);
         if (strcmp(input, "HELP") == 0) {
             help(*user);     
@@ -114,7 +114,7 @@ void handleDokter(User* user, Status* status) {
     char input[50];
     while (*status == DOKTER_LOGGED_IN) {
         printCommandMessage();
-        printf(">>> ");
+        printf("\033[93m>>> \033[0m");
         scanf("%s", input);
 
         if (strcmp(input, "HELP") == 0 ) {
@@ -163,7 +163,7 @@ void handlePasien(User* user, Status* status) {
     char input[50];
     while (*status == PASIEN_LOGGED_IN) {
         printCommandMessage();
-        printf(">>> ");
+        printf("\033[93m>>> \033[0m");
         scanf("%s", input);
 
         if (strcmp(input, "HELP") == 0) {
@@ -256,7 +256,7 @@ int main(int argc, char* argv[]) {
     while(status != EXIT){
         printWelcomeMessage();
         printOpeningMessage();
-        printf(">>> ");
+        printf("\033[93m>>> \033[0m");
         scanf("%s", userInput);
 
         //================ LOGIN ================//
