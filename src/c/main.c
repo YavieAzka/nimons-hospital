@@ -144,11 +144,7 @@ void handleDokter(User* user, Status* status) {
             lihatRuang(ruanganInput);
             //return;
         }
-        else if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0 || strcmp(input, "7") == 0) {
-            lihatSemuaAntrian();
-            //return;
-        }
-        else if (strcmp(input, "EXIT") == 0 || strcmp(input, "8") == 0) {
+        else if (strcmp(input, "EXIT") == 0 || strcmp(input, "7") == 0) {
             *status = EXIT;
             exit_program();
             return;
@@ -199,11 +195,7 @@ void handlePasien(User* user, Status* status) {
             lihatRuang(ruanganInput);
 
         }
-        else if (strcmp(input, "LIHAT_SEMUA_ANTRIAN") == 0 || strcmp(input, "9") == 0) {
-            lihatSemuaAntrian();
-            
-        } 
-        else if(strcmp(input, "EXIT") == 0){
+        else if(strcmp(input, "EXIT") == 0 || strcmp(input, "9") == 0){
             *status = EXIT;
             exit_program();
             return;
