@@ -100,70 +100,73 @@ void gambarDenah(){
     
 // }
 
-void ubahDenah(){
-    //search eff ukuran denah
-    for (int i = 0; i < panjang_denah; i++) {
-        for (int j = 0; j < lebar_denah; j++) {
-            if (ruanganList[i][j].idDokter != 0) {
-                if (i + 1 > panjang_denah_eff) panjang_denah_eff = i + 1;
-                if (j + 1 > lebar_denah_eff) lebar_denah_eff = j + 1;
+    void ubahDenah(){
+        //search eff ukuran denah
+        for (int i = 0; i < panjang_denah; i++) {
+            for (int j = 0; j < lebar_denah; j++) {
+                if (ruanganList[i][j].idDokter != 0) {
+                    if (i + 1 > panjang_denah_eff) panjang_denah_eff = i + 1;
+                    if (j + 1 > lebar_denah_eff) lebar_denah_eff = j + 1;
+                }
+            }
+        }
+
+        // Max 26 26
+        int newPanjang, newLebar;
+        printf("Masukkan ukuran denah yang baru: ");
+        scanf("%d %d", &newPanjang, &newLebar);
+        
+        // cek valid 
+        if (newLebar < lebar_denah_eff || newPanjang < panjang_denah_eff) {
+            int baris = -1, kolom = -1;
+            cariRuang(&baris, &kolom, newLebar, newPanjang);
+            printf("Tidak dapat mengubah ukuran denah. Ruangan %c%d masih ditempati oleh Dr. %s. Silakan pindahkan dokter terlebih dahulu.\n",
+                'A' + baris, kolom + 1, ruanganList[baris][kolom].usernameDokter);
+        } else { 
+            lebar_denah = newLebar;
+            panjang_denah = newPanjang;
+            printf("Denah rumah sakit berhasil diubah menjadi %d baris dan %d kolom.\n", newPanjang, newLebar);
+        }
+    }
+
+    void pindahDokter(){
+        char ruang1[10], ruang2[10];
+        printf("Masukkan ruangan asal dan tujuan (misal: A1 B2): ");
+        // Input format: A1 B2
+        scanf("%s %s", ruang1, ruang2);
+        int baris1, kolom1, baris2, kolom2;
+
+        baris1 = ruang1[0] - 'A'; kolom1 = stringToInt(&ruang1[1]) - 1;
+        baris2 = ruang2[0] - 'A'; kolom2 = stringToInt(&ruang2[1]) - 1;
+        
+        Ruangan r1, r2;
+        
+        r1 = ruanganList[baris1][kolom1];
+        r2 = ruanganList[baris2][kolom2];
+        
+        // Validasi baris dan kolom
+        if (baris1 < 0 || baris1 > panjang_denah - 1 || kolom1 < 0 || kolom1 > lebar_denah - 1)
+        {
+            printf("Pemindahan gagal. Ruangan %c%d Tidak Ada.\n", 'A' + baris1, kolom1 + 1);
+        }else if (baris2 < 0 || baris2 > panjang_denah - 1|| kolom2 < 0 || kolom2 > lebar_denah - 1)
+        {
+            printf("Pemindahan gagal. Ruangan %c%d Tidak Ada.\n", 'A' + baris2, kolom2 + 1);
+        }else if (r1.idDokter == 0)
+        {
+            printf("Pemindahan gagal. Ruangan %c%d Kosong.\n", 'A' + baris1, kolom1 + 1);
+        }  
+        else
+        {
+            if (r2.idDokter == 0)
+            {
+                ruanganList[baris2][kolom2] = r1;
+                ruanganList[baris1][kolom1] = r2; //jadi kosong
+                printf("Dr. %s berhasil dipindahkan dari ruangan %c%d ke ruangan %c%d.\n", r1.usernameDokter, 'A' + baris1, kolom1 + 1, 'A' +  baris2, kolom2 + 1);
+            } else{
+                printf("Pemindahan gagal. Ruangan %c%d Sudah ditempati.\n", 'A' + baris2, kolom2 + 1);
             }
         }
     }
-
-    int newPanjang, newLebar;
-    printf("Masukkan ukuran denah yang baru: ");
-    scanf("%d %d", &newPanjang, &newLebar);
-    
-    if (newLebar < lebar_denah_eff || newPanjang < panjang_denah_eff) {
-        int baris = -1, kolom = -1;
-        cariRuang(&baris, &kolom, newLebar, newPanjang);
-        printf("Tidak dapat mengubah ukuran denah. Ruangan %c%d masih ditempati oleh Dr. %s. Silakan pindahkan dokter terlebih dahulu.\n",
-               'A' + baris, kolom + 1, ruanganList[baris][kolom].usernameDokter);
-    } else {
-        lebar_denah = newLebar;
-        panjang_denah = newPanjang;
-        printf("Denah rumah sakit berhasil diubah menjadi %d baris dan %d kolom.\n", newPanjang, newLebar);
-    }
-}
-
-void pindahDokter(){
-    char ruang1[10], ruang2[10];
-    printf("Masukkan ruangan asal dan tujuan (misal: A1 B2): ");
-    // Input format: A1 B2
-    scanf("%s %s", ruang1, ruang2);
-    int baris1, kolom1, baris2, kolom2;
-
-    baris1 = ruang1[0] - 'A'; kolom1 = stringToInt(&ruang1[1]) - 1;
-    baris2 = ruang2[0] - 'A'; kolom2 = stringToInt(&ruang2[1]) - 1;
-    
-    Ruangan r1, r2;
-    
-    r1 = ruanganList[baris1][kolom1];
-    r2 = ruanganList[baris2][kolom2];
-
-    if (baris1 < 0 || baris1 > panjang_denah - 1 || kolom1 < 0 || kolom1 > lebar_denah - 1)
-    {
-        printf("Pemindahan gagal. Ruangan %c%d Tidak Ada.\n", 'A' + baris1, kolom1 + 1);
-    }else if (baris2 < 0 || baris2 > panjang_denah - 1|| kolom2 < 0 || kolom2 > lebar_denah - 1)
-    {
-        printf("Pemindahan gagal. Ruangan %c%d Tidak Ada.\n", 'A' + baris2, kolom2 + 1);
-    }else if (r1.idDokter == 0)
-    {
-        printf("Pemindahan gagal. Ruangan %c%d Kosong.\n", 'A' + baris1, kolom1 + 1);
-    }  
-    else
-    {
-        if (r2.idDokter == 0)
-        {
-            ruanganList[baris2][kolom2] = r1;
-            ruanganList[baris1][kolom1] = r2; //jadi kosong
-            printf("Dr. %s berhasil dipindahkan dari ruangan %c%d ke ruangan %c%d.\n", r1.usernameDokter, 'A' + baris1, kolom1 + 1, 'A' +  baris2, kolom2 + 1);
-        } else{
-            printf("Pemindahan gagal. Ruangan %c%d Sudah ditempati.\n", 'A' + baris2, kolom2 + 1);
-        }
-    }
-}
 
 void cariRuang(int *baris, int *kolom, int newLebar, int newPanjang) {
     for (int i = 0; i < panjang_denah; i++) {
