@@ -23,7 +23,11 @@
     "queue.h": "c",
     "save.h": "c",
     "minum-obat.h": "c",
-    "diagnosis.h": "c"
+    "diagnosis.h": "c",
+    "fstream": "c",
+    "lihat_antrian.h": "c",
+    "login.h": "c",
+    "register.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }
