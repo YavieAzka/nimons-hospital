@@ -44,7 +44,9 @@ void tambahDokter() {
     // Initialize usernameSet from existing users
     createEmptySet(&usernameSet);
     for (int i = 0; i < userCount; i++) {
-        insert(&usernameSet, users[i].username);
+        char temp[MAX_USERNAME];
+        toLowerCase(users[i].username, temp);
+        insert(&usernameSet, temp);
     }
 
     if (userCount >= MAX_USERS) {
@@ -61,8 +63,11 @@ void tambahDokter() {
         printf("Username hanya boleh terdiri dari huruf!\n");
         return;
     }
+    
+    char lowerUsername[MAX_USERNAME];
+    toLowerCase(username, lowerUsername);
 
-    if (contains(usernameSet, username)) {
+    if (contains(usernameSet, lowerUsername)) {
         printf("Username sudah digunakan. Silakan pilih username lain.\n");
         return;
     }
