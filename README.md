@@ -6,13 +6,6 @@
 
 **Nimons Hospital** is a comprehensive, command-line based information management system built entirely in C. Developed as a final project for the IF1210 Algorithm and Programming course, this application simulates the operational backend of a hospital. It features robust multi-user, role-based access control (Manager, Doctor, Patient) and handles complex data operations, from patient queues to data persistence, all while operating under strict constraints that required building fundamental components from the ground up.
 
----
-
-### 🎥 Live Demo
-
-*(It is highly recommended to record a short GIF of your program in action and place it here. It dramatically increases engagement.)*
-
-![Demo GIF](https://placehold.co/800x400/2d3748/ffffff?text=Project+Demo+GIF)
 
 ---
 
@@ -123,7 +116,11 @@ As a core member of the development team, I was responsible for designing and im
 This project was a collaborative effort by:
 
 * **Yavie Azka** - ([@YavieAzka](https://github.com/YavieAzka))
-* *(Add other team members here)*
+* **Junior Natra Situmorang** - ([@Jerannn24](https://github.com/Jerannn24))
+* **Kalyca Nathania B. Manullang** - ([@kalycanbnctaa](https://github.com/kalycanbnctaa))
+* **Rainaldi Pratama F Sembiring** - ([@R27-04](https://github.com/R27-04))
+* **Muhammad Faiz Alfada Dharma** - ([@Faizalfadaa](https://github.com/Faizalfadaa))
+* **Reysha Syafitri Mulya Ramadhan** - ([@kurakuraninja00](https://github.com/kurakuraninja00))
 
 ---
 
